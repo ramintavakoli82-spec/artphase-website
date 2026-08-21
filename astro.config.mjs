@@ -5,7 +5,22 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
-  integrations: [mdx(), sitemap()],
-  markdown: { remarkPlugins: [remarkMath], rehypePlugins: [rehypeKatex] },
-  vite: { optimizeDeps: { noDiscovery: true } },
+  site: 'https://ramintavakoli82-spec.github.io',
+  base: '/artphase-website',
+
+  integrations: [
+    mdx(),
+    sitemap()
+  ],
+
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex]
+  },
+
+  vite: {
+    optimizeDeps: {
+      noDiscovery: true
+    }
+  }
 });
