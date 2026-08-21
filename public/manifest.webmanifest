@@ -1,0 +1,52 @@
+{
+  "id": "/",
+  "name": "ARTPHASE",
+  "short_name": "ARTPHASE",
+  "description": "Practical engineering notes on motor control, VFDs, power quality and industrial electrical design.",
+  "lang": "en-CA",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fbfcfd",
+  "theme_color": "#17222d",
+  "categories": ["education", "engineering", "productivity"],
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Engineering Notes",
+      "short_name": "Notes",
+      "url": "/engineering-notes"
+    },
+    {
+      "name": "Topics",
+      "short_name": "Topics",
+      "url": "/topics"
+    }
+  ]
+}

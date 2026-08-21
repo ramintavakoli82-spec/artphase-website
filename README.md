@@ -115,3 +115,15 @@ utm_medium=social
 utm_campaign=passive-harmonic-filter
 utm_content=post-01
 ```
+
+## Progressive Web App
+
+ARTPHASE includes a standards-based web app manifest, Android maskable icons,
+an Apple touch icon and a small service worker. The service worker uses the
+network for every page navigation and shows `public/offline.html` only when the
+network is unavailable. Engineering article HTML is not stored in the runtime
+cache, which prevents stale article versions from being served after updates.
+
+The asset cache is network-first and is replaced when `CACHE_VERSION` changes in
+`public/sw.js`. Increase that version when making a breaking change to the
+service worker or its precached files.

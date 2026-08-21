@@ -38,8 +38,16 @@ const pageTitle =
 
     <meta name="author" content="Ramin Tavakoli" />
     <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#17222d" />
+    <meta name="application-name" content="ARTPHASE" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ARTPHASE" />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
 
     {analytics && (
       <script
@@ -51,6 +59,18 @@ const pageTitle =
         data-do-not-track="true"
       ></script>
     )}
+
+    <script is:inline>
+      if ('serviceWorker' in navigator &&
+          (location.protocol === 'https:' || location.hostname === 'localhost')) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js', {
+            scope: '/',
+            updateViaCache: 'none'
+          }).catch(() => {});
+        });
+      }
+    </script>
   </head>
 
   <body>
