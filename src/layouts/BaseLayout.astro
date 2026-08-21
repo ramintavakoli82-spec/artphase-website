@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+import '../styles/extended.css';
+import { siteConfig } from '../config/site';
+
+const {
+  title = siteConfig.title,
+  description = siteConfig.description
+} = Astro.props;
+
+const canonical = siteConfig.domain
+  ? new URL(Astro.url.pathname, siteConfig.domain)
+  : undefined;
+
+const pageTitle =
+  title === siteConfig.title
+    ? siteConfig.title
+    : `${title} | ARTPHASE`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{pageTitle}</title>
+
+    <meta name="description" content={description} />
+
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <meta name="author" content="Ramin Tavakoli" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+
+  <body>
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="/">
+          <strong>ARTPHASE</strong>
+          <span>ENGINEERING NOTES</span>
+        </a>
+
+        <nav aria-label="Main navigation">
+          {siteConfig.navigation.map((item) => (
+            <a href={item.href}>{item.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer>
+      <div class="shell">
+        <strong>ARTPHASE</strong>
+
+        <span>
+          Practical engineering notes, investigations and design observations.
+        </span>
+
+        <span>
+          © {new Date().getFullYear()} Ramin Tavakoli
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>

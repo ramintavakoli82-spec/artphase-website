@@ -1,0 +1,8 @@
+---
+interface Props { src?: string; alt: string; caption: string; number: number | string; width?: 'full' | 'medium' }
+const { src, alt, caption, number, width = 'full' } = Astro.props;
+---
+<figure class:list={['engineering-figure', width]}>
+  {src ? <a href={src} target="_blank"><img src={src} alt={alt} loading="lazy" /></a> : <div class="figure-placeholder" role="img" aria-label={alt}><span>FIGURE {number}</span><strong>{alt}</strong><small>Diagram placeholder</small></div>}
+  <figcaption><strong>Figure {number}.</strong> {caption}</figcaption>
+</figure>

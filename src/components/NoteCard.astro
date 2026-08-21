@@ -1,0 +1,7 @@
+---
+const { note } = Astro.props;
+---
+<article class="note-card" data-category={note.data.category.toLowerCase()} data-search={`${note.data.title} ${note.data.subtitle} ${note.data.tags.join(' ')}`.toLowerCase()}>
+  <p class="meta">{note.data.category}</p><h2><a href={`/engineering-notes/${note.id}`}>{note.data.title}</a></h2>
+  <p>{note.data.description}</p><div class="card-footer"><span>{note.data.publicationDate.toLocaleDateString('en-CA',{year:'numeric',month:'short',day:'numeric'})} · {note.data.readingTime}</span><a href={`/engineering-notes/${note.id}`}>Read Note →</a></div>
+</article>

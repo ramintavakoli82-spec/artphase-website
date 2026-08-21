@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import NoteCard from '../../components/NoteCard.astro';
+const notes = (await getCollection('notes', ({data})=>!data.draft)).sort((a,b)=>b.data.publicationDate.valueOf()-a.data.publicationDate.valueOf());
+const categories = [...new Set(notes.map(n=>n.data.category))];
+---
+<BaseLayout title="Engineering Notes | ARTPHASE" description="Technical notes on motor control, VFDs, power quality and industrial electrical design.">
+  <header class="page-header shell"><p class="eyebrow">Technical library</p><h1>Engineering Notes</h1><p>Practical investigations, calculations and design observations organized for reference.</p></header>
+  <section class="library shell">
+    <div class="filters"><label>Search notes<input id="note-search" type="search" placeholder="Search title, topic or tag…" /></label><div class="filter-buttons"><button class="active" data-filter="all">All</button>{categories.map(c=><button data-filter={c.toLowerCase()}>{c}</button>)}</div></div>
+    <p id="empty-state" hidden>No notes match this search.</p><div class="notes-grid">{notes.map(note=><NoteCard note={note} />)}</div>
+  </section>
+  <script>
+    const input=document.querySelector<HTMLInputElement>('#note-search'); const buttons=[...document.querySelectorAll<HTMLButtonElement>('[data-filter]')]; const cards=[...document.querySelectorAll<HTMLElement>('.note-card')]; let category='all';
+    const update=()=>{const q=input?.value.toLowerCase().trim()??'';let shown=0;cards.forEach(c=>{const ok=(category==='all'||c.dataset.category===category)&&(!q||c.dataset.search?.includes(q));c.hidden=!ok;if(ok)shown++});const empty=document.querySelector<HTMLElement>('#empty-state');if(empty)empty.hidden=shown!==0};
+    input?.addEventListener('input',update);buttons.forEach(b=>b.addEventListener('click',()=>{buttons.forEach(x=>x.classList.remove('active'));b.classList.add('active');category=b.dataset.filter??'all';update()}));
+  </script>
+</BaseLayout>

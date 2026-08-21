@@ -1,0 +1,351 @@
+---
+title: Passive Harmonic Filters at Partial Load
+subtitle: Why passive harmonic filter performance should be evaluated across the actual VFD operating range.
+description: A practical investigation of how changing VFD load affects the operating point of a passive harmonic filter.
+publicationDate: 2026-08-20
+updatedDate: 2026-08-20
+category: VFDs & Harmonics
+tags: [VFD, harmonics, passive filter, THDi, power quality]
+readingTime: 8 min read
+draft: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+## The Question
+
+A passive harmonic filter may perform very well when the connected VFD load is close to its intended operating point.
+
+But what happens when the load changes significantly?
+
+Consider a simplified system:
+
+- One passive harmonic filter rated for approximately **100 A**
+- Two VFD loads connected downstream
+- VFD 1 operating at approximately **25 A**
+- VFD 2 operating at approximately **75 A**
+
+When both drives are operating, the total load is approximately 100 A.
+
+If the 75 A drive stops and only the 25 A drive remains operating, the same filter is now associated with only about 25% of the original VFD load.
+
+The filter has not changed.
+
+The operating condition of the electrical system has.
+
+<Callout type="important-note" title="The key question">
+Should a passive harmonic filter selected around a 100 A VFD load be expected to provide the same system performance when only 25 A of VFD load remains?
+</Callout>
+
+## The Example System
+
+For discussion, consider the following simplified arrangement:
+
+**Source → Passive Harmonic Filter → Common Bus → VFD Loads**
+
+The connected VFD loads are:
+
+<EngineeringTable number="1" caption="Example VFD operating loads">
+<table>
+  <thead>
+    <tr>
+      <th>Load</th>
+      <th>Operating Current</th>
+      <th>Share of Total Example Load</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VFD 1</td>
+      <td>25 A</td>
+      <td>25%</td>
+    </tr>
+    <tr>
+      <td>VFD 2</td>
+      <td>75 A</td>
+      <td>75%</td>
+    </tr>
+    <tr>
+      <td><strong>Total</strong></td>
+      <td><strong>100 A</strong></td>
+      <td><strong>100%</strong></td>
+    </tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The current values are intentionally simplified to make the operating-point comparison easy to follow.
+
+They are not intended to represent the guaranteed performance or minimum loading requirement of a specific filter product.
+
+The purpose of the example is to examine a broader engineering question:
+
+**How can the operating condition of a passive harmonic filter change when the connected nonlinear load changes substantially?**
+
+## Operating Point 1 — Both VFDs Running
+
+With both drives operating:
+
+<EquationBlock label="1">
+$$
+I_{LOAD}=25A+75A=100A
+$$
+</EquationBlock>
+
+The connected VFD load is approximately equal to the nominal filter-current value used in this example.
+
+This represents the highest-load operating point being considered.
+
+At this condition, the VFD system produces its corresponding fundamental and harmonic currents, while the passive filter interacts with the source and nonlinear load according to its electrical design.
+
+No specific THDi value is assumed here because actual performance depends on the filter design, drive characteristics, source impedance, system voltage and measurement location.
+
+## Operating Point 2 — Only the 75 A VFD Running
+
+Now the smaller drive stops.
+
+The remaining VFD load is:
+
+<EquationBlock label="2">
+$$
+I_{LOAD}=75A
+$$
+</EquationBlock>
+
+Relative to the 100 A example operating point:
+
+<EquationBlock label="3">
+$$
+\frac{75A}{100A}\times100=75\%
+$$
+</EquationBlock>
+
+The filter is now associated with approximately 75% of the original VFD load.
+
+This is a different electrical operating point even though no component in the filter has changed.
+
+The fundamental current, harmonic spectrum, power factor and interaction between the source, filter and drive system may therefore differ from the 100 A condition.
+
+## Operating Point 3 — Only the 25 A VFD Running
+
+Now consider the opposite condition.
+
+The 75 A drive stops and only the 25 A drive remains operating.
+
+The remaining VFD load is:
+
+<EquationBlock label="4">
+$$
+I_{LOAD}=25A
+$$
+</EquationBlock>
+
+Relative to the original 100 A example:
+
+<EquationBlock label="5">
+$$
+\frac{25A}{100A}\times100=25\%
+$$
+</EquationBlock>
+
+The connected nonlinear load has now fallen substantially.
+
+However, the passive harmonic filter remains part of the electrical system.
+
+Its passive components and their interaction with the network do not simply disappear because the VFD load has decreased.
+
+<Callout type="warning" title="Important">
+A passive harmonic filter does not scale its electrical behavior proportionally with VFD load.
+</Callout>
+
+This does not mean that harmonic performance must become unacceptable at 25% load.
+
+It means that the 25% operating point should be evaluated rather than assumed to behave exactly like the full-load condition.
+
+## Why Partial Load Matters
+
+Current total harmonic distortion is calculated relative to the fundamental current.
+
+In simplified form:
+
+<EquationBlock label="6">
+$$
+THD_i=
+\frac{\sqrt{I_2^2+I_3^2+I_4^2+\cdots+I_n^2}}
+{I_1}
+\times100\%
+$$
+</EquationBlock>
+
+The denominator is the fundamental current, \(I_1\).
+
+As VFD loading decreases, the fundamental input current generally decreases.
+
+The individual harmonic-current components may also decrease, but not necessarily in the same proportion as the fundamental component.
+
+Because THDi is a ratio referenced to the fundamental current, a reduction in absolute harmonic current does not necessarily result in a lower THDi.
+
+Depending on the VFD, filter design, source impedance and operating point, the percentage current distortion may remain similar, decrease, or increase as load changes.
+
+This is why acceptable harmonic performance at full load should not automatically be assumed to represent performance across the complete operating range.
+
+## The Filter Is Part of the System
+
+A passive harmonic filter is not evaluated in isolation.
+
+Its behavior is influenced by the electrical system in which it is installed.
+
+Relevant parameters can include:
+
+- system voltage,
+- system frequency,
+- source impedance,
+- filter topology and tuning,
+- connected nonlinear load,
+- harmonic spectrum,
+- other connected capacitance,
+- and the operating state of the equipment.
+
+Many passive harmonic filter designs include capacitive elements as part of the filtering network.
+
+Depending on the filter topology and design, these elements can influence reactive power and power factor, particularly as the real load decreases.
+
+The importance of this effect is product- and system-dependent and should be evaluated using the manufacturer's application data or an appropriate system study.
+
+<Callout type="engineering-consideration" title="Engineering consideration">
+The correct question is not only “What is the filter rating?” It is also “What operating range will this filter experience in the actual system?”
+</Callout>
+
+## One Large Load vs. Several Smaller Loads
+
+This issue becomes particularly relevant when one passive harmonic filter serves several independently operated VFDs.
+
+Suppose the maximum combined VFD load is approximately 100 A.
+
+The actual operating combinations could include:
+
+<EngineeringTable number="2" caption="Example operating combinations">
+<table>
+  <thead>
+    <tr>
+      <th>Operating Condition</th>
+      <th>Approx. VFD Load</th>
+      <th>Relative to 100 A Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Both VFDs running</td>
+      <td>100 A</td>
+      <td>100%</td>
+    </tr>
+    <tr>
+      <td>75 A VFD only</td>
+      <td>75 A</td>
+      <td>75%</td>
+    </tr>
+    <tr>
+      <td>25 A VFD only</td>
+      <td>25 A</td>
+      <td>25%</td>
+    </tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The same filter remains installed in all three cases.
+
+But these are three different system operating points.
+
+This is why matching the filter current rating only to the maximum combined VFD load does not, by itself, describe performance across every possible operating condition.
+
+## What Should Be Checked?
+
+When one passive harmonic filter serves multiple VFDs, the design review should consider both maximum and minimum realistic operating conditions.
+
+Useful checks include:
+
+- maximum expected VFD load,
+- minimum realistic VFD load,
+- normal combinations of operating drives,
+- source impedance,
+- expected harmonic spectrum,
+- current distortion at the relevant measurement point,
+- power factor across the expected operating range,
+- possible reactive-current behavior at light load,
+- filter topology,
+- and manufacturer application or minimum-load guidance where applicable.
+
+The actual measurement location also matters.
+
+Drive-input THDi and current distortion measured upstream of a common filter are not necessarily the same quantity.
+
+Therefore, any harmonic-performance requirement should clearly define the point at which compliance is evaluated.
+
+## Minimum Loading
+
+There is no universal minimum-load percentage that can be applied to every passive harmonic filter.
+
+The acceptable operating range depends on the specific product topology, system conditions and the manufacturer's design criteria.
+
+Some products may include features intended to improve light-load behavior, while others may have specific application guidance regarding minimum loading, power factor or capacitor switching.
+
+For this reason, a value such as 25%, 30% or 40% should not be treated as a universal threshold unless it is supported by the documentation for the specific filter being evaluated.
+
+<Callout type="important-note" title="Do not generalize a minimum-load number">
+Minimum loading should come from the specific filter design, manufacturer documentation or system analysis — not from a universal rule of thumb.
+</Callout>
+
+## Practical Design Lesson
+
+A filter can be selected correctly for the maximum connected VFD load while still requiring review at lower operating points.
+
+This is particularly important when several independently controlled VFDs share one passive harmonic filter.
+
+Instead of asking only:
+
+> “Does the maximum VFD current match the filter rating?”
+
+a more complete design question is:
+
+> “How does the filter and electrical system behave across the combinations of VFD loads that will actually occur?”
+
+That question considers the equipment as part of a changing electrical system rather than as a single fixed operating point.
+
+## Conclusion
+
+Passive harmonic filter performance is operating-point dependent.
+
+In this simplified example, the same filter can remain connected while the downstream VFD load changes from approximately 100 A to 75 A or 25 A.
+
+The filter itself has not changed, but the electrical conditions surrounding it have.
+
+The fundamental current changes.
+
+The harmonic-current spectrum can change.
+
+The relative contribution of the passive filter to the system can change.
+
+Power factor and reactive-current behavior may also change depending on the filter topology and system.
+
+None of these observations means that partial-load operation is inherently unacceptable.
+
+They mean that **full-load performance alone does not completely describe the system**.
+
+For installations where several VFDs share a common passive harmonic filter, the expected load profile should therefore be considered during equipment selection and design review.
+
+<Callout type="calculation-result" title="Takeaway">
+Evaluate a passive harmonic filter as part of the complete electrical system and across the expected operating range — not only at the maximum connected load.
+</Callout>
+
+## References
+
+<ReferenceList>
+  <li>IEEE Std 519 — Recommended Practice and Requirements for Harmonic Control in Electric Power Systems.</li>
+  <li>Manufacturer application, selection and performance documentation for the specific passive harmonic filter being evaluated.</li>
+  <li>Manufacturer technical documentation for the connected variable-frequency drives.</li>
+  <li>Project-specific source characteristics, operating load profile and harmonic-performance requirements.</li>
+</ReferenceList>

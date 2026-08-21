@@ -1,0 +1,117 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const topics = [
+  {
+    number: '01',
+    title: 'Motor Control',
+    description:
+      'Practical notes on motor starting, contactors, overload protection, soft starters, control methods and industrial motor applications.',
+    examples:
+      'Motor starters · Soft starters · Coordination · Control circuits'
+  },
+  {
+    number: '02',
+    title: 'VFDs & Harmonics',
+    description:
+      'Investigations into variable-frequency drives, harmonic distortion, passive and active filtering, reactors and power-quality behaviour.',
+    examples:
+      'VFDs · THDi · Passive filters · Active filters · Reactors'
+  },
+  {
+    number: '03',
+    title: 'Protection',
+    description:
+      'Engineering notes on overcurrent protection, fuse and breaker selection, SCCR, coordination and practical protection decisions.',
+    examples:
+      'Fuses · Circuit breakers · SCCR · Coordination · Protection'
+  },
+  {
+    number: '04',
+    title: 'MCCs & Control Panels',
+    description:
+      'Design observations from industrial motor control centres and control panels, including component selection, layouts, ratings and integration.',
+    examples:
+      'MCCs · Control panels · Bus systems · Component selection'
+  },
+  {
+    number: '05',
+    title: 'Electrical Distribution',
+    description:
+      'Practical engineering notes covering industrial power distribution, feeders, voltage drop, equipment ratings and system-level design.',
+    examples:
+      'Distribution · Feeders · Voltage drop · Equipment ratings'
+  },
+  {
+    number: '06',
+    title: 'Automation & PLC-HMI',
+    description:
+      'Notes on industrial automation, PLC and HMI applications, control architecture, communications and integration with electrical systems.',
+    examples:
+      'PLC · HMI · Industrial networks · Controls · Integration'
+  },
+  {
+    number: '07',
+    title: 'Engineering Investigations',
+    description:
+      'Worked technical investigations, calculations, troubleshooting observations and engineering questions developed from real-world applications.',
+    examples:
+      'Calculations · Troubleshooting · Design review · Technical studies'
+  }
+];
+---
+
+<BaseLayout
+  title="Topics | ARTPHASE"
+  description="Engineering topics covered by ARTPHASE, including motor control, VFDs, harmonics, protection, MCCs, electrical distribution and industrial automation."
+>
+  <header class="page-header shell topics-header">
+    <p class="eyebrow">Areas of focus</p>
+
+    <h1>Engineering Topics</h1>
+
+    <p>
+      Practical investigations, calculations and design observations across
+      industrial electrical engineering.
+    </p>
+  </header>
+
+  <main class="topics-page shell">
+    <div class="topics-intro">
+      <p>
+        ARTPHASE is organized around practical engineering subjects rather than
+        isolated articles. Each topic grows as new investigations and technical
+        notes are added.
+      </p>
+    </div>
+
+    <div class="topics-list">
+      {topics.map((topic) => (
+        <article class="topic-item">
+          <div class="topic-number">{topic.number}</div>
+
+          <div class="topic-content">
+            <h2>{topic.title}</h2>
+            <p>{topic.description}</p>
+            <span>{topic.examples}</span>
+          </div>
+
+          <div class="topic-arrow" aria-hidden="true">→</div>
+        </article>
+      ))}
+    </div>
+
+    <section class="topics-note">
+      <p class="eyebrow">Growing technical library</p>
+      <h2>Built one investigation at a time.</h2>
+      <p>
+        New topics and engineering notes will be added as practical questions,
+        design problems and technical investigations develop.
+      </p>
+
+      <a class="text-link" href="/engineering-notes">
+        Browse engineering notes <span aria-hidden="true">→</span>
+      </a>
+    </section>
+  </main>
+</BaseLayout>

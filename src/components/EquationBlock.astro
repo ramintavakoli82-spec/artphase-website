@@ -1,0 +1,4 @@
+---
+const { label } = Astro.props;
+---
+<div class="equation-block"><slot />{label && <span class="equation-label">({label})</span>}</div>

@@ -1,0 +1,88 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { siteConfig } from '../config/site';
+import { getCollection } from 'astro:content';
+import NoteCard from '../components/NoteCard.astro';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publicationDate.valueOf() - a.data.publicationDate.valueOf())
+  .slice(0, 3);
+
+const topics = [
+  'VFDs & Harmonics',
+  'Power Quality',
+  'Motor Control',
+  'Soft Starters',
+  'SCCR & Protection',
+  'Industrial Control Panels',
+  'Transformers',
+  'Electrical Distribution'
+];
+---
+
+<BaseLayout>
+
+  <section class="hero shell">
+
+    <p class="eyebrow">INDUSTRIAL ELECTRICAL ENGINEERING</p>
+
+    <h1>
+      ARTPHASE <span>— Engineering Notes</span>
+    </h1>
+
+    <p class="lead">
+      Practical investigations in motor control, VFDs, power quality and
+      industrial electrical design.
+    </p>
+
+    <p class="intro">
+      A collection of practical engineering notes, investigations,
+      calculations and design observations developed from real-world
+      industrial electrical engineering experience.
+    </p>
+
+    <p class="intro">
+      By Ramin Tavakoli
+    </p>
+
+    <a class="text-link" href="/engineering-notes">
+      Explore engineering notes <span aria-hidden="true">→</span>
+    </a>
+
+  </section>
+
+
+  <section class="section shell">
+
+    <div class="section-heading">
+      <p class="eyebrow">Recently published</p>
+      <h2>Latest Engineering Notes</h2>
+    </div>
+
+    <div class="notes-grid">
+      {notes.map(note => <NoteCard note={note} />)}
+    </div>
+
+  </section>
+
+
+  <section class="section shell">
+
+    <div class="section-heading">
+      <p class="eyebrow">Areas of focus</p>
+      <h2>Topics</h2>
+    </div>
+
+    <div class="home-topics">
+      {topics.map((topic, i) =>
+        <a href="/topics">
+          <span>{String(i + 1).padStart(2, '0')}</span>
+          {topic}
+          <b aria-hidden="true">→</b>
+        </a>
+      )}
+    </div>
+
+  </section>
+
+</BaseLayout>

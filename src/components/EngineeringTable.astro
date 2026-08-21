@@ -1,0 +1,4 @@
+---
+const { caption, number } = Astro.props;
+---
+<figure class="engineering-table"><figcaption><strong>Table {number}.</strong> {caption}</figcaption><div class="table-scroll"><table><slot /></table></div></figure>
