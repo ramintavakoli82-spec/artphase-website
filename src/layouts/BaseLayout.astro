@@ -5,7 +5,9 @@ import { siteConfig } from '../config/site';
 
 const {
   title = siteConfig.title,
-  description = siteConfig.description
+  description = siteConfig.description,
+  robots = 'index, follow',
+  analytics = true
 } = Astro.props;
 
 const canonical = siteConfig.domain
@@ -35,9 +37,20 @@ const pageTitle =
     <meta property="og:type" content="website" />
 
     <meta name="author" content="Ramin Tavakoli" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={robots} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    {analytics && (
+      <script
+        is:inline
+        defer
+        src={siteConfig.analytics.scriptUrl}
+        data-website-id={siteConfig.analytics.websiteId}
+        data-domains={siteConfig.analytics.domains.join(',')}
+        data-do-not-track="true"
+      ></script>
+    )}
   </head>
 
   <body>
@@ -68,8 +81,10 @@ const pageTitle =
           Practical engineering notes, investigations and design observations.
         </span>
 
-        <span>
-          © {new Date().getFullYear()} Ramin Tavakoli
+        <span class="footer-links">
+          <a href="/privacy">Privacy</a>
+          <span aria-hidden="true">·</span>
+          <span>© {new Date().getFullYear()} Ramin Tavakoli</span>
         </span>
       </div>
     </footer>

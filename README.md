@@ -74,3 +74,44 @@ Enter the full domain (for example, `https://example.com`) in the `domain` field
 - `src/config/site.ts` — site identity, navigation and future domain
 - `public/images/engineering-notes/` — article images and diagrams
 - `public/downloads/` — future downloadable files
+
+## Privacy-friendly analytics
+
+The site uses Umami Cloud for anonymous, aggregate analytics. The integration is
+centralized in `src/layouts/BaseLayout.astro`, and the public Website ID and
+tracker settings live in `src/config/site.ts`.
+
+The tracker automatically records all normal page views, including direct
+traffic, search traffic, referrals and visits with or without UTM parameters.
+It is restricted to `artphase.ca` and `www.artphase.ca`, respects the browser's
+Do Not Track setting, and therefore does not collect local development visits.
+
+The Umami Website ID is public by design. Never add an Umami password or API key
+to the repository.
+
+### Exclude your own visits
+
+Open this URL on every personal browser and device:
+
+`https://artphase.ca/privacy/analytics-settings`
+
+Select **Do not count my visits**. This uses Umami's official browser exclusion
+setting:
+
+```js
+localStorage.setItem('umami.disabled', '1');
+```
+
+The setting is per browser and may be removed if site data is cleared. The same
+page can re-enable tracking when needed.
+
+### LinkedIn UTM convention
+
+Use lowercase values and identify different posts with `utm_content`:
+
+```text
+utm_source=linkedin
+utm_medium=social
+utm_campaign=passive-harmonic-filter
+utm_content=post-01
+```

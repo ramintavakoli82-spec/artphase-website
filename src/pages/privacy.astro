@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Privacy"
+  description="Privacy information for ARTPHASE Engineering Notes."
+>
+  <header class="page-header shell privacy-header">
+    <p class="eyebrow">Site information</p>
+    <h1>Privacy</h1>
+    <p>How anonymous website analytics are used on ARTPHASE.</p>
+  </header>
+
+  <article class="policy shell">
+    <p class="policy-updated">Last updated: August 21, 2026</p>
+
+    <h2>Anonymous website analytics</h2>
+    <p>
+      ARTPHASE uses Umami Cloud to understand aggregate website usage, including
+      page views, approximate unique visitors, referring websites, campaign
+      parameters, device categories and approximate geographic location.
+    </p>
+
+    <h2>Information not collected</h2>
+    <p>
+      The analytics configuration does not use cookies, advertising profiles or
+      cross-site tracking. ARTPHASE does not ask Umami to collect names, email
+      addresses or other directly identifying information. Raw visitor IP
+      addresses are not stored by Umami. IP information may be processed
+      transiently to derive an approximate country, region or city and an
+      anonymous visit identifier.
+    </p>
+
+    <h2>Traffic sources and campaigns</h2>
+    <p>
+      Referrer information and standard UTM parameters may be recorded so that
+      aggregate traffic from search engines, LinkedIn posts and other external
+      sources can be compared. UTM values describe the campaign link, not the
+      identity of the visitor.
+    </p>
+
+    <h2>Do Not Track</h2>
+    <p>
+      The ARTPHASE tracker is configured to respect a browser’s Do Not Track
+      setting. Visitors may also use content blockers that prevent analytics
+      scripts from loading.
+    </p>
+
+    <h2>Owner traffic exclusion</h2>
+    <p>
+      The site owner can disable analytics independently on each personal
+      browser. The setting is stored only in that browser and can be reversed at
+      any time from the <a href="/privacy/analytics-settings">analytics settings page</a>.
+    </p>
+
+    <h2>Analytics access</h2>
+    <p>
+      Analytics reports are not published on this website. Access to the Umami
+      dashboard is controlled through the site owner’s authenticated Umami
+      Cloud account.
+    </p>
+  </article>
+</BaseLayout>

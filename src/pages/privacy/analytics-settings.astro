@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Personal Analytics Settings"
+  description="Disable ARTPHASE analytics on this browser."
+  robots="noindex, nofollow"
+  analytics={false}
+>
+  <header class="page-header shell privacy-header">
+    <p class="eyebrow">Private browser setting</p>
+    <h1>Personal Analytics Settings</h1>
+    <p>Use this page on each browser that should be excluded from ARTPHASE analytics.</p>
+  </header>
+
+  <section class="analytics-settings shell" aria-labelledby="analytics-status-heading">
+    <div class="analytics-status" aria-live="polite">
+      <span>Status on this browser</span>
+      <strong id="analytics-status-heading">Checking…</strong>
+      <p id="analytics-status-detail"></p>
+    </div>
+
+    <div class="analytics-actions">
+      <button id="disable-analytics" type="button">Do not count my visits</button>
+      <button id="enable-analytics" class="secondary" type="button">Count my visits again</button>
+    </div>
+
+    <div class="settings-notes">
+      <h2>Important</h2>
+      <ul>
+        <li>This setting applies only to this browser on this device.</li>
+        <li>Repeat it separately on your laptop, phone, tablet and any other browser you use.</li>
+        <li>Clearing browser site data may remove the setting.</li>
+        <li>This page does not load the analytics tracker and is not counted.</li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    const storageKey = 'umami.disabled';
+    const status = document.querySelector('#analytics-status-heading');
+    const detail = document.querySelector('#analytics-status-detail');
+    const disableButton = document.querySelector('#disable-analytics');
+    const enableButton = document.querySelector('#enable-analytics');
+
+    function renderStatus() {
+      const disabled = localStorage.getItem(storageKey) === '1';
+      if (status) status.textContent = disabled ? 'Your visits are excluded' : 'Your visits may be counted';
+      if (detail) {
+        detail.textContent = disabled
+          ? 'Umami analytics is disabled for ARTPHASE in this browser.'
+          : 'Select “Do not count my visits” to exclude this browser.';
+      }
+      disableButton?.toggleAttribute('disabled', disabled);
+      enableButton?.toggleAttribute('disabled', !disabled);
+    }
+
+    disableButton?.addEventListener('click', () => {
+      localStorage.setItem(storageKey, '1');
+      renderStatus();
+    });
+
+    enableButton?.addEventListener('click', () => {
+      localStorage.removeItem(storageKey);
+      renderStatus();
+    });
+
+    renderStatus();
+  </script>
+</BaseLayout>
