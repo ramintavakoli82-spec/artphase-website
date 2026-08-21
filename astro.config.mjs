@@ -5,8 +5,8 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
-  site: 'https://ramintavakoli82-spec.github.io',
-  base: '/artphase-website',
+  site: 'https://artphase.ca',
+  base: '/',
 
   integrations: [
     mdx(),
