@@ -1,0 +1,431 @@
+---
+title: PHF vs AHF vs Hybrid — Which Harmonic Filter Strategy Fits a Multi-VFD System?
+subtitle: Four 480 V VFDs. Three operating states. One question: should harmonic mitigation follow equipment rating — or the load profile?
+description: A practical engineering comparison of all-passive, all-active and hybrid harmonic-filter architectures for a four-VFD 480 V system with changing load diversity.
+publicationDate: 2026-09-03
+updatedDate: 2026-09-03
+category: VFDs & Harmonics
+tags: [VFD, harmonics, PHF, AHF, passive harmonic filter, active harmonic filter, power quality]
+readingTime: 13 min read
+draft: false
+coverImage: /images/engineering-notes/phf-vs-ahf-vs-hybrid.png
+coverAlt: Simplified one-line comparison of all-passive, all-active and hybrid harmonic-filter architectures for four 480 V VFD loads rated 300 HP, 150 HP, 100 HP and 50 HP.
+coverCaption: Simplified one-line diagram — branch protection not shown.
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+## The Engineering Question
+
+A plant has four conventional 6-pulse VFDs on the same 480 V bus:
+
+- **300 HP**
+- **150 HP**
+- **100 HP**
+- **50 HP**
+
+The obvious harmonic-mitigation choices are usually presented as a two-way decision:
+
+**Passive harmonic filters (PHFs)** or **an active harmonic filter (AHF)**.
+
+But a multi-drive system creates a third possibility:
+
+**Use passive filtering where the harmonic burden is large and predictable, and active filtering where it is variable.**
+
+That leads to the real design question explored here:
+
+> **Should all four drives use dedicated passive filters, should one central active filter handle the bus, or should the system use a hybrid of both?**
+
+<Callout type="important-note" title="This is a screening study, not a final harmonic design">
+The calculations below are intentionally simplified so the architecture can be compared clearly. Final AHF sizing and IEEE 519 evaluation require measured or manufacturer-specific harmonic spectra, system impedance, point-of-common-coupling data, CT location, background voltage distortion and the applicable project limits.
+</Callout>
+
+## The Example System
+
+For a representative 480 V drive family, the approximate rated currents used in this study are:
+
+<EngineeringTable number="1" caption="Representative 480 V VFD ratings used for screening">
+<table>
+  <thead>
+    <tr>
+      <th>VFD Rating</th>
+      <th>Representative Rated Current</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>300 HP</td><td>361 A</td></tr>
+    <tr><td>150 HP</td><td>180 A</td></tr>
+    <tr><td>100 HP</td><td>124 A</td></tr>
+    <tr><td>50 HP</td><td>65 A</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+These values are consistent with published 480 V ratings for the ABB ACS580 family and are used only to establish a realistic current scale for the case study.
+
+The percentage loading in this article represents **approximate electrical utilization for screening**. It is not a speed command and it should not be interpreted as an exact motor-power relationship.
+
+## One Plant, Three Operating States
+
+The drives are not assumed to sit at one fixed load all day. The plant moves through three operating snapshots:
+
+<EngineeringTable number="2" caption="Operating load profile used in the case study">
+<table>
+  <thead>
+    <tr>
+      <th>VFD</th>
+      <th>Low Demand</th>
+      <th>Normal Production</th>
+      <th>Peak Production</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>300 HP</td><td>45%</td><td>70%</td><td>90%</td></tr>
+    <tr><td>150 HP</td><td>30%</td><td>55%</td><td>85%</td></tr>
+    <tr><td>100 HP</td><td>15%</td><td>40%</td><td>80%</td></tr>
+    <tr><td>50 HP</td><td>OFF</td><td>25%</td><td>80%</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The corresponding screening currents are approximately:
+
+<EngineeringTable number="3" caption="Approximate operating currents for the three snapshots">
+<table>
+  <thead>
+    <tr>
+      <th>VFD</th>
+      <th>Low Demand</th>
+      <th>Normal Production</th>
+      <th>Peak Production</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>300 HP</td><td>162 A</td><td>253 A</td><td>325 A</td></tr>
+    <tr><td>150 HP</td><td>54 A</td><td>99 A</td><td>153 A</td></tr>
+    <tr><td>100 HP</td><td>19 A</td><td>50 A</td><td>99 A</td></tr>
+    <tr><td>50 HP</td><td>0 A</td><td>16 A</td><td>52 A</td></tr>
+    <tr><td><strong>Total</strong></td><td><strong>235 A</strong></td><td><strong>418 A</strong></td><td><strong>629 A</strong></td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+This changing load profile is the reason the filter architecture matters. At peak production almost every drive is heavily loaded. At low demand, the same installed VFD system is highly diversified.
+
+## Architecture 1 — All Passive
+
+The first option gives every VFD its own line-side PHF:
+
+**480 V Bus → PHF → VFD → Motor**
+
+repeated four times.
+
+A representative 480 V Matrix AP selection illustrates the hardware scale:
+
+<EngineeringTable number="4" caption="Representative dedicated PHF sizes for the four branches">
+<table>
+  <thead>
+    <tr>
+      <th>VFD</th>
+      <th>Representative PHF Current Rating</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>300 HP</td><td>403 A</td></tr>
+    <tr><td>150 HP</td><td>208 A</td></tr>
+    <tr><td>100 HP</td><td>128 A</td></tr>
+    <tr><td>50 HP</td><td>66 A</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The important point is not the brand. It is the architecture: **four independently sized harmonic-mitigation systems are installed because there are four VFD branches.**
+
+### Where all-passive is strong
+
+At peak production the PHFs are operating around 80–90% of their associated VFD loading. This is exactly where a properly selected passive harmonic filter can be very effective.
+
+For example, MTE publishes a Matrix AP performance guarantee of **5% maximum THID at full load and 8% maximum THID at 30% load**, subject to its stated system conditions.
+
+So the all-passive option should not be dismissed as a weak solution. For predictable, heavily loaded branches it can be an excellent one.
+
+### Where the question becomes more interesting
+
+At low demand the branch utilization becomes:
+
+- 300 HP branch: **45%**
+- 150 HP branch: **30%**
+- 100 HP branch: **15%**
+- 50 HP branch: **OFF**
+
+The 100 HP branch is now below the 30% point covered by the example performance guarantee, while the 50 HP branch produces no drive harmonics at all.
+
+That does **not** mean the PHF automatically performs badly at light load. Modern passive filters can maintain good harmonic performance over a broad range. It means the design must be evaluated across the operating envelope rather than judged only at full load.
+
+Passive filters can also include capacitive elements, so light-load reactive behavior and capacitor switching may become part of the design. Some commercial PHFs provide capacitor-disconnect or load-controlled contactor options specifically for this reason.
+
+<Callout type="engineering-consideration" title="The real weakness is not simply partial-load THDi">
+In this case, the main architectural question is whether it makes sense to install four full branch-specific mitigation systems when the plant spends part of its operating life with some branches lightly loaded or off.
+</Callout>
+
+## Architecture 2 — All Active
+
+The second option leaves the four VFD branches unfiltered locally and connects one AHF in parallel with the 480 V bus.
+
+The AHF measures harmonic current through its CT arrangement and injects compensating current. Unlike a branch PHF, its compensation effort can follow the aggregate harmonic demand of the bus as operating conditions change.
+
+That makes load diversity valuable.
+
+### A preliminary compensation-current estimate
+
+For a simple screening comparison, assume:
+
+- conventional 6-pulse VFD input current distortion of approximately **40% THDi** before external harmonic filtering,
+- a screening target of approximately **5% residual bus THDi**,
+- and scalar aggregation for a deliberately simple first-pass estimate.
+
+The required AHF compensation current is then approximated as:
+
+<EquationBlock label="1">
+$$
+I_{AHF,screen}\approx(0.40-0.05)I_{BUS}=0.35I_{BUS}
+$$
+</EquationBlock>
+
+This produces:
+
+<EngineeringTable number="5" caption="All-active preliminary compensation-current estimate">
+<table>
+  <thead>
+    <tr>
+      <th>Operating State</th>
+      <th>Approx. Bus Current</th>
+      <th>Preliminary AHF Compensation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Low Demand</td><td>235 A</td><td>≈ 82 A</td></tr>
+    <tr><td>Normal Production</td><td>418 A</td><td>≈ 146 A</td></tr>
+    <tr><td>Peak Production</td><td>629 A</td><td>≈ 220 A</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The important design point is that the AHF follows the **actual harmonic compensation current**, not the sum of the VFD horsepower ratings.
+
+At low demand it may use only a fraction of its available capacity. At peak production it must still be capable of meeting the worst required operating condition.
+
+### Modular AHF capacity matters
+
+A 220 A requirement does not automatically mean that a single 300 A AHF must be installed.
+
+Several commercial AHF platforms support parallel modular operation. Where the selected 480 V product family allows it, the installed capacity can be assembled close to the calculated requirement — for example, approximately **225 A** rather than jumping automatically to a 300 A single unit.
+
+The exact combination is manufacturer-specific and must be checked for system voltage, parallel-control architecture, enclosure limits, derating and redundancy philosophy.
+
+<Callout type="important-note" title="Do not size an AHF from THDi × current alone">
+The 82 A, 146 A and 220 A values are screening estimates. Final sizing should use the actual harmonic spectrum, phase relationships, background distortion, source impedance, CT arrangement and the manufacturer's sizing method. Harmonic currents from multiple drives do not behave like simple DC quantities that can always be added arithmetically.
+</Callout>
+
+## Architecture 3 — Hybrid
+
+The third option separates the harmonic burden into two different types.
+
+The **300 HP drive** is the largest load and remains significant in all three operating states:
+
+**45% → 70% → 90%**
+
+So it receives a dedicated PHF.
+
+The remaining drives are much more variable:
+
+- 150 HP: **30% → 55% → 85%**
+- 100 HP: **15% → 40% → 80%**
+- 50 HP: **OFF → 25% → 80%**
+
+Those branches remain directly connected to the bus, while a central AHF compensates the remaining bus harmonic current.
+
+This is not simply “put the passive filter on the largest drive.”
+
+The reason the 300 HP branch is selected is that it is both **large and comparatively predictable**.
+
+### What happens to AHF capacity?
+
+For a conservative screening calculation, assume the dedicated PHF leaves **8% residual THDi** on the 300 HP branch while the other three unfiltered drives remain at the 40% screening assumption.
+
+The pre-AHF harmonic-current estimate is:
+
+<EquationBlock label="2">
+$$
+I_{H,hybrid}\approx0.08I_{300}+0.40(I_{150}+I_{100}+I_{50})
+$$
+</EquationBlock>
+
+Subtracting the same 5% residual-bus target gives the following preliminary AHF requirement:
+
+<EngineeringTable number="6" caption="Hybrid preliminary compensation-current estimate">
+<table>
+  <thead>
+    <tr>
+      <th>Operating State</th>
+      <th>All-Active AHF</th>
+      <th>Hybrid AHF</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Low Demand</td><td>≈ 82 A</td><td>≈ 30 A</td></tr>
+    <tr><td>Normal Production</td><td>≈ 146 A</td><td>≈ 65 A</td></tr>
+    <tr><td>Peak Production</td><td>≈ 220 A</td><td>≈ 116 A</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+At peak production, local mitigation on the dominant 300 HP branch reduces the preliminary active-compensation requirement from about **220 A to 116 A**.
+
+That is a reduction of roughly **104 A of active compensation burden** in this simplified model.
+
+With a modular AHF platform, the conceptual installed capacity could therefore move from approximately **225 A in the all-active case** to approximately **125 A in the hybrid case**, subject to the actual manufacturer's available 480 V modules and selection rules.
+
+<Callout type="calculation-result" title="What the hybrid option is really doing">
+The hybrid architecture does not split the system arbitrarily. It removes a large, predictable harmonic burden locally and reserves dynamic active-filter capacity for the variable remainder of the plant.
+</Callout>
+
+## The Three Architectures Side by Side
+
+<EngineeringTable number="7" caption="Engineering comparison for this specific load profile">
+<table>
+  <thead>
+    <tr>
+      <th>Criterion</th>
+      <th>All Passive</th>
+      <th>All Active</th>
+      <th>Hybrid</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Local PHFs</td><td>4</td><td>0</td><td>1</td></tr>
+    <tr><td>Central AHF</td><td>None</td><td>≈ 220 A calculated / modular selection required</td><td>≈ 116 A calculated / modular selection required</td></tr>
+    <tr><td>Peak-load harmonic capability</td><td>Strong</td><td>Strong when correctly sized</td><td>Strong when correctly sized</td></tr>
+    <tr><td>Adaptation to load diversity</td><td>Branch-specific</td><td>Excellent</td><td>Excellent</td></tr>
+    <tr><td>Distributed hardware</td><td>Highest</td><td>Lowest</td><td>Intermediate</td></tr>
+    <tr><td>Branch independence</td><td>Excellent</td><td>Lower</td><td>Intermediate</td></tr>
+    <tr><td>Light-load capacitor considerations</td><td>Four PHF branches to review</td><td>None from PHFs</td><td>One PHF branch to review</td></tr>
+    <tr><td>Future expansion</td><td>Usually branch-by-branch</td><td>Potentially modular</td><td>Potentially modular</td></tr>
+    <tr><td>Initial cost</td><td>Quote-dependent</td><td>Quote-dependent</td><td>Quote-dependent</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+## Reliability Is More Nuanced Than “One AHF = One Point of Failure”
+
+A distributed PHF arrangement has a clear advantage: a problem on one filter branch does not automatically remove harmonic mitigation from every drive.
+
+A central AHF concentrates more of the harmonic-mitigation function in one location.
+
+However, modern AHF systems can be modular. If several modules operate in parallel, the loss of one module may leave partial compensation capacity available rather than reducing the entire system to zero.
+
+The actual failure behavior depends on the product architecture, common controls, bypass philosophy, protection scheme and the number of installed modules.
+
+The hybrid arrangement sits between the two extremes. If the central AHF is unavailable, the largest 300 HP nonlinear load still retains its local PHF, although the remaining bus may no longer meet the intended harmonic target.
+
+## Which Architecture Wins This Case Study?
+
+There is no universal winner between PHF and AHF.
+
+But **for this specific load profile**, the hybrid arrangement is the most interesting engineering fit.
+
+Why?
+
+The four VFDs naturally separate into two different harmonic burdens:
+
+### Predictable dominant burden
+
+The 300 HP drive remains materially loaded across all three operating states.
+
+A dedicated PHF can remove much of that large, relatively predictable harmonic contribution locally.
+
+### Variable diversified burden
+
+The 150 HP, 100 HP and 50 HP drives move from very light or off conditions to heavy production loading.
+
+A central AHF can follow the changing aggregate harmonic demand rather than installing a dedicated full branch filter on each of those drives.
+
+That leads to the central finding of the study:
+
+<Callout type="calculation-result" title="Case-study takeaway">
+Do not choose Active or Passive first. Separate the predictable harmonic burden from the variable harmonic burden — then choose the filter architecture.
+</Callout>
+
+## When the Result Would Change
+
+The hybrid answer is not a rule that says **“put a PHF on the largest VFD.”**
+
+The decision could change significantly if:
+
+- the 300 HP drive itself cycled widely or spent long periods at very light load,
+- all four drives operated near high load most of the time,
+- the plant had many more small nonlinear loads,
+- the AHF had to provide substantial reactive-power or unbalance compensation in addition to harmonics,
+- source impedance or background voltage distortion changed the harmonic behavior,
+- physical space strongly favored one architecture,
+- first cost or lifecycle cost strongly favored another,
+- or a future expansion plan changed the expected bus loading.
+
+If all four VFDs routinely operated at 80–100% load, the all-passive architecture could become much more attractive.
+
+If the plant load were highly dynamic with frequent additions and removals of nonlinear loads, centralized active filtering could become more attractive.
+
+The architecture should follow the system behavior.
+
+## IEEE 519 and the 5% Number
+
+The **5% residual THDi** used in this article is a screening target for comparing architectures. It is **not** a claim of IEEE 519 compliance.
+
+IEEE 519 evaluates harmonic current limits at the point of common coupling using **TDD** and limits that depend on the short-circuit ratio \(I_{SC}/I_L\). Voltage distortion at the PCC must also be checked.
+
+Therefore a final study should establish:
+
+- the defined PCC,
+- available short-circuit current and source impedance,
+- maximum demand load current,
+- individual harmonic current spectrum,
+- background voltage distortion,
+- voltage THD and individual voltage harmonics,
+- TDD at the PCC,
+- transformer and generator operating conditions where applicable,
+- and the project or utility harmonic limits.
+
+<Callout type="warning" title="A low drive-input THDi number is not the same as IEEE 519 compliance">
+Filter performance, branch THDi and PCC compliance are related but different questions. The final acceptance point and applicable harmonic metric must be defined before equipment is selected.
+</Callout>
+
+## Final Design Lesson
+
+A multi-VFD harmonic problem should not be reduced to a product question:
+
+> “Should I use an AHF or a PHF?”
+
+A better sequence is:
+
+1. Identify the nonlinear loads and their actual operating profiles.
+2. Separate large predictable loads from highly variable loads.
+3. Estimate the harmonic burden in low, normal and peak operating states.
+4. Compare distributed passive, centralized active and hybrid architectures.
+5. Perform manufacturer-specific harmonic sizing and a PCC compliance study before final selection.
+
+In a system with load diversity, **installed horsepower alone does not tell the full story**.
+
+The harmonic-mitigation architecture may be better determined by **how the loads behave over time**.
+
+## References
+
+<ReferenceList>
+  <li>IEEE Std 519 — Harmonic control in electric power systems; use the edition and limits applicable to the project.</li>
+  <li>ABB ACS580 published 480 V drive ratings and ABB technical guidance on harmonics in drive systems.</li>
+  <li>MTE Corporation — Matrix AP Harmonic Filter performance guarantee and 480 V product-selection data.</li>
+  <li>Sinexcel — Active Harmonic Filter product literature describing modular AHF capacities and parallel operation; verify the applicable voltage-specific product family for a 480 V installation.</li>
+  <li>Manufacturer-specific AHF sizing tools, CT application guidance and project-specific source / PCC data for final design.</li>
+</ReferenceList>
