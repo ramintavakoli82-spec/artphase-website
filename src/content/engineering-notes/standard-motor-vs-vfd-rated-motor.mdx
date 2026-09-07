@@ -1,0 +1,116 @@
+---
+title: Can You Connect a VFD to a Standard Motor the Same Way as to a VFD-Rated Motor?
+subtitle: Three checks before treating an existing induction motor as ready for inverter duty.
+description: Can a standard motor run from a VFD? Often yes. Check PWM insulation stress, low-speed cooling, bearing currents and manufacturer limits for the complete system.
+publicationDate: 2026-09-07
+category: VFDs & Motors
+tags: [VFD, standard motor, inverter duty, motor insulation, PWM, low-speed cooling, bearing currents]
+readingTime: 7 min read
+draft: false
+coverImage: /images/engineering-notes/standard-motor-vs-vfd-rated-motor.png
+coverAlt: VFD connected to a standard motor, highlighting PWM and insulation, low-speed cooling, and bearing currents as three engineering checks.
+coverCaption: A standard motor can often run from a VFD. These three checks help determine whether the actual motor and application are suitable.
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+## Can a Standard Motor Be Connected to a VFD?
+
+**Often yes.** A standard three-phase induction motor does not automatically fail when connected to a compatible VFD. Successful operation is possible when the motor and installation meet the application requirements [1].
+
+But “can it run?” and “is the application properly engineered?” are different questions. A brief successful run does not establish suitability for years of PWM exposure or hours of loaded operation at low speed.
+
+The connection diagram may look familiar. The engineering review still needs to cover the motor, drive, cable and operating duty.
+
+## 1 — PWM and Insulation
+
+A utility-fed motor normally sees an approximately sinusoidal supply. A modern PWM VFD controls voltage and frequency using fast switching pulses; the motor current can be much smoother than the applied voltage.
+
+Fast voltage edges interacting with the cable and motor can produce reflected-wave overshoot at the motor terminals. Longer leads can make these effects more significant, but length alone does not establish the peak voltage or a safe boundary.
+
+Check motor insulation capability, voltage class, age and repair history against the actual supply voltage, cable length, VFD rise time and switching behavior. Thermal insulation class alone does not specify repetitive PWM voltage withstand. Manufacturer limits govern [1].
+
+For the mechanism, see [why VFD motor cable length changes voltage stress](/engineering-notes/vfd-motor-cable-length/).
+
+This is a reason to verify compatibility, not a prediction that every standard motor will fail.
+
+## 2 — Low-Speed Cooling
+
+Many totally enclosed fan-cooled (TEFC) motors have a shaft-mounted fan. Reducing motor speed also reduces fan speed and available self-cooling. Sustained operation matters: passing briefly through a low speed during acceleration is different from remaining there under load for a shift [2].
+
+The load determines how demanding that condition is:
+
+- **Variable-torque loads:** centrifugal pumps and fans can require sharply less torque and power as speed falls. This often reduces motor heating, but the actual process and operating curve still need checking.
+- **Constant-torque loads:** conveyors or positive-displacement applications may demand substantial torque and current at low speed, even while the motor's fan delivers less cooling [3].
+
+**Low speed does not automatically mean low thermal stress.** Compare the required torque and time at each speed with the manufacturer's continuous and intermittent operating limits [3].
+
+If self-cooling is insufficient, evaluate permitted torque derating, an approved separately powered blower, or a motor designed for the required duty. Check ambient conditions and thermal protection too. ABB's motor-protection guidance identifies independent cooling and load limitation as possible measures; the correct solution remains application-specific [2].
+
+## 3 — Bearing Currents
+
+PWM common-mode voltage can couple through a motor's internal capacitances and create shaft voltage. Under some conditions, voltage across the bearing lubricant film causes discharge current through the bearing. Repeated discharges can produce surface damage and eventually fluting [4].
+
+There are also circulating and shaft-grounding current paths. Motor size, construction, bonding, cable installation and the driven equipment affect which mechanism matters. A quiet first run does not rule out progressive damage.
+
+Follow the motor and drive OEM recommendations. Depending on the mechanism, mitigation may involve improved high-frequency bonding and shielding, shaft grounding, an insulated bearing, or suitable common-mode filtering [4]. These measures need coordinated selection; “add an insulated bearing” is not a universal prescription.
+
+An inverter-duty label does **not** guarantee that shaft grounding or insulated bearings are included. Check the exact motor specification and installed options. Manufacturer product ranges specify different bearing provisions [5].
+
+## 4 — Standard Motor vs. VFD-Rated Motor
+
+Inverter-duty or VFD-rated motors are generally designed and specified with drive operation in mind. This may include insulation suited to PWM exposure and a documented speed/torque envelope. The label should lead to supporting data, rather than replace it [5][6].
+
+<EngineeringTable number="1" caption="Compare documented capability for the actual application">
+  <thead><tr><th>Check</th><th>Standard motor</th><th>VFD-rated / inverter-duty motor</th></tr></thead>
+  <tbody>
+    <tr><td>PWM suitability</td><td>Obtain confirmation of permitted VFD operation and insulation capability.</td><td>Verify the stated PWM capability against the selected drive and installation.</td></tr>
+    <tr><td>Speed and torque</td><td>Do not infer a continuous low-speed rating from the line-frequency rating.</td><td>Use the specified operating envelope and required cooling arrangement.</td></tr>
+    <tr><td>Bearing protection</td><td>Review OEM recommendations and installed construction.</td><td>Check which provisions are included and which remain application-dependent.</td></tr>
+  </tbody>
+</EngineeringTable>
+
+Some general-purpose motors already have documented inverter capability. Conversely, a motor marketed for VFD service is not immune to excessive terminal voltage, inadequate cooling or bearing currents. ABB's nameplate guidance illustrates why inverter type and constant-torque, variable-torque and constant-power ranges are separate pieces of information [6].
+
+### When Should Additional Mitigation Be Evaluated?
+
+Where the documented insulation capability and expected waveform do not align, evaluate an approved **dV/dt filter** or **sine-wave filter** with the drive and motor manufacturers. A dV/dt filter treats fast edges; a sine-wave filter more extensively attenuates PWM content. Both have product-specific limits, including cable, current, switching and output-frequency requirements [7].
+
+For the selection process, see [output reactors, dV/dt filters and sine-wave filters](/engineering-notes/vfd-motor-cable-filter-selection/).
+
+Treat each measure against its purpose: a blower addresses cooling, while shaft grounding or bearing insulation addresses particular current paths. An output filter's differential-mode voltage performance does not automatically establish its common-mode performance [4][7].
+
+## 5 — Practical Engineering Checklist
+
+Before connecting an existing standard motor to a VFD, record and verify:
+
+1. **Motor identity:** manufacturer, exact model, nameplate and data sheet; obtain confirmation that VFD operation is permitted.
+2. **Insulation and voltage:** documented PWM/voltage capability, actual supply voltage, and motor age, condition or rewind history.
+3. **Drive and motor leads:** exact VFD model, manufacturer lead recommendations, actual cable length and construction, and any required output-side mitigation.
+4. **Operating profile:** expected speed range and the amount of time spent at low speed, including repeated cycles.
+5. **Load requirement:** variable or constant torque, continuous demand, starting torque and overload duty.
+6. **Cooling:** motor cooling method, ambient conditions, permitted load/speed envelope and thermal protection; evaluate a separately powered blower when needed.
+7. **Bearing-current control:** shaft-voltage recommendations, installed bearing/grounding provisions and the driven-machine connection.
+8. **Installation:** protective grounding, high-frequency bonding, shielding and cable termination according to the applicable manuals.
+
+Use this as a review sequence, not a substitute for product documentation. Where the motor's capability is unknown or the proposed duty exceeds published limits, resolve that gap with the manufacturers before accepting the application.
+
+## A VFD Changes More Than Motor Speed
+
+A standard motor can be a suitable choice. An inverter-duty motor can provide a better-defined starting point. Both require an application review.
+
+<Callout type="calculation-result" title="Takeaway">
+The question is not simply whether the motor will turn when connected to a VFD. The question is whether the motor, drive, cable and operating duty have been evaluated as one system.
+</Callout>
+
+<ReferenceList>
+  <li id="ref-1"><a href="https://library.e.abb.com/public/5df66cce8dd649689ab7c2c66abd52db/voltstress.pdf" target="_blank" rel="noreferrer">[1] ABB Technical Guide No. 102 — Effects of AC Drives on Motor Insulation</a>. Background on standard motors, PWM and insulation stress; its historical product limits are not universal current limits.</li>
+  <li id="ref-2"><a href="https://new.abb.com/drives/branchen-und-applikationen/motors-and-drives-in-potentially-explosive-atmospheres/effects-of-variable-speed-drives-to-motors" target="_blank" rel="noreferrer">[2] ABB — Understanding the effects of variable speed drives on motors</a>. Cooling and load-capacity principles; the page's hazardous-area product requirements retain their stated scope.</li>
+  <li id="ref-3"><a href="https://library.e.abb.com/public/e555e5106a3c44e882f48b75a44f6807/Technical_guide_No_7_3AFE64362569_RevD_EN_lowres.pdf" target="_blank" rel="noreferrer">[3] ABB Technical Guide No. 7 — Dimensioning of a Drive System</a>, load types and motor loadability.</li>
+  <li id="ref-4"><a href="https://library.e.abb.com/public/8c253c2417ed0238c125788f003cca8e/ABB_Technical_guide_No5_RevC.pdf" target="_blank" rel="noreferrer">[4] ABB Technical Guide No. 5 — Bearing Currents in Modern AC Drive Systems</a>, current mechanisms and mitigation.</li>
+  <li id="ref-5"><a href="https://www.abb.com/global/en/areas/motion/motors-generators/low-voltage-motors/nema-ac-motors-portfolio/variable-speed-ac-motors/vs-master" target="_blank" rel="noreferrer">[5] ABB Baldor-Reliance — V*S Master</a>, an example of specified inverter-duty insulation, torque capability and bearing provisions.</li>
+  <li id="ref-6"><a href="https://new.abb.com/news/detail/132261/how-to-read-a-nema-motor-nameplate" target="_blank" rel="noreferrer">[6] ABB — How to Read a NEMA Motor Nameplate</a>, inverter type and operating-range information.</li>
+  <li id="ref-7"><a href="https://library.e.abb.com/public/e865480b4db243048bbee2541a3a2afc/Tech_Note_181_SelectingandApplyingOutputFilters.pdf" target="_blank" rel="noreferrer">[7] ABB Technical Note 181 — Selecting and Applying Output Filters</a>, for the covered ACS880 480 V and 600 V drives.</li>
+</ReferenceList>
