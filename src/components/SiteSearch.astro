@@ -1,0 +1,237 @@
+---
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../config/site';
+
+const notes = await getCollection('notes', ({ data }) => !data.draft);
+
+const pageResults = [
+  {
+    title: 'ARTPHASE Engineering Notes',
+    description: siteConfig.description,
+    category: 'Home',
+    tags: ['industrial electrical engineering', 'motor control', 'VFD', 'power quality'],
+    href: '/',
+  },
+  {
+    title: 'Engineering Notes',
+    description: 'Practical investigations, calculations and design observations organized for reference.',
+    category: 'Technical library',
+    tags: ['engineering notes', 'technical articles'],
+    href: '/engineering-notes/',
+  },
+  {
+    title: 'Engineering Topics',
+    description: 'Motor control, VFDs, harmonics, protection, MCCs, electrical distribution and industrial automation.',
+    category: 'Topics',
+    tags: ['motor control', 'VFD', 'harmonics', 'protection', 'MCC', 'automation'],
+    href: '/topics/',
+  },
+  {
+    title: 'About ARTPHASE',
+    description: 'About the independent engineering knowledge platform and the experience behind it.',
+    category: 'Page',
+    tags: ['about', 'ARTPHASE', 'Ramin Tavakoli'],
+    href: '/about/',
+  },
+  {
+    title: 'Contact',
+    description: 'Contact ARTPHASE for general inquiries, technical collaboration, or tool support.',
+    category: 'Page',
+    tags: ['contact', 'collaboration', 'support'],
+    href: '/contact/',
+  },
+  {
+    title: 'Privacy',
+    description: 'How anonymous website analytics are used on ARTPHASE.',
+    category: 'Page',
+    tags: ['privacy', 'analytics'],
+    href: '/privacy/',
+  },
+];
+
+const searchIndex = [
+  ...notes.map((note) => ({
+    title: note.data.title,
+    description: note.data.description || note.data.subtitle,
+    category: note.data.category,
+    tags: note.data.tags,
+    href: `/engineering-notes/${note.id}/`,
+  })),
+  ...pageResults,
+];
+---
+
+<div class="site-search" data-site-search>
+  <label class="portal-search" for="site-search-input">
+    <span class="sr-only">Search ARTPHASE</span>
+    <span class="search-icon" aria-hidden="true"></span>
+    <input
+      id="site-search-input"
+      type="search"
+      placeholder="Search notes, tools, topics..."
+      aria-label="Search notes, tools, topics"
+      aria-autocomplete="list"
+      aria-controls="site-search-results"
+      aria-expanded="false"
+      role="combobox"
+      autocomplete="off"
+    />
+  </label>
+
+  <div class="search-results" data-search-results hidden>
+    <ul id="site-search-results" role="listbox" aria-label="Search results"></ul>
+    <p class="search-empty" data-search-empty hidden>No matching results.</p>
+  </div>
+
+  <script is:inline type="application/json" data-search-index set:html={JSON.stringify(searchIndex).replace(/</g, '\u003c')} />
+</div>
+
+<script>
+  type SearchItem = {
+    title: string;
+    description: string;
+    category: string;
+    tags: string[];
+    href: string;
+  };
+
+  const normalize = (value: string) =>
+    value.toLocaleLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+
+  document.querySelectorAll<HTMLElement>('[data-site-search]').forEach((search) => {
+    const input = search.querySelector<HTMLInputElement>('input[type="search"]');
+    const panel = search.querySelector<HTMLElement>('[data-search-results]');
+    const list = search.querySelector<HTMLUListElement>('[role="listbox"]');
+    const empty = search.querySelector<HTMLElement>('[data-search-empty]');
+    const indexElement = search.querySelector<HTMLScriptElement>('[data-search-index]');
+
+    if (!input || !panel || !list || !empty || !indexElement) return;
+
+    const index = JSON.parse(indexElement.textContent || '[]') as SearchItem[];
+    let matches: SearchItem[] = [];
+    let activeIndex = -1;
+
+    const close = () => {
+      panel.hidden = true;
+      input.setAttribute('aria-expanded', 'false');
+      input.removeAttribute('aria-activedescendant');
+      activeIndex = -1;
+    };
+
+    const setActive = (nextIndex: number) => {
+      const options = [...list.querySelectorAll<HTMLElement>('[role="option"]')];
+      if (!options.length) return;
+
+      activeIndex = (nextIndex + options.length) % options.length;
+      options.forEach((option, index) => {
+        const active = index === activeIndex;
+        option.classList.toggle('active', active);
+        option.setAttribute('aria-selected', String(active));
+      });
+
+      const activeOption = options[activeIndex];
+      input.setAttribute('aria-activedescendant', activeOption.id);
+      activeOption.scrollIntoView({ block: 'nearest' });
+    };
+
+    const scoreItem = (item: SearchItem, query: string, terms: string[]) => {
+      const title = normalize(item.title);
+      const description = normalize(item.description);
+      const category = normalize(item.category);
+      const tags = normalize(item.tags.join(' '));
+      const searchable = `${title} ${description} ${category} ${tags}`;
+
+      if (!terms.every((term) => searchable.includes(term))) return -1;
+
+      let score = title === query ? 100 : title.startsWith(query) ? 45 : title.includes(query) ? 30 : 0;
+      for (const term of terms) {
+        if (title.split(/\s+/).some((word) => word.startsWith(term))) score += 16;
+        else if (title.includes(term)) score += 11;
+        if (category.includes(term)) score += 8;
+        if (tags.includes(term)) score += 7;
+        if (description.includes(term)) score += 3;
+      }
+      return score;
+    };
+
+    const render = () => {
+      const query = normalize(input.value.trim());
+      list.replaceChildren();
+      activeIndex = -1;
+      input.removeAttribute('aria-activedescendant');
+
+      if (!query) {
+        close();
+        return;
+      }
+
+      const terms = query.split(/\s+/).filter(Boolean);
+      matches = index
+        .map((item) => ({ item, score: scoreItem(item, query, terms) }))
+        .filter((result) => result.score >= 0)
+        .sort((a, b) => b.score - a.score || a.item.title.localeCompare(b.item.title))
+        .slice(0, 7)
+        .map((result) => result.item);
+
+      matches.forEach((item, resultIndex) => {
+        const option = document.createElement('li');
+        option.id = `site-search-option-${resultIndex}`;
+        option.setAttribute('role', 'option');
+        option.setAttribute('aria-selected', 'false');
+
+        const link = document.createElement('a');
+        link.href = item.href;
+
+        const heading = document.createElement('span');
+        heading.className = 'search-result-heading';
+
+        const title = document.createElement('strong');
+        title.textContent = item.title;
+
+        const category = document.createElement('span');
+        category.className = 'search-result-category';
+        category.textContent = item.category;
+
+        const description = document.createElement('span');
+        description.className = 'search-result-description';
+        description.textContent = item.description;
+
+        heading.append(title, category);
+        link.append(heading, description);
+        option.append(link);
+        list.append(option);
+      });
+
+      empty.hidden = matches.length > 0;
+      panel.hidden = false;
+      input.setAttribute('aria-expanded', 'true');
+    };
+
+    input.addEventListener('input', render);
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) render();
+    });
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        close();
+        return;
+      }
+
+      if (event.key === 'ArrowDown' && matches.length) {
+        event.preventDefault();
+        setActive(activeIndex + 1);
+      } else if (event.key === 'ArrowUp' && matches.length) {
+        event.preventDefault();
+        setActive(activeIndex - 1);
+      } else if (event.key === 'Enter' && matches.length) {
+        event.preventDefault();
+        const selected = activeIndex >= 0 ? matches[activeIndex] : matches[0];
+        window.location.assign(selected.href);
+      }
+    });
+
+    document.addEventListener('pointerdown', (event) => {
+      if (!search.contains(event.target as Node)) close();
+    });
+  });
+</script>

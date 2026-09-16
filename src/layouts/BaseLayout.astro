@@ -3,6 +3,7 @@ import '../styles/global.css';
 import '../styles/extended.css';
 import { siteConfig } from '../config/site';
 import SiteNavigation from '../components/SiteNavigation.astro';
+import SiteSearch from '../components/SiteSearch.astro';
 
 const {
   title = siteConfig.title,
@@ -122,16 +123,7 @@ const socialImage = image && siteConfig.domain ? new URL(image, siteConfig.domai
         </header>
 
         <div class="content-topbar">
-          <label class="portal-search">
-            <span class="sr-only">Search ARTPHASE</span>
-            <span class="search-icon" aria-hidden="true"></span>
-            <input
-              type="search"
-              placeholder="Search notes, tools, topics..."
-              aria-label="Search notes, tools, topics"
-              readonly
-            />
-          </label>
+          <SiteSearch />
         </div>
 
         <main>
