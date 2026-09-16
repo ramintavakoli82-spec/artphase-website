@@ -18,12 +18,44 @@ export const siteConfig = {
     domains: ['artphase.ca', 'www.artphase.ca'],
   },
 
-  navigation: [
-    { label: 'Home', href: '/' },
+  navigation: {
+    home: { label: 'Home', href: '/' },
+    sections: [
+      {
+        label: 'Engineering Notes',
+        items: [
+          { label: 'Motor Control', href: '/engineering-notes' },
+          { label: 'VFD & Drives', href: '/engineering-notes' },
+          { label: 'Power Quality', href: '/engineering-notes' },
+          { label: 'MCC & Control Panels', href: '/engineering-notes' },
+          { label: 'Industrial Power', href: '/engineering-notes' },
+        ],
+      },
+      {
+        label: 'Engineering Tools',
+        items: [
+          { label: 'Drive System Analyzer' },
+          { label: 'Thermal Analyzer' },
+          { label: 'Future Tools' },
+        ],
+      },
+      {
+        label: 'Resources',
+        items: [
+          { label: 'Calculations', href: '/engineering-notes' },
+          { label: 'References', href: '/engineering-notes' },
+          { label: 'About', href: '/about' },
+          { label: 'Contact', href: '/contact' },
+        ],
+      },
+    ],
+  },
+
+  footerNavigation: [
     { label: 'Engineering Notes', href: '/engineering-notes' },
-    { label: 'Topics', href: '/topics' },
     { label: 'About', href: '/about' },
     { label: 'Contact', href: '/contact' },
+    { label: 'Privacy', href: '/privacy' },
   ],
 
   social: {

@@ -1,0 +1,39 @@
+---
+import { siteConfig } from '../config/site';
+
+const { currentPath = '/' } = Astro.props;
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === href : currentPath.startsWith(href);
+---
+
+<nav class="portal-navigation" aria-label="Main navigation">
+  <a
+    class:list={['portal-home-link', { active: isCurrent(siteConfig.navigation.home.href) }]}
+    href={siteConfig.navigation.home.href}
+    aria-current={isCurrent(siteConfig.navigation.home.href) ? 'page' : undefined}
+  >
+    <span class="nav-home-icon" aria-hidden="true">⌂</span>
+    {siteConfig.navigation.home.label}
+  </a>
+
+  {siteConfig.navigation.sections.map((section) => (
+    <section class="portal-nav-section">
+      <h2>{section.label}</h2>
+      <div>
+        {section.items.map((item) => (
+          'href' in item ? (
+            <a
+              class:list={{ active: isCurrent(item.href) }}
+              href={item.href}
+              aria-current={isCurrent(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ) : (
+            <span class="nav-future" title="Coming soon">{item.label}</span>
+          )
+        ))}
+      </div>
+    </section>
+  ))}
+</nav>
