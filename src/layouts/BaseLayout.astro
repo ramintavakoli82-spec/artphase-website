@@ -25,6 +25,7 @@ const pageTitle =
     : `${title} | ARTPHASE`;
 
 const socialImage = image && siteConfig.domain ? new URL(image, siteConfig.domain) : undefined;
+const currentCategory = Astro.url.searchParams.get('category') ?? undefined;
 ---
 
 <!doctype html>
@@ -96,7 +97,7 @@ const socialImage = image && siteConfig.domain ? new URL(image, siteConfig.domai
           <span>ENGINEERING NOTES</span>
         </a>
 
-        <SiteNavigation currentPath={Astro.url.pathname} />
+        <SiteNavigation currentPath={Astro.url.pathname} currentCategory={currentCategory} />
 
         <blockquote class="sidebar-statement">
           <p>Practical engineering for a more reliable and efficient industry.</p>
@@ -117,7 +118,7 @@ const socialImage = image && siteConfig.domain ? new URL(image, siteConfig.domai
               <span class="menu-icon" aria-hidden="true"></span>
             </summary>
             <div class="mobile-menu-panel">
-              <SiteNavigation currentPath={Astro.url.pathname} />
+              <SiteNavigation currentPath={Astro.url.pathname} currentCategory={currentCategory} />
             </div>
           </details>
         </header>

@@ -1,3 +1,31 @@
+export const engineeringNoteCategories = [
+  {
+    label: 'Motor Control',
+    slug: 'motor-control',
+    contentCategories: ['VFDs & Motors'],
+  },
+  {
+    label: 'VFD & Drives',
+    slug: 'vfd-drives',
+    contentCategories: ['VFDs & Motors', 'VFDs & Harmonics'],
+  },
+  {
+    label: 'Power Quality',
+    slug: 'power-quality',
+    contentCategories: ['VFDs & Harmonics'],
+  },
+  {
+    label: 'MCC & Control Panels',
+    slug: 'mcc-control-panels',
+    contentCategories: [],
+  },
+  {
+    label: 'Industrial Power',
+    slug: 'industrial-power',
+    contentCategories: [],
+  },
+] as const;
+
 export const siteConfig = {
   author: 'ARTPHASE',
   title: 'ARTPHASE',
@@ -23,13 +51,11 @@ export const siteConfig = {
     sections: [
       {
         label: 'Engineering Notes',
-        items: [
-          { label: 'Motor Control', href: '/engineering-notes' },
-          { label: 'VFD & Drives', href: '/engineering-notes' },
-          { label: 'Power Quality', href: '/engineering-notes' },
-          { label: 'MCC & Control Panels', href: '/engineering-notes' },
-          { label: 'Industrial Power', href: '/engineering-notes' },
-        ],
+        items: engineeringNoteCategories.map(({ label, slug }) => ({
+          label,
+          href: `/engineering-notes/?category=${slug}`,
+          category: slug,
+        })),
       },
       {
         label: 'Engineering Tools',
@@ -42,8 +68,8 @@ export const siteConfig = {
       {
         label: 'Resources',
         items: [
-          { label: 'Calculations', href: '/engineering-notes' },
-          { label: 'References', href: '/engineering-notes' },
+          { label: 'Calculations' },
+          { label: 'References' },
           { label: 'About', href: '/about' },
           { label: 'Contact', href: '/contact' },
         ],

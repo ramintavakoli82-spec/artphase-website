@@ -1,16 +1,39 @@
 ---
 import { siteConfig } from '../config/site';
 
-const { currentPath = '/' } = Astro.props;
-const isCurrent = (href: string) =>
-  href === '/' ? currentPath === href : currentPath.startsWith(href);
+const { currentPath = '/', currentCategory } = Astro.props;
+type NavigationItem = {
+  href?: string;
+  category?: string;
+  activeMatch?: 'exact' | 'prefix' | boolean;
+};
+
+const normalizePath = (path: string) => {
+  const normalized = path.replace(/\/+$/, '');
+  return normalized || '/';
+};
+
+const isCurrent = (item: NavigationItem) => {
+  if (!item.href || item.activeMatch === false) return false;
+
+  if (item.category) {
+    return normalizePath(currentPath) === '/engineering-notes' && item.category === currentCategory;
+  }
+
+  const path = normalizePath(currentPath);
+  const href = normalizePath(item.href);
+
+  return item.activeMatch === 'prefix'
+    ? path === href || path.startsWith(`${href}/`)
+    : path === href;
+};
 ---
 
 <nav class="portal-navigation" aria-label="Main navigation">
   <a
-    class:list={['portal-home-link', { active: isCurrent(siteConfig.navigation.home.href) }]}
+    class:list={['portal-home-link', { active: isCurrent(siteConfig.navigation.home) }]}
     href={siteConfig.navigation.home.href}
-    aria-current={isCurrent(siteConfig.navigation.home.href) ? 'page' : undefined}
+    aria-current={isCurrent(siteConfig.navigation.home) ? 'page' : undefined}
   >
     <span class="nav-home-icon" aria-hidden="true">⌂</span>
     {siteConfig.navigation.home.label}
@@ -21,11 +44,12 @@ const isCurrent = (href: string) =>
       <h2>{section.label}</h2>
       <div>
         {section.items.map((item) => (
-          'href' in item ? (
+          item.href ? (
             <a
-              class:list={{ active: isCurrent(item.href) }}
+              class:list={{ active: isCurrent(item) }}
               href={item.href}
-              aria-current={isCurrent(item.href) ? 'page' : undefined}
+              data-nav-category={'category' in item ? item.category : undefined}
+              aria-current={isCurrent(item) ? 'page' : undefined}
             >
               {item.label}
             </a>
@@ -37,3 +61,20 @@ const isCurrent = (href: string) =>
     </section>
   ))}
 </nav>
+
+<script>
+  const syncActiveCategory = () => {
+    const activeCategory = new URLSearchParams(window.location.search).get('category');
+
+    document.querySelectorAll<HTMLAnchorElement>('[data-nav-category]').forEach((link) => {
+      const isActive = window.location.pathname.replace(/\/+$/, '') === '/engineering-notes'
+        && link.dataset.navCategory === activeCategory;
+      link.classList.toggle('active', isActive);
+      if (isActive) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
+  };
+
+  syncActiveCategory();
+  window.addEventListener('popstate', syncActiveCategory);
+</script>
