@@ -23,6 +23,7 @@ export const siteConfig = {
     { label: 'Engineering Notes', href: '/engineering-notes' },
     { label: 'Topics', href: '/topics' },
     { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' },
   ],
 
   social: {

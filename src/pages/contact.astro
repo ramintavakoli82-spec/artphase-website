@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const contactOptions = [
+  {
+    title: 'General Contact',
+    description:
+      'Questions about ARTPHASE, engineering notes, or general inquiries.',
+    email: 'contact@artphase.ca',
+  },
+  {
+    title: 'Information & Collaboration',
+    description:
+      'Technical discussions, collaboration, or content-related inquiries.',
+    email: 'info@artphase.ca',
+  },
+  {
+    title: 'Tool Support',
+    description:
+      'Questions, issues, or feedback related to ARTPHASE tools and analyzers.',
+    email: 'support@artphase.ca',
+  },
+];
+---
+
+<BaseLayout
+  title="Contact"
+  description="Contact ARTPHASE for general inquiries, technical collaboration, or support with tools and analyzers."
+>
+  <header class="page-header shell contact-header">
+    <p class="eyebrow">Get in touch</p>
+    <h1>Contact</h1>
+    <p>
+      Choose the email address that best matches your question or inquiry.
+    </p>
+  </header>
+
+  <section class="contact-options shell" aria-label="Contact options">
+    {contactOptions.map((option) => (
+      <article class="contact-option">
+        <h2>{option.title}</h2>
+        <p>{option.description}</p>
+        <a href={`mailto:${option.email}`}>{option.email}</a>
+      </article>
+    ))}
+  </section>
+</BaseLayout>
