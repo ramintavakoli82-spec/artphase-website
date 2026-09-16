@@ -1,38 +1,260 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const focusAreas = [
+  'Motor control and VFD applications',
+  'Power quality and harmonic mitigation',
+  'MCC and control-panel engineering',
+  'Industrial power systems',
+  'Practical engineering calculations and analysis',
+];
+
+const approachPoints = [
+  'Practical engineering application',
+  'Technical clarity',
+  'Traceable reasoning',
+  'Manufacturer-aware engineering',
+  'Useful guidance for real industrial systems',
+];
 ---
 
-<BaseLayout title="About | ARTPHASE">
-  <section class="about shell">
+<BaseLayout
+  title="About"
+  description="About ARTPHASE, an independent platform for practical industrial electrical engineering knowledge, investigations, calculations, and tools."
+>
+  <header class="page-header shell about-header">
     <p class="eyebrow">About ARTPHASE</p>
+    <h1>Engineering knowledge built around practical application</h1>
+    <p>
+      ARTPHASE is an independent engineering platform focused on practical
+      industrial electrical engineering. It brings together engineering notes,
+      technical investigations, calculations, and tools developed around
+      real-world design and application questions.
+    </p>
+  </header>
 
-    <h1>Engineering ideas.<br />Built from real-world experience.</h1>
+  <div class="about-content shell">
+    <section class="about-section" aria-labelledby="about-focus">
+      <div class="section-intro">
+        <p class="section-label">Focus</p>
+        <h2 id="about-focus">What ARTPHASE focuses on</h2>
+      </div>
+      <ul class="about-list">
+        {focusAreas.map((area) => <li>{area}</li>)}
+      </ul>
+    </section>
 
-    <div>
-      <p>
-        ARTPHASE is an independent engineering knowledge platform focused on
-        industrial electrical engineering, motor control, VFD applications,
-        power quality, control panels and practical design challenges.
-      </p>
+    <section class="about-section" aria-labelledby="about-approach">
+      <div class="section-intro">
+        <p class="section-label">Method</p>
+        <h2 id="about-approach">Approach</h2>
+        <p>
+          ARTPHASE emphasizes work that can be understood, checked, and applied
+          in an industrial engineering context.
+        </p>
+      </div>
+      <ul class="about-list">
+        {approachPoints.map((point) => <li>{point}</li>)}
+      </ul>
+    </section>
 
-      <p>
-        The goal is simple: document practical investigations, calculations,
-        technical observations and lessons learned from real-world engineering
-        work — and turn them into useful references for engineers, designers
-        and technical professionals.
-      </p>
+    <section class="about-section" aria-labelledby="about-notes">
+      <div class="section-intro">
+        <p class="section-label">Knowledge</p>
+        <h2 id="about-notes">Engineering Notes</h2>
+      </div>
+      <div class="section-copy">
+        <p>
+          Engineering Notes document practical investigations, design
+          observations, comparisons, and application guidance for industrial
+          electrical systems.
+        </p>
+        <a class="about-link" href="/engineering-notes/">
+          Explore Engineering Notes <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
 
-      <p>
-        Topics include motor control, VFDs, soft starters, harmonic mitigation,
-        electrical distribution, industrial control panels, protection,
-        troubleshooting and other areas of industrial electrical engineering.
-      </p>
+    <section class="about-section" aria-labelledby="about-tools">
+      <div class="section-intro">
+        <p class="section-label">Analysis</p>
+        <h2 id="about-tools">Engineering Tools</h2>
+      </div>
+      <div class="section-copy">
+        <p>
+          ARTPHASE is also developing engineering tools intended to help
+          evaluate and analyze industrial electrical systems. Tools will be
+          introduced as they are ready for practical use.
+        </p>
+      </div>
+    </section>
 
-      <p>
-        ARTPHASE is created and maintained by Ramin Tavakoli, an electrical
-        engineering professional with extensive experience in industrial
-        electrical systems, control panels and automation.
-      </p>
-    </div>
-  </section>
+    <section class="about-section about-contact" aria-labelledby="about-contact">
+      <div class="section-intro">
+        <p class="section-label">Contact</p>
+        <h2 id="about-contact">Continue the discussion</h2>
+      </div>
+      <div class="section-copy">
+        <p>
+          For general questions, technical discussions, or collaboration
+          inquiries, use the ARTPHASE Contact page.
+        </p>
+        <a class="about-link" href="/contact/">
+          Contact ARTPHASE <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .about-header {
+    padding-block: 72px 58px;
+  }
+
+  .about-header h1 {
+    max-width: 850px;
+    font-size: clamp(2.65rem, 5vw, 4.35rem);
+    line-height: 1.04;
+  }
+
+  .about-header > p:last-child {
+    max-width: 820px;
+    margin: 28px 0 0;
+    line-height: 1.75;
+  }
+
+  .about-content {
+    padding-block: 18px 90px;
+  }
+
+  .about-section {
+    display: grid;
+    grid-template-columns: minmax(240px, 0.8fr) minmax(320px, 1.2fr);
+    gap: clamp(40px, 7vw, 96px);
+    padding-block: 46px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .about-section:first-child {
+    border-top: 2px solid var(--ink);
+  }
+
+  .section-label {
+    margin: 0 0 8px;
+    color: var(--blue);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+
+  .section-intro h2 {
+    margin: 0;
+    font-family: Georgia, serif;
+    font-size: clamp(1.65rem, 2.8vw, 2.2rem);
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+  }
+
+  .section-intro > p:last-child:not(.section-label) {
+    max-width: 450px;
+    margin: 16px 0 0;
+    color: var(--muted);
+  }
+
+  .about-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .about-list li {
+    position: relative;
+    padding: 13px 0 13px 25px;
+    border-bottom: 1px solid var(--line);
+    color: #2d3a44;
+  }
+
+  .about-list li:first-child {
+    padding-top: 0;
+  }
+
+  .about-list li:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .about-list li::before {
+    content: '';
+    position: absolute;
+    left: 2px;
+    top: 1.35rem;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--blue);
+  }
+
+  .about-list li:first-child::before {
+    top: 0.6rem;
+  }
+
+  .section-copy p {
+    max-width: 620px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 1.02rem;
+  }
+
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-top: 22px;
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .about-link:hover {
+    text-decoration: underline;
+  }
+
+  .about-contact {
+    border-bottom: 0;
+  }
+
+  @media (max-width: 700px) {
+    .about-header {
+      padding-block: 54px 42px;
+    }
+
+    .about-header h1 {
+      font-size: clamp(2.35rem, 11vw, 3.2rem);
+    }
+
+    .about-header > p:last-child {
+      margin-top: 22px;
+      font-size: 1rem;
+    }
+
+    .about-content {
+      padding-block: 14px 64px;
+    }
+
+    .about-section {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 25px;
+      padding-block: 36px;
+    }
+
+    .section-intro > p:last-child:not(.section-label) {
+      margin-top: 12px;
+    }
+
+    .section-copy p {
+      font-size: 1rem;
+    }
+  }
+</style>
