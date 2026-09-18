@@ -1,0 +1,41 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import '../styles/calculations.css';
+
+const { title, description, eyebrow = 'Calculations', formula, note, noteId } = Astro.props;
+const formulaLines = Array.isArray(formula) ? formula : formula ? [formula] : [];
+---
+
+<BaseLayout title={title} description={description}>
+  <header class="calculation-header shell">
+    <a class="calculation-back" href="/calculations/">← All calculations</a>
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p>{description}</p>
+  </header>
+
+  <div class="calculation-page shell">
+    <section class="calculator-panel" aria-label={title}>
+      <slot />
+    </section>
+
+    <aside class="calculation-context" aria-label="Calculation guidance">
+      {formulaLines.length > 0 && (
+        <section>
+          <h2>Relationship</h2>
+          <div class="formula-list">
+            {formulaLines.map((line) => <p class="formula-text">{line}</p>)}
+          </div>
+        </section>
+      )}
+      {note && (
+        <section>
+          <h2>Engineering note</h2>
+          <p id={noteId}>{note}</p>
+        </section>
+      )}
+    </aside>
+  </div>
+</BaseLayout>
+
+<script src="../scripts/calculator-ui.ts"></script>

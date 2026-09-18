@@ -1,0 +1,45 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="Ohm’s Law & Basic Power Calculator"
+  description="Solve voltage, current, resistance, and power from two known electrical values."
+  formula="V = I × R; P = V × I = I²R = V² ÷ R"
+  note="The V, I, R, and P relationships shown apply directly to DC and purely resistive circuits. AC circuits with reactance require impedance and power-factor relationships."
+>
+  <form class="calculator-form" data-calculator="ohms">
+    <div class="calculator-grid">
+      <label class="calculator-field wide">
+        <span>Known values</span>
+        <select name="mode" required>
+          <option value="vr">Voltage and resistance</option>
+          <option value="vi">Voltage and current</option>
+          <option value="ir">Current and resistance</option>
+          <option value="pv">Power and voltage</option>
+          <option value="pi">Power and current</option>
+          <option value="pr">Power and resistance</option>
+        </select>
+      </label>
+      <label class="calculator-field">
+        <span data-ohms="aLabel">Voltage</span>
+        <span class="input-with-unit"><input name="a" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit" data-ohms="aUnit">V</span></span>
+      </label>
+      <label class="calculator-field">
+        <span data-ohms="bLabel">Resistance</span>
+        <span class="input-with-unit"><input name="b" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit" data-ohms="bUnit">Ω</span></span>
+      </label>
+    </div>
+    <div class="calculator-actions"><button class="calculate-button" type="submit">Solve values</button></div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Calculated values</p>
+      <div class="result-grid">
+        <div><span>Voltage</span><strong><span data-output="voltage">—</span> V</strong></div>
+        <div><span>Current</span><strong><span data-output="current">—</span> A</strong></div>
+        <div><span>Resistance</span><strong><span data-output="resistance">—</span> Ω</strong></div>
+        <div><span>Power</span><strong><span data-output="power">—</span> W</strong></div>
+      </div>
+    </section>
+  </form>
+</CalculationLayout>

@@ -1,0 +1,77 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="AC Power Triangle Calculator"
+  description="Solve common single-phase and three-phase AC power relationships using a practical set of known-value modes."
+  formula={['S² = P² + Q²', 'PF = P / S']}
+  note="Positive kvar represents lagging/inductive reactive power. Negative kvar represents leading/capacitive reactive power. Voltage is line-to-line for three-phase calculations and line voltage for single-phase calculations."
+>
+  <form class="calculator-form" data-calculator="ac-power">
+    <div class="calculator-grid">
+      <label class="calculator-field wide">
+        <span>Solve mode</span>
+        <select name="mode" required>
+          <option value="">Select known values</option>
+          <option value="vipf">Given V, I, and PF → kW, kVA, kvar</option>
+          <option value="kwpf">Given kW and PF → kVA, kvar</option>
+          <option value="kwkva">Given kW and kVA → PF, kvar</option>
+          <option value="kvapf">Given kVA and PF → kW, kvar</option>
+          <option value="current">Given V, kW, PF, and phase → current</option>
+        </select>
+      </label>
+
+      <label class="calculator-field wide">
+        <span>Power factor type</span>
+        <select name="powerFactorType" required>
+          <option value="lagging" selected>Lagging / inductive</option>
+          <option value="leading">Leading / capacitive</option>
+        </select>
+      </label>
+
+      <label class="calculator-field" data-ac-modes="vipf current">
+        <span>Phase</span>
+        <select name="phase">
+          <option value="">Select phase</option>
+          <option value="single">Single-phase</option>
+          <option value="three">Three-phase</option>
+        </select>
+      </label>
+      <label class="calculator-field" data-ac-modes="vipf current">
+        <span>Voltage</span>
+        <span class="input-with-unit"><input name="voltage" type="number" inputmode="decimal" min="0" step="any" /><span class="input-unit">V</span></span>
+      </label>
+      <label class="calculator-field" data-ac-modes="vipf">
+        <span>Current</span>
+        <span class="input-with-unit"><input name="current" type="number" inputmode="decimal" min="0" step="any" /><span class="input-unit">A</span></span>
+      </label>
+      <label class="calculator-field" data-ac-modes="vipf kwpf kvapf current">
+        <span>Power factor</span>
+        <input name="powerFactor" type="number" inputmode="decimal" min="0" max="1" step="any" />
+        <small class="field-help">Greater than 0 and no more than 1.</small>
+      </label>
+      <label class="calculator-field" data-ac-modes="kwpf kwkva current">
+        <span>Active power</span>
+        <span class="input-with-unit"><input name="kw" type="number" inputmode="decimal" min="0" step="any" /><span class="input-unit">kW</span></span>
+      </label>
+      <label class="calculator-field" data-ac-modes="kwkva kvapf">
+        <span>Apparent power</span>
+        <span class="input-with-unit"><input name="kva" type="number" inputmode="decimal" min="0" step="any" /><span class="input-unit">kVA</span></span>
+      </label>
+    </div>
+
+    <div class="calculator-actions"><button class="calculate-button" type="submit">Calculate AC power</button></div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Calculated values</p>
+      <div class="result-grid">
+        <div><span>Active power</span><strong><span data-output="kw">—</span> kW</strong></div>
+        <div><span>Apparent power</span><strong><span data-output="kva">—</span> kVA</strong></div>
+        <div><span>Reactive power</span><strong><span data-output="kvar">—</span> kvar</strong></div>
+        <div><span>Power factor</span><strong data-output="pf">—</strong></div>
+        <div data-current-row><span>Line current</span><strong><span data-output="current">—</span> A</strong></div>
+      </div>
+    </section>
+  </form>
+</CalculationLayout>

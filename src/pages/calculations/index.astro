@@ -1,0 +1,39 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/calculations.css';
+
+const calculators = [
+  { title: 'Motor Current', href: '/calculations/motor-current/', description: 'Estimate single-phase or three-phase motor line current from mechanical output power, voltage, power factor, and efficiency.' },
+  { title: 'Transformer Current', href: '/calculations/transformer-current/', description: 'Calculate transformer full-load current from kVA rating, voltage, and phase.' },
+  { title: 'AC Power Triangle', href: '/calculations/ac-power/', description: 'Solve practical relationships among kW, kvar, kVA, power factor, voltage, and current.' },
+  { title: 'Power Factor Correction', href: '/calculations/power-factor-correction/', description: 'Estimate the theoretical capacitor kvar required to improve a load power factor.' },
+  { title: 'Ohm’s Law & Basic Power', href: '/calculations/ohms-law/', description: 'Calculate voltage, current, resistance, and DC or resistive power from two known values.' },
+  { title: 'Engineering Unit Converter', href: '/calculations/unit-converter/', description: 'Convert common electrical, mechanical, HVAC, pressure, length, and mass units.' },
+];
+---
+
+<BaseLayout title="Calculations" description="Practical electrical engineering calculators for common design and application checks.">
+  <header class="page-header shell calculation-hub-header">
+    <p class="eyebrow">Engineering resources</p>
+    <h1>Calculations</h1>
+    <p>Practical electrical engineering calculators for common design and application checks.</p>
+  </header>
+
+  <main class="calculations-hub shell">
+    <div class="calculator-card-grid">
+      {calculators.map((calculator, index) => (
+        <a class="calculator-card" href={calculator.href}>
+          <span class="calculator-card-number">{String(index + 1).padStart(2, '0')}</span>
+          <h2>{calculator.title}</h2>
+          <p>{calculator.description}</p>
+          <span class="calculator-card-link">Open calculator <span aria-hidden="true">→</span></span>
+        </a>
+      ))}
+    </div>
+
+    <p class="calculations-disclaimer">
+      These calculators are intended for engineering estimation and application checks. Final equipment selection and design should be verified against applicable codes, standards, manufacturer data, and project-specific requirements.
+    </p>
+  </main>
+</BaseLayout>
+

@@ -68,7 +68,7 @@ export const siteConfig = {
       {
         label: 'Resources',
         items: [
-          { label: 'Calculations' },
+          { label: 'Calculations', href: '/calculations/', activeMatch: 'prefix' as const },
           { label: 'References' },
           { label: 'About', href: '/about' },
           { label: 'Contact', href: '/contact' },

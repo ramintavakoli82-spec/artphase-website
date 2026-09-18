@@ -1,0 +1,37 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="Transformer Current Calculator"
+  description="Calculate single-phase or three-phase transformer full-load current from nameplate kVA and voltage."
+  formula={['Three-phase: I = kVA × 1000 / (√3 × VLL)', 'Single-phase: I = kVA × 1000 / V']}
+  note="For three-phase systems, enter line-to-line voltage. For single-phase systems, enter line voltage."
+>
+  <form class="calculator-form" data-calculator="transformer">
+    <div class="calculator-grid">
+      <label class="calculator-field">
+        <span>Transformer rating</span>
+        <span class="input-with-unit"><input name="kva" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit">kVA</span></span>
+      </label>
+      <label class="calculator-field">
+        <span>Phase</span>
+        <select name="phase" required>
+          <option value="">Select phase</option>
+          <option value="single">Single-phase</option>
+          <option value="three">Three-phase</option>
+        </select>
+      </label>
+      <label class="calculator-field wide">
+        <span data-voltage-label>Voltage</span>
+        <span class="input-with-unit"><input name="voltage" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit">V</span></span>
+      </label>
+    </div>
+    <div class="calculator-actions"><button class="calculate-button" type="submit">Calculate current</button></div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Full-load current</p>
+      <div class="primary-result"><strong data-output="current">—</strong><span>A</span></div>
+    </section>
+  </form>
+</CalculationLayout>

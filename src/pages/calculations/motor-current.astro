@@ -1,0 +1,54 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="Motor Current Calculator"
+  description="Estimate RMS motor line current from mechanical shaft/output power, supply voltage, power factor, and efficiency."
+  formula={['Three-phase: I = Pout / (√3 × VLL × PF × η)', 'Single-phase: I = Pout / (V × PF × η)']}
+  note="Entered hp or kW is mechanical shaft/output power. The result is an estimated RMS line current at the stated voltage, power factor, and efficiency; it is not a substitute for motor nameplate FLA."
+>
+  <form class="calculator-form" data-calculator="motor">
+    <div class="calculator-grid">
+      <label class="calculator-field">
+        <span>Power unit</span>
+        <select name="powerUnit" required>
+          <option value="">Select unit</option>
+          <option value="hp">Mechanical hp</option>
+          <option value="kw">kW</option>
+        </select>
+      </label>
+      <label class="calculator-field">
+        <span>Motor output power</span>
+        <input name="power" type="number" inputmode="decimal" min="0" step="any" required />
+      </label>
+      <label class="calculator-field">
+        <span data-voltage-label>Voltage</span>
+        <span class="input-with-unit"><input name="voltage" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit">V</span></span>
+      </label>
+      <label class="calculator-field">
+        <span>Phase</span>
+        <select name="phase" required>
+          <option value="">Select phase</option>
+          <option value="single">Single-phase</option>
+          <option value="three">Three-phase</option>
+        </select>
+      </label>
+      <label class="calculator-field">
+        <span>Power factor</span>
+        <input name="powerFactor" type="number" inputmode="decimal" min="0" max="1" step="any" required />
+        <small class="field-help">Greater than 0 and no more than 1.</small>
+      </label>
+      <label class="calculator-field">
+        <span>Efficiency</span>
+        <span class="input-with-unit"><input name="efficiency" type="number" inputmode="decimal" min="0" max="100" step="any" required /><span class="input-unit">%</span></span>
+      </label>
+    </div>
+    <div class="calculator-actions"><button class="calculate-button" type="submit">Calculate current</button></div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Calculated line current</p>
+      <div class="primary-result"><strong data-output="current">—</strong><span>A</span></div>
+    </section>
+  </form>
+</CalculationLayout>

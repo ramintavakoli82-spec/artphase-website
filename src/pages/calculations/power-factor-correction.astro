@@ -1,0 +1,33 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="Power Factor Correction Calculator"
+  description="This calculator assumes an inductive load with lagging power factor and estimates capacitive kvar required to improve the power factor."
+  formula="Qc = P × [tan(cos⁻¹ PF1) − tan(cos⁻¹ PF2)]"
+  note="This is a theoretical kvar requirement at the stated operating load. Final capacitor-bank selection should consider system voltage, harmonics, switching steps, resonance risk, and utility requirements."
+>
+  <form class="calculator-form" data-calculator="power-factor">
+    <div class="calculator-grid">
+      <label class="calculator-field wide">
+        <span>Real load power</span>
+        <span class="input-with-unit"><input name="kw" type="number" inputmode="decimal" min="0" step="any" required /><span class="input-unit">kW</span></span>
+      </label>
+      <label class="calculator-field">
+        <span>Existing power factor</span>
+        <input name="existingPf" type="number" inputmode="decimal" min="0" max="1" step="any" required />
+      </label>
+      <label class="calculator-field">
+        <span>Target power factor</span>
+        <input name="targetPf" type="number" inputmode="decimal" min="0" max="1" step="any" required />
+      </label>
+    </div>
+    <div class="calculator-actions"><button class="calculate-button" type="submit">Calculate correction</button></div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Required capacitor correction</p>
+      <div class="primary-result"><strong data-output="kvar">—</strong><span>kvar</span></div>
+    </section>
+  </form>
+</CalculationLayout>

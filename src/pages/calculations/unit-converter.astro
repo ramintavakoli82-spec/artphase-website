@@ -1,0 +1,44 @@
+---
+import CalculationLayout from '../../layouts/CalculationLayout.astro';
+---
+
+<CalculationLayout
+  title="Engineering Unit Converter"
+  description="Convert common engineering units for power, airflow, temperature, pressure, length, and mass."
+  formula="Each value is converted through its group’s base SI unit."
+  note="BTU/hr is a rate of heat transfer. Convert BTU/hr to W or kW when comparing thermal load with electrical power or enclosure heat-loss data."
+  noteId="converter-engineering-note"
+>
+  <form class="calculator-form" data-calculator="converter">
+    <div class="calculator-grid">
+      <label class="calculator-field wide">
+        <span>Conversion group</span>
+        <select name="group">
+          <option value="thermal">Thermal Power</option>
+          <option value="mechanical">Mechanical Power</option>
+          <option value="airflow">Airflow</option>
+          <option value="temperature">Temperature</option>
+          <option value="pressure">Pressure</option>
+          <option value="staticPressure">Water column / static pressure</option>
+          <option value="length">Length</option>
+          <option value="mass">Mass</option>
+        </select>
+      </label>
+      <label class="calculator-field wide">
+        <span>Value</span>
+        <input name="value" type="number" inputmode="decimal" step="any" required />
+      </label>
+    </div>
+    <div class="converter-pair">
+      <label class="calculator-field"><span>From unit</span><select name="fromUnit" aria-label="From unit"></select></label>
+      <span class="converter-arrow" aria-hidden="true">→</span>
+      <label class="calculator-field"><span>To unit</span><select name="toUnit" aria-label="To unit"></select></label>
+    </div>
+    <p class="calculator-error" data-error role="alert" hidden></p>
+    <section class="calculator-result" data-result aria-live="polite" hidden>
+      <p>Converted value</p>
+      <p class="result-equation" data-output="equation">—</p>
+      <span class="sr-only" data-output="converted"></span>
+    </section>
+  </form>
+</CalculationLayout>
