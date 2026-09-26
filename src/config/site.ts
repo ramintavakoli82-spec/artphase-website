@@ -12,7 +12,7 @@ export const engineeringNoteCategories = [
   {
     label: 'Power Quality',
     slug: 'power-quality',
-    contentCategories: ['VFDs & Harmonics'],
+    contentCategories: ['VFDs & Harmonics', 'Power Quality'],
   },
   {
     label: 'MCC & Control Panels',

@@ -1,0 +1,159 @@
+---
+title: Can Passive Harmonic Filters Be Paralleled?
+subtitle: How to size parallel passive filters for a large VFD without relying on nameplate arithmetic alone.
+description: Can passive harmonic filters be connected in parallel for large VFD applications? This example explains MTE Matrix AP parallel-filter sizing, derating, and practical design considerations.
+publicationDate: 2026-09-25
+updatedDate: 2026-09-25
+category: Power Quality
+tags: [VFD, harmonics, passive harmonic filter, parallel filters, Matrix AP, power quality]
+readingTime: 7 min read
+draft: false
+coverImage: /images/engineering-notes/parallel-passive-harmonic-filters.png
+coverAlt: Two 800 A passive harmonic filters connected in parallel ahead of a 1600 A VFD
+coverCaption: A simple nameplate sum does not necessarily equal the usable rating of a parallel passive-filter bank.
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+## Why Parallel Passive Filters?
+
+For a small or medium VFD, filter selection is usually direct: determine the drive input current, choose the correct voltage and current rating, and verify the manufacturer’s installation and performance requirements.
+
+A large VFD can exceed the practical rating of one standard passive harmonic filter. Multiple filters in parallel may then provide the required current capacity:
+
+**Source → parallel passive-filter branches → common output → VFD**
+
+These filters are in the VFD power path. This is not the same arrangement as an active harmonic filter connected as a shunt compensating device on a bus.
+
+## Can They Actually Be Paralleled?
+
+Yes—when the manufacturer explicitly supports the arrangement and its instructions are followed.
+
+MTE’s application note *Matrix AP Recommendations for Paralleling Filters* permits Matrix AP units to be paralleled to increase current or power capacity. It calls for exact matching catalog numbers, apart from specified master/slave configurations, and says not to mix voltage, frequency, or current ratings. It also limits a bank to three parallel units.
+
+The practical interpretation is simple: treat the units as a matched filter bank, not as unlike filters whose ratings happen to total the desired current.
+
+<Callout type="important-note" title="Manufacturer approval comes first">
+Parallel operation is manufacturer-specific. Confirm that the selected filter family supports it before designing the system.
+</Callout>
+
+## The Combined Rating Must Be Derated
+
+For parallel **MTE Matrix AP** configurations, the application note limits loading to 90% of the sum of the filter nameplate ratings:
+
+<EquationBlock>
+$$
+I_{usable}=\left(\sum I_{filter}\right)\times0.90
+$$
+</EquationBlock>
+
+MTE states that this margin allows for slight variations caused by manufacturing tolerances. Two physical filters are not assumed to share current perfectly enough to use 100% of their arithmetic sum continuously.
+
+<Callout type="warning" title="Do not universalize the 10% margin">
+The 90% limit is a requirement in this MTE Matrix AP application note—not a universal passive-filter rule. Another manufacturer may specify a different factor or may not permit parallel operation at all.
+</Callout>
+
+## Example: Two 800 A Filters for a 1600 A VFD
+
+Suppose the required VFD input current is **1600 A**, and two matching **800 A** filters are available.
+
+<Callout title="Nameplate arithmetic">
+**800 A + 800 A = 1600 A?**
+</Callout>
+
+At first glance, the filters appear to match the load exactly. Under the MTE Matrix AP rule, however, the usable rating is:
+
+<Callout type="calculation-result" title="Usable parallel rating">
+**(800 A × 2) × 0.90 = 1440 A**
+</Callout>
+
+<Callout type="warning" title="Sizing result">
+**1440 A < 1600 A — UNDERSIZED**
+</Callout>
+
+Although the nameplates total 1600 A, the usable combined rating under this manufacturer-specific guideline is only 1440 A. Two 800 A Matrix AP filters would therefore not be sufficient for the stated 1600 A requirement.
+
+The lesson is broader than this example: **nameplate arithmetic alone is not enough when passive harmonic filters operate in parallel.**
+
+## MTE’s Published 1270 A Example
+
+MTE’s note gives a similar example for a system requiring **1270 A**. Two 636 A units appear to total 1272 A, but they fail after the required factor is applied. MTE instead shows two 786 A units.
+
+<EngineeringTable number="1" caption="MTE Matrix AP parallel-sizing example">
+<table>
+  <thead><tr><th>Option</th><th>Nameplate Sum</th><th>Usable Rating at 90%</th><th>Result for 1270 A</th></tr></thead>
+  <tbody>
+    <tr><td>2 × 636 A</td><td>1272 A</td><td>1144.8 A</td><td><strong>Not sufficient</strong></td></tr>
+    <tr><td>2 × 786 A</td><td>1572 A</td><td>1414.8 A</td><td><strong>Sufficient for current sizing</strong></td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+This comparison comes directly from MTE’s parallel-filter application guidance. “Sufficient” here addresses the parallel-filter current calculation only; it is not final approval of the complete installation.
+
+## Current Rating Is Only One Check
+
+Once the arithmetic works, the design is not finished. Verify each of these items against the filter documentation, VFD instructions, and applicable electrical codes.
+
+### Matching filters
+
+Confirm compatible voltage, frequency, current, options, and catalog configuration. Matrix AP units normally require matching catalog numbers.
+
+### Number of units
+
+The MTE guidance used here permits no more than three filters in parallel.
+
+### Fusing and conductors
+
+MTE recommends individual, same-type fuses for parallel filters and describes limited conditions for common input fusing of panel-mount arrangements. Filter fusing and VFD input fusing must both be verified. Size conductors, terminals, and common buswork for the actual current carried.
+
+### Thermal protection
+
+MTE says each filter’s thermal switch should be incorporated into the drive control circuit so an over-temperature condition in any one unit shuts the system down.
+
+### Switching coordination
+
+Some Matrix AP options use capacitor contactors. Where fitted, their control must follow MTE’s parallel-operation instructions; the permitted arrangement depends on the option configuration.
+
+### Drive requirements
+
+The filter does not replace the VFD manufacturer’s fuse limits, conductor requirements, installation instructions, or applicable codes.
+
+## A Practical Workflow
+
+1. Determine the actual required VFD input current.
+2. Confirm that the filter manufacturer permits parallel operation.
+3. Select matching filter units.
+4. Apply the manufacturer’s parallel derating or sizing method.
+5. Verify that usable capacity exceeds the required input current.
+6. Check fusing, buswork, conductors, thermal protection, and switching.
+7. Validate the arrangement against both filter and VFD documentation.
+
+## The Key Takeaway
+
+Parallel passive harmonic filters can serve very large VFDs when one suitably rated filter is unavailable. But their usable capacity may be less than the sum of their nameplates.
+
+For the MTE Matrix AP example in this note:
+
+<EquationBlock>
+$$
+(800A\times2)\times0.90=1440A
+$$
+</EquationBlock>
+
+That is below a 1600 A requirement, so the proposed bank is undersized.
+
+<Callout type="calculation-result" title="Final design lesson">
+800 A + 800 A may equal 1600 A mathematically—but not necessarily in the final engineering design.
+</Callout>
+
+## Reference
+
+<ReferenceList>
+  <li><a href="https://mtecorp.com/wp-content/uploads/Matrix-AP-Recommendations-for-Paralleling-Filters-App-Note-rev.1.pdf">MTE Corporation — <em>Matrix AP Recommendations for Paralleling Filters</em></a> (official application note).</li>
+</ReferenceList>
+
+The matching-filter requirement, three-unit maximum, 90% combined-rating limit, 1270 A example, fusing guidance, and over-temperature guidance discussed above come from this MTE application note.
