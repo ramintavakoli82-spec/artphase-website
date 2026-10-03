@@ -22,7 +22,7 @@ const structuredData = {
     <h1>{entry.data.title}</h1><p class="article-subtitle">{entry.data.subtitle}</p>
     <div class="article-meta"><span>Published {entry.data.publicationDate.toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'})}</span>{entry.data.updatedDate && <span>Updated {entry.data.updatedDate.toLocaleDateString('en-CA',{year:'numeric',month:'long',day:'numeric',timeZone:'UTC'})}</span>}<span>{entry.data.readingTime}</span></div>
   </header>
-  {entry.data.coverImage && <figure class="article-cover shell"><img src={entry.data.coverImage} alt={entry.data.coverAlt} width="1024" height="1536" decoding="async" fetchpriority="high" /><figcaption>{entry.data.coverCaption}</figcaption></figure>}
+  {entry.data.coverImage && entry.data.coverDisplay && <figure class="article-cover shell"><img src={entry.data.coverImage} alt={entry.data.coverAlt} width="1024" height="1536" decoding="async" fetchpriority="high" /><figcaption>{entry.data.coverCaption}</figcaption></figure>}
   <div class="article-grid shell">
     <article class="prose"><slot /></article>
     <aside class="toc"><strong>On this page</strong><ol>{sections.map((h:any)=><li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol></aside>

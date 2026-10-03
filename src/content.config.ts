@@ -8,6 +8,7 @@ const notes = defineCollection({
     publicationDate: z.coerce.date(), updatedDate: z.coerce.date().optional(),
     category: z.string(), tags: z.array(z.string()), readingTime: z.string(), draft: z.boolean().default(false),
     coverImage: z.string().optional(), coverAlt: z.string().optional(), coverCaption: z.string().optional(),
+    coverDisplay: z.boolean().default(true),
   }),
 });
 export const collections = { notes };

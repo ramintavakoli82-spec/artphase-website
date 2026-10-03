@@ -1,0 +1,340 @@
+---
+title: How Can a 500A Active Harmonic Filter Draw Only ~15A from the Grid?
+subtitle: Compensation-current capability and real-power consumption describe two very different duties inside an active harmonic filter.
+description: A worked 480 V example explaining how a 500 A active harmonic filter can inject about 496 A of harmonic compensation while drawing only about 15 A of real input current for assumed internal losses.
+publicationDate: 2026-10-02
+updatedDate: 2026-10-02
+category: VFDs & Harmonics
+tags: [VFD, AHF, active harmonic filter, harmonics, THDi, RMS current, power quality]
+readingTime: 9 min read
+draft: false
+coverImage: /images/engineering-notes/how-can-500a-active-harmonic-filter-draw-only-15a-from-grid.gif
+coverAlt: Animated one-line diagram and waveforms showing a 1600 A nonlinear VFD load, a 500 A modular active harmonic filter injecting approximately 496 A, and an approximately 1602 A grid current at less than 5 percent THDi.
+coverCaption: Simplified illustrative example showing load current, AHF compensation current, and the resulting grid current. Values are not manufacturer performance data.
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+
+## The Key Distinction
+
+A **500 A Active Harmonic Filter** does not normally draw 500 A of real current from the utility simply because its nameplate says 500 A.
+
+The 500 A rating refers primarily to the filter's **compensation-current capability**: the maximum corrective current that its inverter can generate and inject at the point of common coupling to cancel unwanted harmonic components of the load current.
+
+This distinction is one of the most important concepts when understanding an Active Harmonic Filter.
+
+In the example shown in the animation, we will use a large nonlinear VFD load and follow the current mathematically from the load side back toward the utility.
+
+<figure className="engineering-figure">
+  <img
+    src="/images/engineering-notes/how-can-500a-active-harmonic-filter-draw-only-15a-from-grid.gif"
+    alt="Animated one-line diagram and waveforms showing a 1600 A nonlinear VFD load, a 500 A modular active harmonic filter injecting approximately 496 A, and an approximately 1602 A grid current at less than 5 percent THDi."
+    width="1200"
+    height="622"
+    loading="eager"
+    decoding="async"
+  />
+  <figcaption>Simplified illustrative example showing load current, AHF compensation current, and the resulting grid current. Values are not manufacturer performance data.</figcaption>
+</figure>
+
+<Callout type="calculation-result" title="500 A compensation current ≠ 500 A real-power consumption">
+**~15 A is an illustrative estimate of the AHF's own real input current based on an assumed 3% internal loss.**
+</Callout>
+
+## Example Operating Point
+
+Consider the following illustrative case:
+
+- **System voltage:** 480 V, three-phase
+- **Fundamental load current:** approximately 1600 A
+- **Initial load-current distortion:** approximately 31% THDi
+- **Total load RMS current:** approximately 1675.1 A
+- **AHF compensation current:** approximately 496 A
+- **AHF rated capacity:** 500 A
+- **Target utility-side distortion:** approximately 5% THDi
+- **Resulting utility RMS current:** approximately 1602 A
+
+These values are intentionally selected so the relationship between fundamental current, harmonic current, total RMS current, and AHF compensation can be seen clearly.
+
+## 1. Where Does the 496 A Harmonic Current Come From?
+
+THDi is defined relative to the fundamental current:
+
+<EquationBlock label="1">
+$$
+THD_i=\frac{I_h}{I_1}
+$$
+</EquationBlock>
+
+where:
+
+<EquationBlock label="2">
+$$
+I_h=\sqrt{I_2^2+I_3^2+I_4^2+\cdots}
+$$
+</EquationBlock>
+
+For an approximately 1600 A fundamental current and 31% THDi:
+
+<EquationBlock label="3">
+$$
+I_h=0.31\times1600\approx496\,\mathrm{A}
+$$
+</EquationBlock>
+
+So the nonlinear VFD load contains approximately **496 A RMS** of combined harmonic current.
+
+The total RMS current is not obtained by simply adding 1600 A and 496 A. Because the fundamental and harmonic components are orthogonal RMS components:
+
+<EquationBlock label="4">
+$$
+I_{\mathrm{Load}}=\sqrt{I_1^2+I_h^2}
+$$
+</EquationBlock>
+
+therefore:
+
+<EquationBlock label="5">
+$$
+\begin{aligned}
+I_{\mathrm{Load}}&=\sqrt{1600^2+496^2}\\
+&\approx1675.1\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+This explains the **1675.1 A** load-current value shown in the animation.
+
+## 2. Recovering the Fundamental Current from the RMS Values
+
+We can also work backward from the measured total RMS current:
+
+<EquationBlock label="6">
+$$
+I_1=\sqrt{I_{\mathrm{Load}}^2-I_h^2}
+$$
+</EquationBlock>
+
+Using the values in this example:
+
+<EquationBlock label="7">
+$$
+\begin{aligned}
+I_1&=\sqrt{1675.1^2-496^2}\\
+&\approx1599.98\,\mathrm{A}\\
+&\approx1600\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+This **1599.98 A** value is the fundamental current, not the final total RMS current seen by the utility. That distinction is important.
+
+## 3. What Happens When the AHF Reduces THDi from 31% to 5%?
+
+The goal of the Active Harmonic Filter in this example is not to remove the 1600 A fundamental load current. The motor/load still requires approximately the same fundamental current.
+
+The AHF instead injects an opposing harmonic current waveform so that most of the load-generated harmonic current does not propagate upstream into the utility.
+
+If the utility-side target is approximately 5% THDi:
+
+<EquationBlock label="8">
+$$
+\begin{aligned}
+I_{h,\mathrm{Grid}}&=0.05\times1599.98\\
+&\approx80\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+The utility therefore still carries approximately 1600 A fundamental current plus only about 80 A RMS of residual harmonic current. The resulting total grid RMS current becomes:
+
+<EquationBlock label="9">
+$$
+\begin{aligned}
+I_{\mathrm{Grid}}&=\sqrt{I_1^2+I_{h,\mathrm{Grid}}^2}\\
+&=\sqrt{1599.98^2+80^2}\\
+&\approx1601.98\,\mathrm{A}\approx1602\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+This is why the animation shows approximately:
+
+> **Load: 1675.1 A RMS at ~31% THDi**
+
+becoming:
+
+> **Grid: ~1602 A RMS at ~5% THDi**
+
+after harmonic compensation.
+
+Notice that the AHF may be injecting nearly 496 A of corrective current, while the total RMS current drawn from the source only decreases by about 73 A. That is not a contradiction.
+
+The 496 A represents harmonic compensation, not 496 A of ordinary fundamental load current being removed.
+
+## 4. Why Can't We Simply Subtract RMS Currents?
+
+At every instant, Kirchhoff's Current Law still applies:
+
+<EquationBlock label="10">
+$$
+i_{\mathrm{Grid}}(t)=i_{\mathrm{Load}}(t)-i_{\mathrm{AHF}}(t)
+$$
+</EquationBlock>
+
+This is an instantaneous waveform relationship. However, it is generally incorrect to write:
+
+<EquationBlock label="11">
+$$
+I_{\mathrm{Grid,RMS}}=I_{\mathrm{Load,RMS}}-I_{\mathrm{AHF,RMS}}
+$$
+</EquationBlock>
+
+because RMS magnitudes lose the phase, frequency, and waveform information required for direct scalar subtraction.
+
+Harmonic components at different frequencies are combined using root-sum-square relationships, not ordinary arithmetic subtraction. This is why **1675.1 A − 496 A** is not the grid RMS current.
+
+## 5. Where Does the AHF Get Almost 500 A of Compensation Current?
+
+The AHF contains a power-electronic inverter, semiconductor switches, a DC-link capacitor, filtering inductors/reactors, sensing circuitry, and a controller.
+
+The controller continuously measures the load or source current, identifies the unwanted harmonic components, and commands the inverter to generate an opposing current waveform. The inverter then exchanges electrical energy with the AC system through its DC link and switching bridge.
+
+The DC-link capacitor is important, but it should not be thought of as a battery continuously supplying hundreds of amperes of real power. Instead, the inverter synthesizes the required compensating waveform and exchanges instantaneous energy with the AC network while the DC-link voltage is regulated around its target value.
+
+For harmonic cancellation, much of the compensation current is therefore not associated with a large continuous transfer of real energy from the utility into the AHF. The utility mainly needs to provide the AHF's real internal losses and the small amount of real power required to maintain the DC-link voltage.
+
+## 6. Why Can a 500 A AHF Draw Only About 15 A of Real Input Current?
+
+Consider the 500 A, 480 V three-phase AHF in this example. Its current rating corresponds to an apparent-power capability of approximately:
+
+<EquationBlock label="12">
+$$
+\begin{aligned}
+S&=\sqrt{3}\times480\times500\\
+&\approx415.7\,\mathrm{kVA}
+\end{aligned}
+$$
+</EquationBlock>
+
+Now assume, for this simplified engineering example, that the AHF's total internal losses are approximately **3% of rated apparent-power capability**.
+
+This 3% figure is only an illustrative engineering assumption. Actual losses depend on the specific manufacturer, topology, switching frequency, loading, ambient conditions, cooling system, and operating point.
+
+Using the 3% assumption:
+
+<EquationBlock label="13">
+$$
+\begin{aligned}
+P_{\mathrm{loss}}&=0.03\times415.7\\
+&\approx12.47\,\mathrm{kW}
+\end{aligned}
+$$
+</EquationBlock>
+
+If the filter draws this real power from a 480 V three-phase system at approximately unity power factor:
+
+<EquationBlock label="14">
+$$
+\begin{aligned}
+I_{\mathrm{loss}}&=\frac{P_{\mathrm{loss}}}{\sqrt{3}\times480}\\
+&\approx15\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+Therefore, it is entirely reasonable in this simplified example for a 500 A compensation-rated AHF to inject hundreds of amperes of harmonic correction while requiring only approximately **15 A** of real input current to cover its own losses.
+
+This is the key point behind the title: **500 A compensation capability does not mean 500 A of continuous real-power consumption.**
+
+## 7. Where Does the Real Power Actually Go?
+
+The main 1600 A fundamental current continues to deliver real power to the VFD-driven load. The AHF is not supplying the motor's main operating power. Its primary role is to reshape the current seen by the source.
+
+The AHF real-power requirement is mainly associated with:
+
+- semiconductor conduction losses,
+- switching losses,
+- reactor and magnetic losses,
+- DC-link regulation,
+- cooling fans, and
+- control electronics.
+
+That is why the real input current associated with the filter itself can be very small compared with its compensation-current rating.
+
+## 8. What the Animation Is Showing
+
+The animation combines three current waveforms:
+
+### VFD Load Current
+
+The nonlinear current demanded by the VFD load, containing the fundamental plus substantial harmonic content.
+
+### AHF Injected Current
+
+The corrective waveform produced by the Active Harmonic Filter to oppose the unwanted harmonic components.
+
+### Grid Current
+
+The current remaining upstream after the load current and AHF compensation waveform combine according to KCL.
+
+In this example:
+
+<EquationBlock label="15">
+$$
+i_{\mathrm{Grid}}(t)=i_{\mathrm{Load}}(t)-i_{\mathrm{AHF}}(t)
+$$
+</EquationBlock>
+
+The result is a source current that is much closer to sinusoidal even though the nonlinear load itself has not changed.
+
+## Engineering Takeaway
+
+A large AHF current rating can initially look like a large additional electrical load. It is not.
+
+The nameplate current describes how much corrective current the inverter can synthesize, not how much real current the filter continuously consumes.
+
+For the illustrative case in this Note:
+
+**Before compensation**
+
+<EquationBlock label="16">
+$$
+\begin{aligned}
+I_1&\approx1600\,\mathrm{A}\\
+THD_i&\approx31\%\\
+I_h&\approx496\,\mathrm{A}\\
+I_{\mathrm{Load}}&\approx1675.1\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+**After compensation**
+
+<EquationBlock label="17">
+$$
+\begin{aligned}
+THD_i&\approx5\%\\
+I_{h,\mathrm{Grid}}&\approx80\,\mathrm{A}\\
+I_{\mathrm{Grid}}&\approx1602\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+while the AHF itself may require only approximately:
+
+<EquationBlock label="18">
+$$
+I_{\mathrm{loss}}\approx15\,\mathrm{A}
+$$
+</EquationBlock>
+
+of real input current under the assumed 3% internal-loss example.
+
+The AHF is therefore better understood as a **controlled current-shaping power-electronic converter**, not as a conventional 500 A load.
+
+<Callout type="important-note" title="Engineering Note">
+The numerical values above are a simplified illustrative example intended to explain RMS current decomposition, THDi, compensation current, and AHF power flow. Actual AHF current, efficiency, losses, compensation capability, and residual THDi depend on the specific equipment and operating conditions. Manufacturer performance data should be used for final design.
+</Callout>
