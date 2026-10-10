@@ -1,0 +1,219 @@
+---
+title: Same THDi, Different Neutral Current
+subtitle: Why the harmonic spectrum matters in a balanced 3-phase, 4-wire system.
+description: Why two 3-phase, 4-wire systems with the same THDi can produce very different neutral currents. A visual explanation of 3rd, 5th and 7th harmonics and triplen-harmonic accumulation.
+publicationDate: 2026-10-10
+updatedDate: 2026-10-10
+category: Power Quality
+tags: [Neutral Current, THDi, harmonics, triplen harmonics, 3rd harmonic, power quality, 3-phase 4-wire]
+readingTime: 7 min read
+draft: false
+coverImage: /images/engineering-notes/same-thdi-different-neutral-current-social.png
+coverAlt: Animated comparison showing constant 30% current THD while the harmonic spectrum shifts from 5th and 7th harmonics toward 3rd harmonic, causing neutral RMS current to increase.
+coverCaption: THDi remains fixed at 30%, but the neutral current changes dramatically as the harmonic spectrum shifts toward the 3rd harmonic.
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+
+## Same THDi, Different Result
+
+Two electrical systems can show exactly the same current THD and still place very different demands on the neutral conductor.
+
+Why? Because THDi tells us how much harmonic RMS current exists—but not which harmonic orders create it.
+
+In a balanced 3-phase, 4-wire system, that distinction matters. Non-triplen harmonics such as the 5th and 7th behave very differently in the neutral from triplen harmonics such as the 3rd.
+
+The animation below keeps **THDi fixed at 30%** while changing only the harmonic spectrum.
+
+<figure className="engineering-figure">
+  <img
+    src="/images/engineering-notes/same-thdi-different-neutral-current.gif"
+    alt="Animated comparison showing constant 30% current THD while the harmonic spectrum shifts from 5th and 7th harmonics toward 3rd harmonic, causing neutral RMS current to increase."
+    width="1080"
+    height="1350"
+    loading="eager"
+    decoding="async"
+  />
+  <figcaption>THDi remains fixed at 30%, but the neutral current changes dramatically as the harmonic spectrum shifts toward the 3rd harmonic.</figcaption>
+</figure>
+
+<Callout type="important-note" title="The central engineering point">
+**THDi alone does NOT determine neutral current.** The harmonic orders behind that THDi—and especially the triplen content—determine how balanced harmonic currents combine in the neutral.
+</Callout>
+
+## What Stays Constant?
+
+The animation represents a simplified, balanced **3-phase, 4-wire system**. Each phase has a fundamental current component of:
+
+<EquationBlock label="1">
+$$
+I_1=100\,\mathrm{A\ RMS}
+$$
+</EquationBlock>
+
+Current total harmonic distortion is fixed at 30%, so the combined harmonic RMS current remains:
+
+<EquationBlock label="2">
+$$
+\begin{aligned}
+I_h&=THD_i\times I_1\\
+&=0.30\times100\\
+&=30\,\mathrm{A\ RMS}
+\end{aligned}
+$$
+</EquationBlock>
+
+The fundamental and harmonic components are orthogonal RMS components. The total phase RMS current is therefore:
+
+<EquationBlock label="3">
+$$
+\begin{aligned}
+I_{phase}&=\sqrt{I_1^2+I_h^2}\\
+&=\sqrt{100^2+30^2}\\
+&\approx104.4\,\mathrm{A\ RMS}
+\end{aligned}
+$$
+</EquationBlock>
+
+Because both **$I_1$** and the combined **$I_h$** remain fixed, the total phase RMS current also remains essentially constant throughout the animation.
+
+## What Changes?
+
+Only the distribution of that 30 A harmonic RMS current changes.
+
+- At one end, the harmonic content is dominated by the **5th and 7th harmonics**.
+- As the animation progresses, the share assigned to the **3rd harmonic** increases while the other harmonic components adjust so their combined RMS value remains 30 A.
+- At the other end, the full 30 A harmonic RMS content is dominated by the **3rd harmonic**.
+
+THDi remains **30% at every point**. The neutral current changes because the sequence behavior of the harmonic spectrum changes.
+
+## Why the 5th and 7th Do Not Accumulate
+
+In the ideal balanced model used here, the three phase currents sum to determine neutral current.
+
+Balanced non-triplen components such as the 5th and 7th retain phase displacement between the three phases. They do not become three in-phase currents in the neutral path, so they do not add arithmetically there.
+
+For the balanced 5th- and 7th-harmonic components in this animation, the resulting neutral contribution is approximately zero. The phase-current waveform can still be visibly distorted and THDi can still be 30%; neither observation, by itself, means that the neutral must carry a large current.
+
+## Why Triplen Harmonics Add
+
+Triplen harmonics are harmonic orders that are integer multiples of three:
+
+**3rd, 9th, 15th, 21st, …**
+
+In a balanced three-phase system, these harmonics behave as zero-sequence components. Their phase relationship makes the corresponding phase components in phase with one another in the neutral conductor. They therefore add instead of cancelling.
+
+For the balanced 3rd harmonic:
+
+<EquationBlock label="4">
+$$
+I_{N,3}=I_{3,A}+I_{3,B}+I_{3,C}
+$$
+</EquationBlock>
+
+When the three phase magnitudes are equal:
+
+<EquationBlock label="5">
+$$
+I_{N,3}=3I_3
+$$
+</EquationBlock>
+
+The same principle applies to other balanced triplen orders. Their actual contribution depends on the measured or predicted magnitude of each harmonic order, not on THDi alone.
+
+## Numerical Example at the 3rd-Harmonic End
+
+At the fully 3rd-harmonic-dominated end of this specific animation:
+
+<EquationBlock label="6">
+$$
+\begin{aligned}
+I_3&=30\,\mathrm{A\ RMS\ per\ phase}\\
+I_N&=3\times30\\
+&=90\,\mathrm{A\ RMS}
+\end{aligned}
+$$
+</EquationBlock>
+
+The total phase RMS current is still approximately 104.4 A, so:
+
+<EquationBlock label="7">
+$$
+\frac{I_N}{I_{phase}}=\frac{90}{104.4}\approx0.86
+$$
+</EquationBlock>
+
+<Callout type="calculation-result" title="Result for this stated model">
+In this simplified balanced example, with THDi fixed at 30% and the distortion fully dominated by the 3rd harmonic, the neutral RMS current reaches approximately **0.86 times the total phase RMS current**.
+</Callout>
+
+This is a result for the stated spectrum and assumptions. It does **not** mean that 30% THDi universally produces 90 A of neutral current or an $I_N/I_{phase}$ ratio of 0.86.
+
+## Case A vs Case B
+
+<EngineeringTable number="1" caption="The same fundamental current and THDi with two different harmonic spectra">
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Case A: mainly 5th + 7th</th>
+      <th>Case B: mainly 3rd</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>THDi</td><td>30%</td><td>30%</td></tr>
+    <tr><td>Combined harmonic RMS</td><td>30 A</td><td>30 A</td></tr>
+    <tr><td>Total phase RMS</td><td>Approximately 104.4 A</td><td>Approximately 104.4 A</td></tr>
+    <tr><td>Neutral behavior</td><td>Balanced 5th and 7th components do not accumulate; their neutral contribution is approximately zero in this model.</td><td>Balanced 3rd-harmonic components add in the neutral.</td></tr>
+    <tr><td>Neutral RMS at the illustrated endpoint</td><td>Approximately 0 A from the modeled balanced components</td><td>Approximately 90 A</td></tr>
+    <tr><td>$I_N/I_{phase}$</td><td>Approximately 0</td><td>Approximately 0.86</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+> **Same THDi. Completely different neutral-current demand.**
+
+## Instantaneous Current vs RMS Current
+
+The animation's plotted waveforms show **instantaneous current**. The numeric current values shown in the labels and calculations are **RMS values**.
+
+Those are not the same quantity. A 100 A RMS sinusoidal fundamental has a peak value of:
+
+<EquationBlock label="8">
+$$
+I_{peak}=100\sqrt{2}\approx141.4\,\mathrm{A}
+$$
+</EquationBlock>
+
+Adding harmonic components changes the instantaneous waveform further. It is therefore normal for the plotted phase current to exceed 100 A at some electrical angles even though the fundamental component is specified as 100 A RMS. That visual behavior is not an error.
+
+## Practical Engineering Interpretation
+
+High neutral current is especially relevant in 3-phase, 4-wire systems that supply substantial single-phase nonlinear loading. Depending on the equipment and its input topology, examples can include electronic power supplies, office and IT loads, certain lighting loads, UPS input stages, and other single-phase rectifier-type loads.
+
+That does not mean every modern electronic load creates severe neutral current. The actual result depends on the aggregated phase loading, harmonic spectrum, diversity, system impedance, and operating state.
+
+It is also important not to transfer the conclusion automatically to VFD loads. A conventional balanced three-phase 6-pulse VFD commonly produces characteristic harmonics such as the **5th, 7th, 11th, and 13th**. These can create significant THDi, but they are not triplen harmonics. High THDi from a balanced three-phase VFD load therefore does **not** automatically imply severe neutral-current accumulation.
+
+For a related waveform-level example of harmonic compensation, see [how an active harmonic filter cancels selected VFD harmonics](/engineering-notes/how-active-harmonic-filter-cancels-vfd-harmonics/).
+
+## Do Not Turn the Ratio into a Sizing Rule
+
+<Callout type="warning" title="Current behavior is not conductor sizing">
+The calculated current ratio describes current demand under the stated harmonic model. Actual neutral-conductor sizing must consider the applicable electrical code, conductor ampacity, installation method, temperature, grouping, the actual measured or predicted harmonic spectrum, equipment requirements, and other project-specific design conditions.
+</Callout>
+
+The animation does not establish a universal relationship between neutral-conductor size and phase-conductor size. It isolates one electrical behavior so the effect of moving harmonic RMS content into the 3rd harmonic can be seen clearly.
+
+## Key Takeaway
+
+THDi is an important power-quality metric, but by itself it cannot predict neutral current.
+
+For neutral-current assessment, the harmonic spectrum matters—especially the magnitude of the triplen harmonics. The same THDi can represent two very different electrical conditions.
+
+<Callout type="important-note" title="Final takeaway">
+## Same THDi ≠ Same Neutral Current
+</Callout>
