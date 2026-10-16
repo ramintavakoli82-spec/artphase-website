@@ -1,0 +1,293 @@
+---
+title: What Happens If We Don't Use a Shunt Contactor in a Passive Harmonic Filter?
+subtitle: Why an energized capacitor branch can matter when the associated VFD slows down or stops.
+description: Learn how passive harmonic filters can cause bus-voltage rise at light VFD loading, and when a capacitor-branch contactor may be needed.
+publicationDate: 2026-10-16
+updatedDate: 2026-10-16
+category: VFDs & Harmonics
+tags: [VFD, harmonics, passive harmonic filter, power quality, capacitor switching, reactive power, voltage rise]
+readingTime: 12 min read
+draft: false
+coverImage: /images/engineering-notes/passive-harmonic-filter-without-shunt-contactor.gif
+coverAlt: Animated three-phase passive harmonic filter schematic showing VFD loading decreasing from 100% to 0% while illustrative common-bus voltage increases from 480 V to 505 V, with the capacitor branch remaining connected.
+coverCaption: "Illustrative operating scenario: reduced VFD loading with an energized passive filter capacitor branch may increase the common-bus voltage. Actual behavior depends on filter design, source impedance, and connected loads."
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+**A passive harmonic filter may perform exceptionally well at full load. But what happens to its capacitor branch when the VFD slows down—or stops completely?**
+
+<figure class="engineering-figure">
+  <img
+    src="/images/engineering-notes/passive-harmonic-filter-without-shunt-contactor.gif"
+    alt="Animated three-phase passive harmonic filter schematic showing VFD loading decreasing from 100% to 0% while illustrative common-bus voltage increases from 480 V to 505 V, with the capacitor branch remaining connected."
+    width="1122"
+    height="1402"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <figcaption>Illustrative operating scenario: reduced VFD loading with an energized passive filter capacitor branch may increase the common-bus voltage. Actual behavior depends on filter design, source impedance, and connected loads.</figcaption>
+</figure>
+
+This is an operating condition that deserves attention during the design and selection of passive harmonic filters.
+
+Passive harmonic filters (PHFs) are commonly installed on the input side of variable frequency drives (VFDs) to reduce harmonic currents and improve overall power quality.
+
+Many PHF designs use a combination of series inductors and a tuned reactor-capacitor network. These components work together to reduce harmonic distortion under the intended operating conditions.
+
+However, the filter's capacitive reactive power does not necessarily decrease in proportion to the VFD's load.
+
+At very light loading, or when the drive is stopped while the filter remains energized, this characteristic can become important.
+
+In some systems, the result may be a leading power factor and an increase in voltage at the common electrical bus.
+
+The consequences depend on the filter design and the electrical characteristics of the installation.
+
+For a broader look at changing filter operating points, see [Passive Harmonic Filters at Partial Load](/engineering-notes/passive-harmonic-filters-partial-load/).
+
+## 1. What Happens at Normal VFD Loading?
+
+When the VFD operates within its intended loading range, the passive harmonic filter reduces harmonic currents associated with the drive's rectifier.
+
+The reactor-capacitor network also affects the fundamental-frequency reactive power balance.
+
+Depending on the filter design and the characteristics of the connected drive, this may improve the overall power factor.
+
+At normal loading, the filter's reactive power contribution may be appropriately balanced by the electrical system.
+
+However, this operating condition does not represent every possible loading scenario.
+
+A VFD that normally operates at high loading may spend considerable time running at reduced output, particularly in variable-torque applications such as pumps and fans.
+
+## 2. What Changes When the VFD Load Decreases?
+
+As VFD loading decreases, the real power drawn by the drive generally decreases.
+
+The reactive power demand associated with the drive and the overall loading conditions can also change.
+
+However, if the passive filter's capacitor branch remains connected, it continues to exchange capacitive reactive power with the AC system.
+
+For a fixed capacitor operating at a given frequency, its reactive power is strongly influenced by the applied voltage and capacitance rather than being directly controlled by the motor's load percentage.
+
+The complete behavior of a tuned harmonic filter also depends on the associated inductors and the filter's design.
+
+Consequently, the filter may provide more capacitive reactive power than the connected loads require at a particular operating point.
+
+The net system power factor may then become leading.
+
+This is not necessarily a fault. Whether it creates an unacceptable condition depends on the wider electrical system.
+
+## 3. What Happens When the VFD Is OFF?
+
+Now consider a VFD that has stopped operating while its input supply and passive harmonic filter remain energized.
+
+The motor is no longer producing mechanical output.
+
+However, unless the filter's capacitor branch is disconnected through an appropriate switching arrangement, that branch may remain connected to the AC supply.
+
+In this condition, the harmonic-producing load may be very small or absent, but the filter can still contribute capacitive reactive power.
+
+Depending on the network conditions, this reactive power may contribute to a voltage rise at the common bus.
+
+This is one reason light-load behavior must be considered when selecting a passive harmonic filter.
+
+<Callout type="important-note" title="A stopped VFD is not necessarily isolated">
+A stopped VFD is not necessarily electrically isolated. The behavior described here assumes that the upstream supply remains energized and the capacitor branch remains connected. An energized drive may still draw a small amount of standby or internal-loss current even when no motor-load current is shown in the illustration.
+</Callout>
+
+## 4. Why Can the Common-Bus Voltage Rise?
+
+The relationship between reactive power and voltage depends on the electrical impedance between the supply and the point of connection.
+
+A capacitor branch can provide leading reactive power to the electrical system.
+
+If the source has appreciable impedance, this reactive power contribution can affect the voltage at the common bus.
+
+The magnitude of the resulting voltage change depends on several factors:
+
+- The equivalent source impedance and available short-circuit strength.
+- The filter's effective capacitive reactive power.
+- The loading and reactive power requirements of other connected equipment.
+- The operating voltage and characteristics of the filter.
+- The location of the filter within the electrical distribution system.
+- The presence of other capacitor banks, harmonic filters, or resonance conditions.
+
+A relatively stiff electrical supply may experience only a small voltage change.
+
+A weaker supply with greater effective impedance may be more sensitive to capacitive reactive power.
+
+The voltage change caused by decreasing load should also be distinguished from the additional voltage effect associated with the energized filter capacitor branch.
+
+Both can influence the observed operating voltage.
+
+## 5. An Illustrative 480 V Example
+
+Consider a hypothetical 480 V three-phase distribution system supplying a VFD through a passive harmonic filter.
+
+The capacitor branch remains connected throughout the operating sequence.
+
+As the drive loading decreases, the common-bus voltage is illustrated as follows:
+
+<EngineeringTable number="1" caption="Hypothetical VFD loading and common-bus voltage sequence shown in the animation">
+<table>
+  <thead>
+    <tr>
+      <th>VFD Loading</th>
+      <th>Illustrative Common-Bus Voltage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>100%</td><td>480 V</td></tr>
+    <tr><td>80%</td><td>482 V</td></tr>
+    <tr><td>50%</td><td>486 V</td></tr>
+    <tr><td>20%</td><td>492 V</td></tr>
+    <tr><td>10%</td><td>498 V</td></tr>
+    <tr><td>0% — VFD stopped</td><td>505 V</td></tr>
+  </tbody>
+</table>
+</EngineeringTable>
+
+The animated diagram demonstrates this possible behavior.
+
+At full loading, the displayed bus voltage is 480 V.
+
+As loading decreases, the voltage increases in the illustration.
+
+When the VFD reaches 0% load, the capacitor branch remains energized, and the displayed bus voltage reaches 505 V.
+
+<Callout type="warning" title="Illustrative values—not field results">
+These numbers are illustrative only. They are not derived from a documented power-system study or field measurement, and they must not be treated as a prediction for a particular PHF model.
+</Callout>
+
+A voltage of 505 V is approximately 5.2% above 480 V nominal. Whether this is acceptable depends on the equipment ratings, applicable operating requirements, and the actual installation. It does not by itself prove that equipment will be damaged.
+
+A real installation may experience a smaller increase, a different voltage profile, or no significant voltage problem.
+
+The purpose of the example is to demonstrate why a capacitor branch that remains energized at very low load deserves engineering attention.
+
+## 6. What About Other Loads Connected to the Same Bus?
+
+This is an important system-level consideration.
+
+A passive harmonic filter is commonly selected based on the characteristics of one VFD.
+
+However, that VFD may share an electrical distribution bus with other equipment.
+
+Examples include:
+
+- Additional VFDs and motor controllers.
+- Control power transformers and associated equipment.
+- Electronic power supplies.
+- Lighting systems.
+- Other voltage-sensitive industrial equipment.
+
+If the filter's operating condition produces a significant common-bus voltage rise, other equipment connected to that same bus may experience the higher voltage.
+
+Depending on the magnitude and duration of the voltage increase, possible consequences include nuisance protection trips, increased electrical stress, or operation outside an equipment manufacturer's specified voltage range.
+
+These effects are not inevitable.
+
+The actual risk must be evaluated against equipment voltage ratings, protection settings, source characteristics, and measured or calculated system conditions.
+
+The key point is that the filter's influence may extend beyond the VFD it was selected to serve.
+
+## 7. What Is the Role of a Shunt Contactor?
+
+In this application, the term *shunt contactor* refers to a contactor used to switch the capacitor-containing shunt branch of a passive harmonic filter.
+
+It is more precisely described as a capacitor-branch switching contactor.
+
+Its purpose is to disconnect the capacitor branch when that branch is not required, or when its reactive power contribution would be undesirable.
+
+For example, a suitable manufacturer-approved control arrangement may disconnect the capacitor branch when the associated VFD is stopped or operating below a defined load condition.
+
+When the VFD returns to an operating condition that requires harmonic filtering, the capacitor branch may be reconnected according to the manufacturer's recommended sequence.
+
+This can help avoid an unnecessarily leading power factor and reduce the potential for voltage rise under particular operating conditions.
+
+However, switching the capacitor branch out also removes the tuned LC filter's intended harmonic mitigation during that period.
+
+If a series input reactor remains connected, it may still provide some current smoothing or impedance, but this is not equivalent to having the complete tuned harmonic filter operating.
+
+For this reason, capacitor switching must be treated as part of the filter's overall engineering design rather than as a universal solution.
+
+Contactor selection, capacitor-switching duty, control logic, discharge time, switching transients, and interlocking must follow the manufacturer's instructions.
+
+<Callout type="warning" title="Validate the complete filter design">
+Do not add or bypass a capacitor-branch switching device without validating the design.
+</Callout>
+
+## 8. Does Every Passive Harmonic Filter Need a Shunt Contactor?
+
+**No.**
+
+This is an important distinction.
+
+Passive harmonic filters do not all have the same capacitor kVAr ratings, filter configurations, or light-load characteristics.
+
+Some manufacturers deliberately minimize capacitive reactive power to maintain acceptable behavior across a broad operating range.
+
+For these designs, disconnecting the capacitor branch at light load may not be necessary.
+
+Other filter designs or particular system conditions may benefit from a manufacturer-approved capacitor-switching option.
+
+The decision depends on the filter and the application, not simply on whether the motor operates below an arbitrary percentage of rated load.
+
+There is no universal rule requiring capacitor disconnection whenever a VFD falls below 20% loading.
+
+Generator-fed systems may require additional evaluation because the generator's ability to absorb leading reactive power can be limited.
+
+The filter manufacturer's technical guidance and the generator's reactive power capability should be reviewed where applicable.
+
+## 9. What Should Engineers Verify Before Selecting a PHF?
+
+Before finalizing a passive harmonic filter, consider the following questions:
+
+1. What is the actual operating-load profile of the VFD, including extended low-load or idle periods?
+2. What is the filter's effective capacitive reactive power at various operating points?
+3. How does the filter perform at minimum load and when the VFD is stopped?
+4. What are the available short-circuit strength and source impedance at the point of connection?
+5. Could the resulting reactive power affect the common-bus voltage or other connected equipment?
+6. Is the system supplied by a utility transformer or an on-site generator?
+7. Does the manufacturer offer or recommend capacitor-branch switching for this model?
+8. What happens to harmonic mitigation when the capacitor branch is disconnected?
+9. Are switching coordination, discharge, and control requirements addressed?
+10. Have the actual operating conditions been verified against manufacturer data or a suitable power-system study?
+
+These questions help assess the filter as part of the overall electrical distribution system rather than as an isolated accessory to the drive. When evaluating a multi-drive bus, the related comparison [PHF vs AHF vs Hybrid](/engineering-notes/phf-vs-ahf-vs-hybrid/) also shows why the actual load profile matters.
+
+## 10. Final Engineering Takeaway
+
+A passive harmonic filter should not be evaluated only at full load.
+
+Its performance at very light load—and particularly when the associated VFD is stopped but the filter remains energized—can be equally important.
+
+An energized capacitor branch may contribute leading reactive power and, depending on the electrical system, cause an undesirable common-bus voltage rise.
+
+A properly designed capacitor-branch switching arrangement can be beneficial in some applications.
+
+In other applications, a low-kVAr filter may operate satisfactorily without switching.
+
+<Callout type="calculation-result" title="Engineering objective">
+The engineering objective is not to install a shunt contactor in every passive harmonic filter. It is to understand the filter's light-load behavior and select the appropriate design for the actual power system.
+</Callout>
+
+## Technical Notes and Disclaimer
+
+The illustrations and numerical values in this article are intended for educational purposes.
+
+Actual performance must be established from manufacturer specifications, relevant system data, calculations, testing, or an appropriate power-quality study.
+
+The simplified diagram is conceptual and does not represent a complete construction or protection schematic.
+
+Any capacitor-switching arrangement must be approved for the filter design and comply with applicable electrical safety requirements.
+
+<ReferenceList>
+  <li><a href="https://americas.hammondpowersolutions.com/resources/whitepapers-and-technical-articles/phf-leading-power-factor-at-light-load">Hammond Power Solutions, <em>Passive Harmonic Filters: Leading Power Factor at Light Load and Application on a Generator</em></a> — light-load leading power factor, voltage effects, generator considerations, and the loss of complete filter operation when the capacitor branch is switched out.</li>
+  <li><a href="https://americas.hammondpowersolutions.com/en/resources/whitepapers-and-technical-articles/passive-harmonic-filter-misconceptions">Hammond Power Solutions, <em>Common Misconceptions About Passive Harmonic Filters</em></a> — product-design differences, capacitive kVAr, and light-load voltage behavior.</li>
+  <li><a href="https://americas.hammondpowersolutions.com/news/2023/january/phf-contactor-option">Hammond Power Solutions, <em>New Capacitor Contactor Option Available for HPS Centurion P</em></a> — manufacturer-provided capacitor-contactor option and VFD control example.</li>
+  <li><a href="https://www.mirusinternational.com/downloads/Mirus-Passive-Filter-Models-and-Options-22.02.03.pdf">Mirus International, <em>Passive Filter Models and Options</em></a> — capacitor-switching contactor information for light-load, stopped-load, and generator applications.</li>
+</ReferenceList>
