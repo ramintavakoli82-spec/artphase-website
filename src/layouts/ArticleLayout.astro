@@ -5,6 +5,7 @@ const { entry, headings } = Astro.props;
 const sections = headings.filter((h:any) => h.depth === 2);
 const compactMobileTitle = [
   'how-active-harmonic-filter-cancels-vfd-harmonics',
+  'how-power-factor-correction-reduces-current',
   'passive-harmonic-filter-without-shunt-contactor',
 ].includes(entry.id);
 const articleUrl = new URL(Astro.url.pathname, 'https://artphase.ca');

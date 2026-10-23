@@ -1,0 +1,242 @@
+---
+title: Same 100 kW Load — Less Current After PFC? How?
+subtitle: How a shunt capacitor reduces source current while the unchanged inductive load keeps drawing the same current.
+description: See why correcting a 100 kW, 600 V load from 0.80 to 0.95 power factor reduces source current from 120.3 A to 101.3 A without changing the load current.
+publicationDate: 2026-10-23
+updatedDate: 2026-10-23
+category: Power Quality
+tags: [power factor correction, PFC, capacitor bank, reactive power, source current, load current, power triangle, 3-phase power]
+readingTime: 8 min read
+draft: false
+coverImage: /images/engineering-notes/how-power-factor-correction-reduces-current-social.png
+coverAlt: Power factor correction comparison for a 100 kW three-phase load, showing lower source current after a shunt capacitor supplies part of the reactive current locally.
+coverCaption: Power factor correction changes the current supplied from upstream; it does not change the current in an unchanged inductive load branch.
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+
+A 100 kW load is operating from a 600 V, three-phase supply at 0.80 lagging power factor. After a capacitor bank raises the source power factor to 0.95 lagging, the source current falls from approximately **120.3 A to 101.3 A**.
+
+The real power is still 100 kW. The load itself has not changed. So where did the current go?
+
+The answer is in the reactive-current path. The shunt capacitor supplies part of the load's reactive current locally, so less reactive current has to travel through the upstream source and conductors.
+
+<figure className="engineering-figure medium">
+  <img
+    src="/images/engineering-notes/how-power-factor-correction-reduces-current.gif"
+    alt="Animated power factor correction example for a balanced 100 kW, 600 V three-phase inductive load. It compares the original 0.80 lagging condition with correction to 0.95 lagging and distinguishes load, capacitor, and source current."
+    width="648"
+    height="810"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <figcaption>Power factor correction reduces the upstream source current while the unchanged inductive load continues to draw the same branch current.</figcaption>
+</figure>
+
+<Callout type="important-note" title="The central engineering point">
+**Power factor correction reduces the current supplied by the source, not the current drawn by the unchanged inductive load.**
+</Callout>
+
+## The System Being Compared
+
+The example uses a balanced, three-phase inductive load under constant operating conditions:
+
+- Line-to-line voltage: **600 V AC**
+- Frequency: **60 Hz**
+- Real power: **100 kW**
+- Initial load power factor: **0.80 lagging**
+- Corrected source power factor: **0.95 lagging**
+- Compensation: a shunt capacitor bank connected in parallel with the load
+
+The load, supply voltage, and real power do not change when the capacitor is connected. Only the source-side reactive-power demand changes.
+
+## Before Power Factor Correction
+
+For a balanced three-phase system, line current is:
+
+<EquationBlock label="1">
+$$
+I=\frac{P}{\sqrt{3}\,V_{LL}\,PF}
+$$
+</EquationBlock>
+
+At 0.80 power factor:
+
+<EquationBlock label="2">
+$$
+\begin{aligned}
+I_{source,before}
+&=\frac{100{,}000}{\sqrt{3}\times600\times0.80}\\
+&\approx120.3\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+The apparent power is:
+
+<EquationBlock label="3">
+$$
+S_{before}=\frac{P}{PF}=\frac{100}{0.80}=125\,\mathrm{kVA}
+$$
+</EquationBlock>
+
+Reactive power is found from:
+
+<EquationBlock label="4">
+$$
+Q=P\tan\!\left(\cos^{-1}(PF)\right)
+$$
+</EquationBlock>
+
+Therefore:
+
+<EquationBlock label="5">
+$$
+Q_{before}=100\tan\!\left(\cos^{-1}(0.80)\right)=75.0\,\mathrm{kVAr}
+$$
+</EquationBlock>
+
+Before correction, the source supplies all 100 kW of real power and all 75.0 kVAr of inductive reactive power. The source current and load current are therefore the same: approximately 120.3 A.
+
+## What Changes When the Capacitor Bank Is Connected?
+
+The capacitor bank is connected in parallel with the inductive load. It does not sit in series with the load and does not directly force the load current to a lower value.
+
+Instead, the capacitor draws a leading current. Its reactive component opposes part of the load's lagging reactive current at the point of connection.
+
+The source still supplies the full **100 kW** required by the load. However, it now supplies only the portion of inductive reactive power that remains after the capacitor contribution is included.
+
+This is why three currents must be kept distinct:
+
+- **Load current:** remains approximately 120.3 A because the load operating point is unchanged.
+- **Capacitor current:** a leading branch current that provides capacitive reactive power locally.
+- **Source current:** the phasor sum of the load and capacitor branch currents; its reactive component is smaller after correction.
+
+These RMS current magnitudes should not be added or subtracted arithmetically. Voltage-aligned and quadrature components must be combined as phasors.
+
+## After Correction to 0.95 Lagging
+
+At a corrected source power factor of 0.95:
+
+<EquationBlock label="6">
+$$
+\begin{aligned}
+I_{source,after}
+&=\frac{100{,}000}{\sqrt{3}\times600\times0.95}\\
+&\approx101.3\,\mathrm{A}
+\end{aligned}
+$$
+</EquationBlock>
+
+The source apparent power becomes:
+
+<EquationBlock label="7">
+$$
+S_{after}=\frac{100}{0.95}\approx105.3\,\mathrm{kVA}
+$$
+</EquationBlock>
+
+The remaining reactive power supplied from upstream is:
+
+<EquationBlock label="8">
+$$
+\begin{aligned}
+Q_{after}
+&=100\tan\!\left(\cos^{-1}(0.95)\right)\\
+&\approx32.9\,\mathrm{kVAr}
+\end{aligned}
+$$
+</EquationBlock>
+
+The required capacitor compensation is the difference:
+
+<EquationBlock label="9">
+$$
+\begin{aligned}
+Q_c&=Q_{before}-Q_{after}\\
+&=75.0-32.9\\
+&\approx42.1\,\mathrm{kVAr}
+\end{aligned}
+$$
+</EquationBlock>
+
+An ideal 42.1 kVAr, 600 V three-phase capacitor bank corresponds to approximately 40.5 A of line current in its branch. That leading current cancels part of the load's lagging reactive-current component at the common connection point.
+
+## Numerical Comparison
+
+<EngineeringTable number="1" caption="Source and load quantities before and after power factor correction">
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Before PFC</th>
+      <th>After PFC</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td>Load real power</td><td>100 kW</td><td>100 kW</td></tr>
+    <tr><td>Source power factor</td><td>0.80 lagging</td><td>0.95 lagging</td></tr>
+    <tr><td>Source current</td><td>120.3 A</td><td>101.3 A</td></tr>
+    <tr><td>Load current</td><td>120.3 A</td><td>120.3 A</td></tr>
+    <tr><td>Source reactive power</td><td>75.0 kVAr</td><td>32.9 kVAr</td></tr>
+    <tr><td>Capacitor compensation</td><td>0 kVAr</td><td>42.1 kVAr</td></tr>
+    <tr><td>Source apparent power</td><td>125.0 kVA</td><td>105.3 kVA</td></tr>
+    <tr><td>Source phase angle</td><td>36.9° lagging</td><td>18.2° lagging</td></tr>
+  </tbody>
+</EngineeringTable>
+
+The source current falls by approximately **19.0 A**, or **15.8%**, while the source continues to deliver the same 100 kW. The source apparent power decreases by the same percentage because the voltage is fixed.
+
+## Why the Source Current Moves Closer to the Voltage
+
+At 0.80 lagging power factor, the source current lags the source voltage by approximately 36.9°. Its reactive component is relatively large.
+
+After correction to 0.95 lagging, the source current lags by only about 18.2°. The current phasor has moved closer to the voltage phasor because the capacitor supplies part of the quadrature current locally.
+
+The in-phase current component associated with real power remains essentially unchanged. What decreases is the net lagging reactive component seen by the source. With a smaller quadrature component, the total source-current magnitude is lower.
+
+For the same relationships in an interactive format, use the [Power Factor Correction Calculator](/calculations/power-factor-correction/) or compare $P$, $Q$, and $S$ with the [AC Power Triangle Calculator](/calculations/ac-power/).
+
+## Practical Engineering Considerations
+
+The 42.1 kVAr result is the ideal compensation required at this one operating point. A practical capacitor-bank design needs more than a single steady-state calculation.
+
+Capacitor banks must be selected and applied with care when:
+
+- the load varies enough to require stepped or automatically controlled compensation;
+- harmonic-producing loads are present;
+- the capacitor bank and system inductance could create a resonant condition;
+- switching transients, discharge time, or inrush current affect the switching equipment;
+- the installation could become overcorrected and operate at leading power factor during light load.
+
+In systems with significant harmonics, a harmonic study may be needed. Detuned reactors or another purpose-designed solution may be appropriate; a standard capacitor bank should not be applied solely from the fundamental-frequency kVAr calculation.
+
+<Callout type="warning" title="Do not confuse lower current with lower real energy">
+Power factor correction does not reduce the unchanged load's 100 kW real-power demand. It may reduce upstream $I^2R$ losses and can affect utility demand or power-factor charges, but it does not guarantee a lower electricity bill. The result depends on the installation and tariff.
+</Callout>
+
+## Assumptions and Limits
+
+This example assumes:
+
+- balanced three-phase operation;
+- sinusoidal voltage and current;
+- constant load and constant 600 V supply voltage;
+- idealized shunt compensation with negligible losses;
+- no harmonic distortion; and
+- unchanged load impedance and operating conditions.
+
+Real installations should be evaluated using measured or manufacturer-provided load data, actual voltage, system impedance, load profile, harmonic spectrum, equipment ratings, and applicable codes and utility requirements.
+
+## Key Takeaway
+
+The capacitor bank does not make the unchanged inductive load draw less current. It creates a second branch that supplies part of the required reactive current near the load.
+
+As a result, the upstream source supplies the same real power but less reactive power. The source current becomes more closely aligned with the voltage and falls from approximately **120.3 A to 101.3 A**.
+
+<Callout type="calculation-result" title="Final result">
+## Same 100 kW load. Same 120.3 A load current. Lower 101.3 A source current after PFC.
+</Callout>
