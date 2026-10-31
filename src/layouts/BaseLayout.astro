@@ -12,7 +12,8 @@ const {
   analytics = true,
   image,
   type = 'website',
-  structuredData
+  structuredData,
+  socialDescription = description
 } = Astro.props;
 
 const canonical = siteConfig.domain
@@ -41,14 +42,14 @@ const currentCategory = Astro.url.searchParams.get('category') ?? undefined;
     {canonical && <link rel="canonical" href={canonical} />}
 
     <meta property="og:title" content={pageTitle} />
-    <meta property="og:description" content={description} />
+    <meta property="og:description" content={socialDescription} />
     <meta property="og:type" content={type} />
     {canonical && <meta property="og:url" content={canonical} />}
     {socialImage && <meta property="og:image" content={socialImage} />}
     {socialImage && <meta property="og:image:alt" content={description} />}
     <meta name="twitter:card" content={socialImage ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={pageTitle} />
-    <meta name="twitter:description" content={description} />
+    <meta name="twitter:description" content={socialDescription} />
     {socialImage && <meta name="twitter:image" content={socialImage} />}
     {structuredData && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 

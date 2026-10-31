@@ -1,1 +1,4 @@
-<section class="references"><h2 id="references">References</h2><ol><slot /></ol></section>
+---
+const { title = 'References' } = Astro.props;
+---
+<section class="references"><h2 id="references">{title}</h2><ol><slot /></ol></section>

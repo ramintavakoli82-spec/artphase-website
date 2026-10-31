@@ -9,6 +9,7 @@ const notes = defineCollection({
     category: z.string(), tags: z.array(z.string()), readingTime: z.string(), draft: z.boolean().default(false),
     coverImage: z.string().optional(), coverAlt: z.string().optional(), coverCaption: z.string().optional(),
     coverDisplay: z.boolean().default(true),
+    socialDescription: z.string().optional(),
   }),
 });
 export const collections = { notes };

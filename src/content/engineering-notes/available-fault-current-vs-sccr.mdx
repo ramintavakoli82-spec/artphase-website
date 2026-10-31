@@ -1,0 +1,396 @@
+---
+title: 35 kA SCCR for the Panel. Is It Enough?
+subtitle: A worked 480 V transformer-and-feeder example showing why panel SCCR must be checked against available fault current at the panel terminals.
+description: A worked 480 V example shows how transformer and feeder impedance affect available fault current—and why a 35 kA SCCR alone is not enough.
+socialDescription: Same 35 kA panel. Different fault current at its terminals. See when it passes the SCCR comparison—and why the installation still needs engineering review.
+publicationDate: 2026-10-31
+updatedDate: 2026-10-31
+category: MCC & Control Panels
+tags: [Industrial Power, Short Circuit, SCCR, Available Fault Current, UL 508A, Electrical Safety, Transformer Impedance, Feeder Impedance]
+readingTime: 16 min read
+draft: false
+coverImage: /images/engineering-notes/available-fault-current-vs-sccr-480v.gif
+coverAlt: Animation of a 2,500 kVA transformer feeding a 35 kA SCCR panel at 480 V. Feeder length changes from 10 to 400 m and the calculated available fault current decreases from about 51.1 to 24.4 kA.
+coverCaption: Illustrative 480 V, three-phase system comparing a fixed 35 kA panel SCCR with calculated available fault current at different feeder lengths.
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+*A panel nameplate says **35 kA SCCR**. Does that make it suitable for a particular installation? Not until we know the **available fault current at the panel's incoming terminals**.*
+
+The same panel might be suitable at one point in an electrical distribution system and unsuitable at another. Its SCCR does not change simply because it is installed farther from a transformer. What changes is the **prospective current the upstream electrical system could deliver during a short circuit**.
+
+The animation follows a 480 V, three-phase transformer-and-feeder example. The panel stays at **35 kA SCCR** while feeder impedance changes. We calculate the available fault current—not invent it—and compare the resulting value with the panel's fixed rating.
+
+<div className="central-check">Verified equipment SCCR, at its specified voltage and conditions, ≥ maximum available fault current at its supply terminals.</div>
+
+<figure className="engineering-figure portrait">
+  <img
+    className="motion-animation"
+    src="/images/engineering-notes/available-fault-current-vs-sccr-480v.gif"
+    alt="Animation of a 2,500 kVA transformer feeding a 35 kA SCCR panel at 480 V. Feeder length changes from 10 to 400 metres; the prospective three-phase available fault current decreases from about 51.1 to 24.4 kA, and the SCCR comparison changes from FAIL to PASS."
+    width="648"
+    height="810"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <img
+    className="reduced-motion-poster"
+    src="/images/engineering-notes/available-fault-current-vs-sccr-480v-poster.png"
+    alt="Still frame of the 480 V example at 10 metres, where calculated available fault current is 51.1 kA and exceeds the panel's 35 kA SCCR."
+    width="648"
+    height="810"
+    loading="eager"
+    decoding="async"
+  />
+  <figcaption>Illustrative 480 V, three-phase system: panel SCCR stays at 35 kA while calculated available fault current changes as the transformer-to-panel feeder length changes.</figcaption>
+</figure>
+
+<Callout type="important-note" title="What PASS means here">
+The animation's **PASS** or **FAIL** result applies only to the stated SCCR-versus-AFC screening comparison. PASS does not establish feeder ampacity, voltage drop, protective-device coordination, arc-flash performance, code compliance, or installation approval.
+</Callout>
+
+## What AFC and SCCR Actually Mean
+
+**Available Fault Current (AFC)** is the *prospective* short-circuit current available from the electrical system at a specified location for a stated fault type and calculation basis. AFC is a characteristic of the supply system **at that point**. It depends on upstream source strength, transformer characteristics, intervening conductor and bus impedances, network arrangement, and possible additional contributions from rotating machines and other connected sources.
+
+**Short-Circuit Current Rating (SCCR)** identifies the available short-circuit current level at which specified electrical equipment or an assembly may be connected, subject to its voltage rating and evaluated conditions, including required upstream protective devices where applicable. For an industrial control panel, the **assembly SCCR** is the rating that matters—not merely an impressive rating printed on one component inside it.
+
+The terms answer two different questions:
+
+- **AFC:** How much fault current could the **electrical system deliver here**?
+- **SCCR:** For how much available fault current is this **equipment or assembly evaluated and rated here**, under the stated conditions?
+
+For the basic installation screening comparison:
+
+<EquationBlock label="1">
+$$
+\boxed{SCCR_{equipment}\;\geq\;I_{AFC,location}}
+$$
+</EquationBlock>
+
+If the confirmed AFC at the incoming terminals is **22 kA** and the panel is correctly rated **35 kA SCCR at that voltage**, this magnitude check passes. If AFC is **42 kA**, the same 35 kA panel fails the check unless a separately valid, documented equipment/protection arrangement changes the applicable rating or installation basis. The comparison is necessary, but it is not a complete statement of system safety.
+
+## The 480 V System in the Animation
+
+The transformer's secondary feeds the panel through a variable-length feeder. The panel's **35 kA SCCR remains fixed** throughout the demonstration.
+
+<EngineeringTable number="1" caption="Fixed inputs used in the animation and calculations">
+  <thead><tr><th>Item</th><th>Value used</th></tr></thead>
+  <tbody>
+    <tr><td>Nominal line-to-line voltage</td><td>480 V AC</td></tr>
+    <tr><td>System</td><td>Balanced three-phase, 60 Hz</td></tr>
+    <tr><td>Transformer</td><td>2,500 kVA</td></tr>
+    <tr><td>Transformer impedance</td><td>5.75%</td></tr>
+    <tr><td>Assumed transformer X/R ratio</td><td>10</td></tr>
+    <tr><td>Upstream source</td><td>Ideal infinite-bus approximation</td></tr>
+    <tr><td>Feeder</td><td>Seven idealized parallel 500-kcmil copper circuits</td></tr>
+    <tr><td>Assumed R of one feeder circuit</td><td>0.09 Ω/km</td></tr>
+    <tr><td>Assumed X of one feeder circuit</td><td>0.08 Ω/km</td></tr>
+    <tr><td>Feeder length</td><td>10–400 m</td></tr>
+    <tr><td>Panel SCCR</td><td>35 kA rms symmetrical at 480 V</td></tr>
+    <tr><td>Fault calculation</td><td>Three-phase symmetrical bolted fault at the panel incoming terminals</td></tr>
+  </tbody>
+</EngineeringTable>
+
+The feeder R and X values are **illustrative inputs**, not a conductor manufacturer's guaranteed specification. Seven parallel circuits are an **impedance-model assumption**, not a verified, code-compliant feeder selection. Actual conductor ampacity, arrangement, voltage drop, protection, and installation method require independent design checks.
+
+The calculation resolves transformer and feeder impedance into resistance and reactance, adds like components, and then computes total impedance magnitude. This follows the general series-impedance method described in Schneider Electric's *Electrical Installation Guide* [1].
+
+## Calculating Fault Current at the Transformer Secondary
+
+### Step 1: Transformer full-load current
+
+For a balanced three-phase transformer:
+
+<EquationBlock label="2">
+$$
+I_{FL}=\frac{S}{\sqrt{3}\,V_{LL}}
+=\frac{2{,}500{,}000}{\sqrt{3}\times480}
+\approx3{,}007.0\ \mathrm{A}
+$$
+</EquationBlock>
+
+This is the **rated full-load secondary current**, not fault current.
+
+### Step 2: Transformer impedance on the 480 V side
+
+<EquationBlock label="3">
+$$
+|Z_T|=\frac{V_{LL}^{2}}{S}\left(\frac{Z_{\%}}{100}\right)
+=\frac{480^2}{2{,}500{,}000}\times0.0575
+=0.0052992\ \Omega
+$$
+</EquationBlock>
+
+The simplified infinite-source three-phase fault current directly at the transformer secondary is:
+
+<EquationBlock label="4">
+$$
+I_{sc,T}=\frac{480}{\sqrt{3}\times0.0052992}
+\approx52{,}296\ \mathrm{A}=\boxed{52.30\ \mathrm{kA}}
+$$
+</EquationBlock>
+
+The equivalent transformer-terminal shortcut is:
+
+<EquationBlock label="5">
+$$
+I_{sc,T}\approx\frac{I_{FL}}{Z_{\%}/100}
+=\frac{3{,}007.0}{0.0575}\approx52.30\ \mathrm{kA}
+$$
+</EquationBlock>
+
+Do not apply this shortcut directly at a remote panel without adding the intervening impedance. **52.30 kA is the transformer-secondary-terminal value** for this model, not automatically the AFC at the downstream panel. The infinite-upstream-source assumption also ignores source impedance ahead of the transformer; it is an instructional assumption, not a substitute for utility data.
+
+## Adding the Transformer-to-Panel Feeder
+
+With the assumed transformer **X/R = 10**:
+
+<EquationBlock label="6">
+$$
+\begin{aligned}
+|Z_T|&=\sqrt{R_T^2+X_T^2},\qquad X_T=10R_T\\
+R_T&=\frac{0.0052992}{\sqrt{101}}=0.0005272901\ \Omega\\
+X_T&=10R_T=0.0052729011\ \Omega
+\end{aligned}
+$$
+</EquationBlock>
+
+For seven idealized equal parallel circuits, with each circuit represented by $R'=0.09\ \Omega/\mathrm{km}$ and $X'=0.08\ \Omega/\mathrm{km}$, the equivalent feeder impedance for physical length $L$ metres is:
+
+<EquationBlock label="7">
+$$
+R_F(L)=\frac{0.09}{7}\frac{L}{1000}\ \Omega,
+\qquad
+X_F(L)=\frac{0.08}{7}\frac{L}{1000}\ \Omega
+$$
+</EquationBlock>
+
+The model assumes identical circuit impedances, equal current sharing, and independent parallel circuits. Real arrangement and spacing affect mutual inductive coupling; real studies must use appropriate conductor data and geometry.
+
+Add resistance and reactance separately before taking the magnitude:
+
+<EquationBlock label="8">
+$$
+\begin{aligned}
+R_{total}(L)&=R_T+R_F(L)\\
+X_{total}(L)&=X_T+X_F(L)\\
+|Z_{total}(L)|&=\sqrt{R_{total}(L)^2+X_{total}(L)^2}
+\end{aligned}
+$$
+</EquationBlock>
+
+Finally:
+
+<EquationBlock label="9">
+$$
+\boxed{I_{AFC}(L)=\frac{480}{\sqrt{3}\,|Z_{total}(L)|}}
+$$
+</EquationBlock>
+
+This is the current at the panel supply terminals for the defined hypothetical system. It is neither transformer full-load current nor a protective device's interrupting rating.
+
+## Worked Cases: 10 m, 200 m and 400 m
+
+### Case A — 10 m feeder
+
+<EquationBlock label="10">
+$$
+\begin{aligned}
+R_F&=\frac{0.09}{7}\times0.010=0.0001285714\ \Omega\\
+X_F&=\frac{0.08}{7}\times0.010=0.0001142857\ \Omega\\
+R_{total}&=0.0006558615\ \Omega\\
+X_{total}&=0.0053871868\ \Omega\\
+|Z_{total}|&=0.0054269638\ \Omega
+\end{aligned}
+$$
+</EquationBlock>
+
+<EquationBlock label="11">
+$$
+I_{AFC}=\frac{480}{\sqrt{3}\times0.0054269638}
+\approx\boxed{51.065\ \mathrm{kA}}
+$$
+</EquationBlock>
+
+The animation displays **51.1 kA**. Because $51.1\ \mathrm{kA}>35.0\ \mathrm{kA}$, the **SCCR comparison fails**.
+
+### Case B — 200 m feeder
+
+<EquationBlock label="12">
+$$
+\begin{aligned}
+R_F&=0.0025714286\ \Omega,\qquad X_F=0.0022857143\ \Omega\\
+R_{total}&=0.0030987187\ \Omega,\qquad X_{total}=0.0075586154\ \Omega\\
+|Z_{total}|&=0.0081691324\ \Omega\\
+I_{AFC}&\approx\boxed{33.924\ \mathrm{kA}}
+\end{aligned}
+$$
+</EquationBlock>
+
+The animation displays **33.9 kA**. Because $33.9\ \mathrm{kA}<35.0\ \mathrm{kA}$, the **SCCR-versus-AFC screening comparison passes**. This does not establish that a 200 m feeder is practical or that the complete installation is compliant.
+
+### Case C — 400 m feeder
+
+<EquationBlock label="13">
+$$
+\begin{aligned}
+R_F&=0.0051428571\ \Omega,\qquad X_F=0.0045714286\ \Omega\\
+R_{total}&=0.0056701473\ \Omega,\qquad X_{total}=0.0098443296\ \Omega\\
+|Z_{total}|&=0.0113605192\ \Omega\\
+I_{AFC}&\approx\boxed{24.394\ \mathrm{kA}}
+\end{aligned}
+$$
+</EquationBlock>
+
+The animation displays **24.4 kA**, so the narrow SCCR comparison passes. Less available fault current is not necessarily better overall: a long feeder can create substantial voltage drop, losses, and minimum-fault protection challenges.
+
+<EngineeringTable number="2" caption="Calculated available fault current at the panel terminals">
+  <thead><tr><th>Feeder length</th><th>Calculated AFC</th><th>35 kA SCCR comparison</th></tr></thead>
+  <tbody>
+    <tr><td>0 m (transformer terminals)</td><td>52.30 kA</td><td><strong>FAIL</strong></td></tr>
+    <tr><td>10 m</td><td>51.07 kA</td><td><strong>FAIL</strong></td></tr>
+    <tr><td>50 m</td><td>46.50 kA</td><td><strong>FAIL</strong></td></tr>
+    <tr><td>100 m</td><td>41.57 kA</td><td><strong>FAIL</strong></td></tr>
+    <tr><td>150 m</td><td>37.42 kA</td><td><strong>FAIL</strong></td></tr>
+    <tr><td>183.68 m</td><td>≈35.00 kA</td><td>Boundary</td></tr>
+    <tr><td>200 m</td><td>33.92 kA</td><td><strong>PASS — SCCR screen only</strong></td></tr>
+    <tr><td>250 m</td><td>30.97 kA</td><td><strong>PASS — SCCR screen only</strong></td></tr>
+    <tr><td>300 m</td><td>28.44 kA</td><td><strong>PASS — SCCR screen only</strong></td></tr>
+    <tr><td>350 m</td><td>26.27 kA</td><td><strong>PASS — SCCR screen only</strong></td></tr>
+    <tr><td>400 m</td><td>24.39 kA</td><td><strong>PASS — SCCR screen only</strong></td></tr>
+  </tbody>
+</EngineeringTable>
+
+The fixed panel rating is 35 kA in every row. System impedance—and therefore AFC at the panel location—is what changes.
+
+## When Does AFC Fall Below 35 kA?
+
+For this model, set $I_{AFC}(L)=35{,}000\ \mathrm{A}$:
+
+<EquationBlock label="14">
+$$
+\left(R_T+\frac{0.09L}{7\times1000}\right)^2+
+\left(X_T+\frac{0.08L}{7\times1000}\right)^2
+=\left(\frac{480}{\sqrt{3}\times35{,}000}\right)^2
+$$
+</EquationBlock>
+
+The positive solution is:
+
+<EquationBlock label="15">
+$$
+\boxed{L\approx183.68\ \mathrm{m}}
+$$
+</EquationBlock>
+
+The indicator changes when numerical AFC crosses 35.0 kA. This threshold belongs only to this hypothetical model. **183.68 m is not a permitted minimum feeder length, a code-prescribed distance, or a design recommendation.**
+
+## SCCR Is Not the Interrupting Rating of a Fuse or Breaker
+
+A fuse or circuit breaker's **interrupting rating** describes the current it is rated to interrupt at specified voltage and conditions. A panel's **SCCR** describes the available short-circuit current level for which the equipment assembly is evaluated for connection under its stated conditions. These are not interchangeable ratings.
+
+A **200 kA interrupting-rated fuse does not automatically make a downstream panel a 200 kA SCCR assembly**. The rating and conditions of the overall panel still matter. UL 508A Supplement SB and manufacturer-specific evaluated combinations are among the methods used to establish applicable industrial control panel SCCR [2–4].
+
+Protective-device interrupting capacity, equipment SCCR, maximum AFC, and protective-device coordination each require their own evaluation. A satisfactory result for one does not prove the others.
+
+## Can a Current-Limiting Fuse Increase the Permitted SCCR?
+
+Sometimes a properly selected **current-limiting protective device** and a documented, applicable equipment/protection arrangement permit a higher overall panel SCCR or application at a higher prospective fault-current level. **There is no automatic upgrade merely because a current-limiting fuse was added.**
+
+Depending on the applicable standard and circuit location, the determination may rely on verified manufacturer combinations, tested ratings, or a permitted evaluation method such as specific provisions of **UL 508A Supplement SB**. Peak let-through current and let-through energy characteristics must be evaluated under the relevant rules and test conditions. Public guidance cannot replace product instructions or applicable standards [2–4].
+
+Before claiming a higher assembly SCCR, establish:
+
+- the device manufacturer and exact fuse/breaker model or class;
+- maximum permitted ampere rating and voltage;
+- required placement and circuit role;
+- documented combination rating or standard-approved evaluation procedure; and
+- prospective fault current plus all marking conditions and restrictions.
+
+Do not select a fuse only because its interrupting rating is high and then change the panel nameplate without an applicable evaluation and documentation.
+
+## What a PASS in the Animation Does—and Does Not—Mean
+
+**PASS means only** that, in the stated three-phase symmetrical model, the assumed 35 kA panel SCCR equals or exceeds computed prospective AFC at the panel line terminals.
+
+It does not confirm:
+
+- sufficient feeder ampacity or acceptable temperature rise;
+- acceptable running voltage drop or conductor installation method;
+- overload protection or prompt clearing of minimum short-circuit currents;
+- required interrupting ratings and correct application of fuses and breakers;
+- selective coordination, equipment protection, or arc-flash performance;
+- transient/asymmetrical peak current duty or mechanical stress;
+- motor, generator, inverter, or alternate-source contributions; or
+- panel documentation, SCCR markings, product certification, or AHJ acceptance.
+
+The **2,500 kVA, 480 V** transformer has a full-load secondary current of about **3,007 A**. The animation's **seven parallel 500-kcmil copper circuits** are only a simplified impedance demonstration. **Their continuous-current ampacity has not been evaluated and must not be assumed adequate.** Conductor selection depends on insulation and terminal ratings, current-carrying conductor count, installation configuration, grouping/derating, ambient temperature, routing, and applicable code.
+
+The engineering lesson is not “make the feeder longer until the panel passes.” It is: **determine AFC at the actual equipment location, then select and verify suitable equipment and protection for the real system.**
+
+## Practical Design Checklist
+
+1. **Locate the evaluation point.** Use the supply/line terminals of the equipment under review—not automatically the transformer terminals.
+2. **Determine maximum prospective fault current.** Obtain source/utility data, transformer information, and connecting-system impedances. Include relevant contributors and operating arrangements.
+3. **Verify assembly SCCR at the correct voltage.** Do not extend a rating beyond its stated voltage or protective-device conditions.
+4. **Identify required protective devices.** Use manufacturer instructions, evaluated combinations, and applicable standard methods rather than assuming any fuse upgrades SCCR.
+5. **Design feeder and protection.** Check ampacity, voltage drop, conductor thermal withstand, minimum fault current, interruption, and coordination.
+6. **Consider future changes.** Transformer replacement, system ties, added generation, or source changes can alter AFC.
+7. **Document the basis.** Record assumptions, location, AFC basis, assembly rating, protective-device conditions, and the applicable code/certification jurisdiction.
+
+## Assumptions and Limitations
+
+This is an **instructional calculation**, not a site-specific short-circuit study, certification, or installation approval. It uses a balanced, three-phase, 480 V nominal system with a bolted symmetrical fault, a 2,500 kVA transformer, 5.75% transformer impedance, assumed X/R = 10, zero upstream source impedance, and seven idealized equal parallel copper feeder circuits represented by fixed positive-sequence R and X.
+
+The model neglects utility impedance, conductor temperature variation, transformer impedance tolerance, mutual coupling, detailed bus/connection impedance, motor/generator/inverter contribution, alternate arrangements, and formal ANSI/IEEE or IEC correction factors. It does not predict asymmetrical peak duty, arc-flash incident energy, clearing time, line-to-ground faults, or minimum faults. Real maximum and minimum fault-current results may differ materially.
+
+The selected R/X values and topology were **not validated as a buildable feeder design**. The model does not address ampacity, overload capacity, termination constraints, insulation type, voltage drop, protective-device clearing performance, or local code compliance.
+
+SCCR is assumed to be a properly documented **35 kA rms symmetrical at 480 V** assembly rating under its valid conditions. Actual ratings may depend on specified upstream protective equipment and product instructions. Follow applicable electrical codes, standards, certification conditions, manufacturer requirements, and local AHJ expectations.
+
+## Frequently Asked Questions
+
+### Is AFC measured at the transformer or at the panel?
+
+For the panel SCCR check, determine AFC at the **panel's incoming/supply terminals**. Transformer-secondary current is a useful starting point, but include feeder and all other upstream impedance between the transformer and panel.
+
+### Is a 35 kA SCCR panel always acceptable on a 480 V system?
+
+**No.** Nominal voltage alone does not specify AFC. The SCCR must suit the actual maximum prospective fault current at the equipment location, at the appropriate voltage and under all specified protective-device conditions.
+
+### Does increasing feeder length always reduce maximum AFC?
+
+For this unchanged source-and-series-impedance model, increasing length raises series impedance and lowers calculated three-phase bolted-fault current. Real networks can include alternate sources and other contributions. Longer feeders can also worsen voltage drop and protective-device operation. Extending a feeder is not a design remedy for inadequate SCCR.
+
+### Does a 200 kA interrupting-rating fuse give the panel a 200 kA SCCR?
+
+**No, not automatically.** Interrupting rating and assembly SCCR describe different performance requirements. A higher assembly rating or permissible combination requires applicable evaluations, manufacturer documentation, and the relevant standard method.
+
+### Why include X/R instead of using only transformer %Z?
+
+Percent impedance gives transformer impedance **magnitude** on a defined base. To combine it correctly with feeder impedance, resolve it into R and X, sum like components, and then calculate total magnitude. The assumed X/R supplies the information needed for this illustration; actual studies should use appropriate source data.
+
+## Key Takeaway
+
+**Same 35 kA SCCR panel. Different available fault current at different installation points.**
+
+In this 480 V model, panel-terminal AFC drops from about **51.1 kA at 10 m** to **24.4 kA at 400 m**. The SCCR never changes. Near **183.7 m**, AFC crosses 35 kA and the animation's narrow screening result changes from FAIL to PASS.
+
+That does not validate the feeder as an installation. It demonstrates the core principle:
+
+> **SCCR tells you the equipment's evaluated short-circuit-current rating. AFC tells you the prospective short-circuit current available at its location. Verify that the former is adequate for the latter—under the equipment's actual rated conditions.**
+
+<ReferenceList title="Technical References">
+  <li><a href="https://www.electrical-installation.org/enwiki/3-phase_short-circuit_current_(Isc)_at_any_point_within_a_LV_installation">Schneider Electric — Electrical Installation Guide: 3-phase short-circuit current at any point within a LV installation</a>. Series-impedance method and three-phase fault-current calculation.</li>
+  <li><a href="https://www.ul.com/resources/determining-short-circuit-current-rating-sccr-machinery">UL Solutions — Determining Short-Circuit Current Rating (SCCR) for Machinery</a>. Panel-terminal AFC, SCCR checks, and current-limiting-device considerations.</li>
+  <li><a href="https://www.eaton.com/us/en-us/products/electrical-circuit-protection/fuses/short-circuit-current-ratings.html">Eaton — Short-Circuit Current Ratings</a>. Equipment SCCR versus protective-device interrupting ratings.</li>
+  <li><a href="https://www.siemens.com/en-us/industries/industrial-machinery/control-panels/short-circuit-calculation/">Siemens — Short-circuit calculation (SCCR), Control Panel Tip</a>. Evaluated combinations and UL 508A Supplement SB application restrictions.</li>
+  <li><a href="https://www.eaton.com/us/en-us/products/controls-drives-automation-sensors/ul508a.html">Eaton — Information about how UL 508A affects you</a>. Panel SCCR from component ratings, tested combinations, and recognized procedures.</li>
+</ReferenceList>

@@ -17,12 +17,12 @@ export const engineeringNoteCategories = [
   {
     label: 'MCC & Control Panels',
     slug: 'mcc-control-panels',
-    contentCategories: [],
+    contentCategories: ['MCC & Control Panels'],
   },
   {
     label: 'Industrial Power',
     slug: 'industrial-power',
-    contentCategories: [],
+    contentCategories: ['MCC & Control Panels'],
   },
 ] as const;
 
