@@ -7,6 +7,8 @@
     "dev": "astro dev",
     "check": "astro check",
     "verify:note19": "node scripts/verify-note-19.mjs",
+    "verify:note20": "node scripts/verify-note-20.mjs",
+    "verify:note20:browser": "node scripts/verify-note-20-browser.mjs",
     "build": "astro build",
     "preview": "astro preview"
   },

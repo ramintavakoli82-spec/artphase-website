@@ -1,0 +1,321 @@
+---
+title: The Hidden SCCR Trap
+seoTitle: The Hidden SCCR Trap | Reactors vs Passive Filters
+noteNumber: 20
+subtitle: Why a Line Reactor May Be SCCR-Exempt While a Passive Harmonic Filter Requires Additional Evaluation
+description: Learn why line reactors and passive harmonic filters are treated differently during industrial control panel SCCR evaluations under UL 508A, with practical examples, manufacturer references, and Canadian compliance considerations.
+socialDescription: Passive does not automatically mean SCCR-exempt. See why the exception for a reactor or dry-type capacitor does not automatically extend to a complete passive harmonic filter.
+publicationDate: 2026-11-20
+updatedDate: 2026-11-20
+category: MCC & Control Panels
+tags: [Industrial Power, MCC, Industrial Control Panels, SCCR, UL 508A, CSA C22.2 No. 286, Line Reactors, Passive Harmonic Filters, Short Circuit]
+readingTime: 19 min read
+draft: false
+coverImage: /images/engineering-notes/the-hidden-sccr-trap.gif
+socialImage: /images/engineering-notes/the-hidden-sccr-trap-poster.png
+coverAlt: Animated comparison of a line reactor and passive harmonic filter illustrating SCCR component exceptions and the need to evaluate the complete harmonic filter.
+coverCaption: Conceptual electrical diagrams for educational purposes. Individual reactor and dry-type capacitor exceptions do not automatically establish an SCCR exception for the complete harmonic filter.
+coverDisplay: false
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+*When determining the Short-Circuit Current Rating (SCCR) of an industrial control panel, understanding how each applicable power-circuit component is evaluated is essential.*
+
+Some components are specifically excepted from having an individual SCCR under the documented UL 508A evaluation method. A common mistake is to extend a component-level exception to a complete electrical assembly.
+
+A standalone **line reactor** and a **passive harmonic filter (PHF)** illustrate the problem. Both are passive. Both may contain inductors. Their treatment in a panel SCCR evaluation is not necessarily the same.
+
+<div className="central-check">The engineering question is not simply whether a device is passive. It is whether the specific component—or complete assembly—qualifies for an applicable SCCR exception.</div>
+
+<figure className="engineering-figure portrait">
+  <img
+    className="motion-animation"
+    src="/images/engineering-notes/the-hidden-sccr-trap.gif"
+    alt="Animated comparison of a line reactor and passive harmonic filter illustrating SCCR component exceptions and the need to evaluate the complete harmonic filter."
+    width="1080"
+    height="1350"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+  <img
+    className="reduced-motion-poster"
+    src="/images/engineering-notes/the-hidden-sccr-trap-poster.png"
+    alt="Static comparison of a line reactor and passive harmonic filter, with the capacitor section identified as a distinguishing feature of the complete filter."
+    width="1080"
+    height="1350"
+    loading="eager"
+    decoding="async"
+  />
+  <figcaption>Conceptual electrical diagrams for educational purposes. Individual reactor and dry-type capacitor exceptions do not automatically establish an SCCR exception for the complete harmonic filter.</figcaption>
+</figure>
+
+<Callout type="important-note" title="Read the red circle correctly">
+The red circle identifies the capacitor section as a visible distinction between the standalone reactor and the illustrated PHF. It does **not** mean that a dry-type capacitor is inherently required to have an individual SCCR or that every capacitor automatically reduces panel SCCR.
+</Callout>
+
+## 1. Understanding SCCR
+
+**Short-Circuit Current Rating (SCCR)** is the maximum prospective short-circuit current at which equipment is rated to be connected under its specified conditions. For an industrial control panel, SCCR is an **assembly-level rating** that must account for applicable power-circuit components, protective devices, tested combinations, and permitted evaluation methods.
+
+SCCR is not the same as the interrupting rating of a circuit breaker or fuse. A protective device may have a high interrupting rating without establishing that same rating for the complete panel.
+
+For example, a main circuit breaker with a 65 kA interrupting rating does not automatically make an industrial control panel a 65 kA SCCR assembly. The panel rating still has to be determined by an applicable method and supported by component and assembly information [1, 6–9].
+
+## 2. Why Line Reactors Are Different
+
+MTE Corporation's application note on the 2018 third edition of UL 508A identifies reactors and DC chokes as covered by the individual-component exception in Supplement SB §SB4.2.1, Exception No. 1 [3]. Hammond Power Solutions likewise states that reactors are exempt under §SB4.2.1 and warns that ordinary iron-core reactors are **not current-limiting devices** [5].
+
+Accordingly, the absence of an individual SCCR for an eligible standalone line reactor does not, by itself, reduce the panel's overall SCCR. The exception is not a blanket exemption for everything installed around that reactor.
+
+Associated disconnect switches, fuse holders, contactors, terminals, and other applicable power-circuit components must still be evaluated. A line reactor also must not be treated as a recognized short-circuit current-limiting protective device merely because it adds impedance.
+
+<Callout type="calculation-result" title="Key distinction">
+An exception applying to an individual reactor does not automatically extend to a complete assembly that contains a reactor plus other functional components.
+</Callout>
+
+## 3. What Changes With a Passive Harmonic Filter?
+
+A passive harmonic filter is more complex than a standalone line reactor. Depending on manufacturer and model, it may include:
+
+- an input reactor;
+- an output reactor;
+- a shunt reactor;
+- a capacitor bank;
+- thermal protection; and
+- optional switching or protective components.
+
+The exact arrangement varies. MTE's Matrix AP+ basic schematic, for example, documents inductive sections and a three-phase delta-connected capacitor section for that 480 V product family [4]. That reference is useful for understanding a general filter topology; it does not establish identical construction or ratings for every Matrix AP product or every PHF.
+
+A PHF is therefore a **functional electrical assembly**, not merely a standalone inductor. The MTE application note's discussion of the 2018 UL 508A edition specifically distinguishes exempt reactors from open-panel harmonic filters and treats the latter as devices needing an applicable SCCR evaluation [3].
+
+The individual reactor and dry-type capacitor exceptions do not automatically establish an SCCR exception for the complete filter. Its applicable rating has to be supported by product markings, certification, manufacturer documentation, an applicable default value, or another method permitted by the governing standard.
+
+## 4. The Capacitor Bank: An Important Distinction
+
+The capacitor bank is an essential functional element of many passive harmonic filters. Together with the inductive sections, it produces the filter's frequency-selective behaviour.
+
+But the capacitor must not be blamed by itself. The documented exception discussed in MTE's application note includes **dry-type capacitors** as individual components [3]. It would therefore be technically incorrect to say that the capacitor bank automatically reduces panel SCCR.
+
+The actual concern is the classification and evaluation of the **complete filter assembly**, including any applicable non-exempt components and manufacturer-specified conditions. A capacitor section is a useful visual identifier of the difference between a standalone reactor and a PHF, but its presence alone does not prove a lower rating.
+
+## 5. A Manufacturer Example: MTE Matrix AP
+
+MTE's application note describes three general paths for evaluating an open-panel harmonic filter within the documented UL 508A application [3]:
+
+1. Use an applicable manufacturer-tested or certified SCCR.
+2. Use the applicable UL 508A default SCCR value.
+3. Use an appropriate manufacturer-supported protective arrangement where the governing method permits it.
+
+The second path produces the following examples from MTE's published **600 V, 60 Hz, open-panel Matrix AP** table.
+
+<div className="note20-sccr-table">
+<EngineeringTable number="1" caption="Selected MTE 600 V, 60 Hz open-panel Matrix AP default SCCR examples from the manufacturer's application note [3]">
+  <thead>
+    <tr><th scope="col">MTE part number</th><th scope="col">Motor rating</th><th scope="col">Default SCCR</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>MAPP0034E</td><td>30 HP</td><td>5 kA</td></tr>
+    <tr><td>MAPP0052E</td><td>50 HP</td><td>5 kA</td></tr>
+    <tr><td>MAPP0066E</td><td>60 HP</td><td>10 kA</td></tr>
+    <tr><td>MAPP0083E</td><td>75 HP</td><td>10 kA</td></tr>
+  </tbody>
+</EngineeringTable>
+</div>
+
+These are **default evaluation values** for the documented products and method. They are not universal SCCR ratings for all MTE filters, all PHFs, or all configurations. Manufacturer-tested ratings, certification, construction, protection, and the applicable standard edition must still be checked.
+
+### What this means for a panel designer
+
+Consider an illustrative industrial control panel intended to achieve 65 kA SCCR. It contains an open-panel PHF for which the applicable default SCCR is 5 kA.
+
+If that filter remains a relevant 5 kA component in the final determination and no permitted higher-rating method is established, the panel cannot simply be assigned a 65 kA SCCR. The limiting condition has to be resolved before the target assembly rating can be claimed.
+
+This is a general example, not a completed SCCR assessment of a particular panel.
+
+<Callout type="warning" title="A high-rated main device is not enough">
+A main fuse or breaker with a high interrupting rating does not automatically overcome a lower applicable SCCR elsewhere in the assembly.
+</Callout>
+
+## 6. Can Protective Fusing Increase the Filter SCCR?
+
+In some documented configurations, yes. MTE describes a method using protective fusing in the filter shunt circuit to support a higher SCCR evaluation [3]. The method depends on specific conditions, including fuse class and rating, peak let-through current, filter configuration, and the manufacturer's application instructions.
+
+**Adding a fuse does not automatically increase a passive harmonic filter SCCR.** The arrangement must be supported by the governing standard and applicable manufacturer documentation. An unsuitable fuse may not achieve the intended result, and a filter rating established under specific protective conditions is not automatically the rating of the completed industrial control panel.
+
+### Factory-installed fuses and recommended protection are different
+
+A manufacturer's recommended shunt-circuit fuse arrangement does not mean that the fuse is supplied inside every factory-built filter. Some models or configurations may include internal protection; others may require separately installed devices or use a different construction.
+
+Review the exact model's drawings, bill of materials, certification information, and installation instructions. Do not infer internal protection from horsepower, enclosure style, or a recommendation applying to another product family.
+
+Protective fusing is one possible manufacturer-supported path—not the central lesson and not a universal solution.
+
+## 7. Open-Panel Filters vs. Enclosed Filters
+
+An open-panel filter intended for integration into another industrial control panel is not necessarily evaluated in the same way as a complete factory-certified enclosed filter.
+
+A factory-certified product may have an established rating and installation conditions for that product configuration. An open-panel filter may instead require the panel builder to establish its applicable SCCR through the relevant industrial-control-panel procedure and manufacturer documentation.
+
+Always distinguish among:
+
+- an individually excepted component;
+- an open-panel filter assembly;
+- a certified enclosed harmonic filter; and
+- the completed industrial control panel.
+
+These categories are not interchangeable.
+
+## 8. UL 508A: United States
+
+UL 508A is a principal product standard for industrial control panels in the United States. Supplement SB provides methods used to determine industrial control panel SCCR [1, 7–9].
+
+The historical MTE guidance used for this example discusses:
+
+- **SB4.2.1**, addressing SCCR consideration for individual power-circuit components and specified exceptions;
+- **Exception No. 1**, which the MTE document identifies as including reactors and dry-type capacitors;
+- **Table SB4.1**, used for applicable default component SCCR values; and
+- **Table SB4.2**, used in certain current-limiting protective-device evaluations [3].
+
+The public UL catalog identifies UL 508A as active and lists a revision dated June 26, 2025 [1]. The MTE application note, however, is expressly about the third edition dated April 24, 2018. Its historical wording must not be presented as a complete reproduction of every later revision.
+
+<Callout type="important-note" title="Use the controlled standard">
+This article summarizes public manufacturer and standards-organization information. It does not reproduce or replace the current controlled edition of UL 508A, its amendments, a product certification record, or an approved panel SCCR evaluation.
+</Callout>
+
+## 9. Canadian Perspective: CSA C22.2 No. 286:23
+
+CSA C22.2 No. 286:23, *Industrial control panels and assemblies*, is an important Canadian product standard [2]. CSA Group's public implementation notice says the 2023 edition expands SCCR determination criteria and identifies §4.13 as **Assembly Short Circuit Ratings**.
+
+Canadian requirements must be evaluated independently under the applicable CSA standard and certification program. Do not assume that every UL 508A exception, default table, or protective-device evaluation applies identically under CSA C22.2 No. 286.
+
+For equipment intended for both Canadian and US markets, the panel builder should confirm that the proposed method is acceptable for each required certification and for the actual construction.
+
+The full controlled CSA text was not publicly available during preparation of this note. This article therefore does **not** claim that CSA C22.2 No. 286:23 contains an identical reactor exception or passive-filter default-rating table. It uses the CSA reference only to explain the separate Canadian assembly-SCCR responsibility.
+
+## 10. SCCR vs. Available Fault Current
+
+These quantities are related but different:
+
+- **SCCR** describes the equipment's rated short-circuit capability under specified conditions.
+- **Available Fault Current (AFC)** describes the prospective current the electrical system can deliver at a particular location.
+
+A panel must be suitable for the available fault current at its installation point under the applicable code and equipment requirements [6]. For example:
+
+- Required panel SCCR: 65 kA.
+- Applicable filter SCCR: 5 kA.
+- No supported higher-rating method established.
+
+That is a potential panel SCCR limitation requiring a complete evaluation. A high-interrupting-capacity fuse or breaker alone does not establish the final panel SCCR.
+
+For a worked explanation of equipment capability versus system fault current, see [Engineering Note #19 — 35 kA SCCR for the Panel. Is It Enough?](/engineering-notes/available-fault-current-vs-sccr/).
+
+## 11. Practical Engineering Checklist
+
+Before finalizing the SCCR of a panel containing a passive harmonic filter:
+
+1. Identify the exact filter manufacturer and part number.
+2. Determine whether it is an open-panel or enclosed product.
+3. Verify the applicable certification and installation conditions.
+4. Review the complete filter schematic and relevant internal components.
+5. Obtain the manufacturer's documented SCCR or evaluation information.
+6. Confirm whether a default SCCR is permitted under the governing standard.
+7. Review any required protective devices or tested combinations.
+8. Verify whether proposed fuses are factory-installed or separately required.
+9. Evaluate every other applicable power-circuit component in the panel.
+10. Establish the overall assembly SCCR under the appropriate standard.
+11. Confirm that the resulting SCCR is suitable for the installation's available fault current.
+12. Retain the supporting technical documentation for certification and future reference.
+
+## 12. Common Engineering Mistakes
+
+### Mistake 1: Assuming every passive device is exempt
+
+Passive electrical behaviour does not automatically establish an SCCR exception.
+
+### Mistake 2: Treating a complete PHF as a standalone reactor
+
+An exception applying to an individual reactor does not automatically apply to a complete harmonic-filter assembly.
+
+### Mistake 3: Blaming the capacitor alone
+
+A dry-type capacitor can itself qualify for an individual exception. The complete filter still has to be evaluated appropriately.
+
+### Mistake 4: Assuming a main breaker establishes panel SCCR
+
+The main circuit breaker's interrupting rating is not, by itself, the assembly SCCR.
+
+### Mistake 5: Assuming any shunt fuse solves the problem
+
+Only an applicable, supported protective arrangement may be used to establish an increased rating.
+
+### Mistake 6: Ignoring the exact model
+
+Different product families, ratings, options, and certification conditions may require different evaluations.
+
+## 13. Frequently Asked Questions
+
+### Does a standalone line reactor require an individual SCCR under UL 508A Supplement SB?
+
+An eligible reactor is covered by the documented individual-component exception identified in SB4.2.1, Exception No. 1, subject to the applicable standard edition and application conditions [3, 5].
+
+### Are dry-type capacitors also excepted?
+
+Yes. MTE's application note identifies dry-type capacitors in the documented individual-component exception [3]. That does not create an exception for a complete capacitor-containing assembly.
+
+### Is every passive harmonic filter required to have a separate SCCR rating?
+
+The applicable rating and evaluation depend on product classification, construction, certification, installation, and the governing standard. The reactor exception must not automatically be extended to the complete filter.
+
+### Does the presence of a capacitor bank automatically reduce SCCR?
+
+No. The complete filter and its applicable components must be evaluated. Capacitor presence alone does not establish a lower rating.
+
+### Does adding a shunt-circuit fuse automatically increase SCCR to 100 kA?
+
+No. A higher rating must be established through a permitted method and the exact manufacturer-supported conditions.
+
+### Does a 100 kA-rated filter make the complete panel 100 kA?
+
+No. The complete industrial control panel must independently satisfy the applicable assembly-SCCR requirements.
+
+### Are UL 508A and CSA C22.2 No. 286 identical?
+
+No. Their applicable requirements and evaluation methods must be checked separately.
+
+### Is the lowest component SCCR always the final panel SCCR?
+
+Not necessarily. Permitted tested combinations or current-limiting protective arrangements may affect the final result. The governing standard's complete methodology and every condition of use must be followed.
+
+## 14. Engineering Conclusion
+
+A standalone line reactor and a complete passive harmonic filter may both contain passive components, but that does not give them identical treatment in an SCCR evaluation.
+
+The public manufacturer guidance cited here identifies individual SCCR exceptions for reactors and dry-type capacitors. A complete PHF, however, cannot automatically rely on those component exceptions.
+
+The determining factors include the filter's construction, certification, documented rating, applicable protection, and governing evaluation method. Engineers should verify the actual filter and its installation conditions before assigning the SCCR of the completed industrial control panel.
+
+<Callout type="calculation-result" title="The hidden trap">
+The hidden trap is not the capacitor itself. It is assuming that an exception for individual passive components automatically applies to an entire passive harmonic filter.
+</Callout>
+
+## Technical Notes and Limitations
+
+The animated diagram is conceptual and does not represent the exact wiring, protection, certification, or construction of a specific manufacturer's product. Product families and configurations vary.
+
+This article is educational. It is not a site-specific short-circuit study, a product certification decision, legal advice, or an authority having jurisdiction approval. Use the current controlled standard, applicable certification information, exact manufacturer documentation, and the actual assembly construction.
+
+<ReferenceList>
+  <li><a href="https://www.shopulstandards.com/ProductDetail.aspx?productId=UL508a">UL Standards &amp; Engagement, <em>UL 508A — Industrial Control Panels</em></a> — official catalog entry for the active standard, including its scope and revision status.</li>
+  <li><a href="https://store.csastandards.org/store/electrical/">CSA Group, <em>CSA C22.2 No. 286:23 — Industrial control panels and assemblies</em></a> — official CSA store listing for the Canadian standard.</li>
+  <li><a href="https://mtecorp.com/wp-content/uploads/UL-508A-3rd-edition-and-how-it-ralates-to-MTE-Product-SCCR-Ratings-App-Note-rev.1.pdf">MTE Corporation, <em>UL 508A Third Edition and How It Relates to MTE Product SCCR Ratings</em></a> — manufacturer application note covering reactors, open-panel harmonic filters, default values, and manufacturer-specific protective arrangements.</li>
+  <li><a href="https://mtecorp.com/wp-content/uploads/MV1-TRM-E-Rev-02-1.pdf">MTE Corporation, <em>Matrix AP+ Technical Reference Manual</em>, Form MV1-TRM-E, April 2026, Revision 02</a> — Figure 5-1 documents a basic schematic for the 480 V Matrix AP+ family; it is not a universal construction or rating reference.</li>
+  <li><a href="https://americas.hammondpowersolutions.com/resources/faq/reactors/what-is-the-short-circuit-current-rating-for-centurion-r-reactors">Hammond Power Solutions, <em>What Is the Short Circuit Current Rating for Reactors?</em></a> — manufacturer explanation of the reactor exception and why iron-core reactors are not current-limiting devices.</li>
+  <li><a href="https://www.ul.com/resources/determining-short-circuit-current-rating-sccr-machinery">UL Solutions, <em>Determining Short-Circuit Current Rating (SCCR) for Machinery</em></a> — relationship between equipment SCCR, available fault current, and UL 508A Supplement SB.</li>
+  <li><a href="https://www.eaton.com/us/en-us/products/controls-drives-automation-sensors/ul508a.html">Eaton, <em>Information About How UL 508A Affects You</em></a> — manufacturer guidance and SCCR resources for industrial control panels.</li>
+  <li><a href="https://www.siemens.com/en-us/industries/industrial-machinery/control-panels/short-circuit-calculation/">Siemens, <em>Short-Circuit Calculation (SCCR)</em></a> — control-panel guidance on identifying relevant components and determining overall SCCR.</li>
+  <li><a href="https://productinfo.se.com/8536db0901_motorcontrolsolutions_db/8536db0901-db-motor-control-solutions/English/8536DB0901R0119%20Motor%20Control%20Solutions%20for%20the%20North%20American%20MarketSchnei_0000295698.xml/%24/SCCRRequirementinUL508ACPT_0000295593">Schneider Electric, <em>Code Requirements for Short-Circuit Current Ratings</em></a> — North American motor-control guidance on SCCR requirements and component evaluation.</li>
+</ReferenceList>
