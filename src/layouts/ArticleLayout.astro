@@ -11,19 +11,33 @@ const compactMobileTitle = [
 ].includes(entry.id);
 const articleUrl = new URL(Astro.url.pathname, 'https://artphase.ca');
 const socialImage = entry.data.socialImage ?? entry.data.coverImage;
-const structuredData = {
-  '@context': 'https://schema.org', '@type': 'TechArticle',
-  headline: entry.data.title, description: entry.data.description,
+const articleImage = entry.data.video ? socialImage : entry.data.coverImage;
+const articleStructuredData = {
+  '@type': 'TechArticle',
+  headline: entry.data.title,
+  description: entry.data.description,
   datePublished: entry.data.publicationDate.toISOString(),
   dateModified: (entry.data.updatedDate ?? entry.data.publicationDate).toISOString(),
   mainEntityOfPage: articleUrl.href,
   author: { '@type': 'Person', name: 'Ramin Tavakoli' },
   publisher: { '@type': 'Organization', name: 'ARTPHASE', url: 'https://artphase.ca' },
-  image: entry.data.coverImage ? new URL(entry.data.coverImage, 'https://artphase.ca').href : undefined,
+  image: articleImage ? new URL(articleImage, 'https://artphase.ca').href : undefined,
   keywords: entry.data.tags.join(', ')
 };
+const videoStructuredData = entry.data.video ? {
+  '@type': 'VideoObject',
+  name: entry.data.video.name,
+  description: entry.data.video.description,
+  thumbnailUrl: new URL(entry.data.video.thumbnailUrl, 'https://artphase.ca').href,
+  uploadDate: entry.data.publicationDate.toISOString(),
+  duration: entry.data.video.duration,
+  contentUrl: new URL(entry.data.video.contentUrl, 'https://artphase.ca').href,
+} : undefined;
+const structuredData = videoStructuredData
+  ? { '@context': 'https://schema.org', '@graph': [articleStructuredData, videoStructuredData] }
+  : { '@context': 'https://schema.org', ...articleStructuredData };
 ---
-<BaseLayout title={entry.data.title} fullTitle={entry.data.seoTitle} description={entry.data.description} socialDescription={entry.data.socialDescription} image={socialImage} imageAlt={entry.data.coverAlt} type="article" structuredData={structuredData}>
+<BaseLayout title={entry.data.title} fullTitle={entry.data.seoTitle} description={entry.data.description} socialTitle={entry.data.socialTitle} socialDescription={entry.data.socialDescription} image={socialImage} imageAlt={entry.data.coverAlt} type="article" structuredData={structuredData}>
   <header class:list={['article-header', 'shell', compactMobileTitle && 'article-header--compact-mobile-title']}>
     <a class="back-link" href="/engineering-notes">← Engineering Notes</a><p class="eyebrow">{entry.data.noteNumber ? `Engineering Note #${entry.data.noteNumber}` : entry.data.category}</p>
     {entry.data.noteNumber && <p class="article-category">{entry.data.category}</p>}

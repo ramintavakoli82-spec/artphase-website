@@ -1,0 +1,707 @@
+---
+title: One Motor Fault. Another at Risk?
+seoTitle: One Motor Fault. Another at Risk? | ARTPHASE
+noteNumber: 21
+subtitle: The Hidden Consequences of a Ground Fault in an Ungrounded Three-Phase System
+description: See why a 480 V ungrounded motor system may keep running after a ground fault, how healthy phases rise to 480 V to ground, and why early detection matters.
+listingDescription: Two identical industrial motors can respond very differently to the same ground fault depending on source grounding. Explore neutral displacement, increased insulation stress, and the hidden risk to another motor in an ungrounded 480 V electrical system.
+socialTitle: One Motor Fault. Another at Risk?
+socialDescription: A ground fault in one industrial motor can change the insulation stress experienced by another motor, even when both continue operating normally.
+publicationDate: 2026-11-28
+updatedDate: 2026-11-28
+category: MCC & Control Panels
+tags: [System Grounding, Ungrounded Systems, Ground Fault Protection, Motor Protection, Insulation Monitoring, Neutral Displacement, Industrial Electrical Systems, Industrial Power, Power Distribution, 480 V]
+readingTime: 24 min read
+draft: false
+coverImage: /images/engineering-notes/one-motor-fault-another-at-risk.webp
+socialImage: /images/engineering-notes/one-motor-fault-another-at-risk-social.png
+listingImage: /images/engineering-notes/one-motor-fault-another-at-risk.webp
+coverAlt: Industrial animation comparing ground faults in solidly grounded and ungrounded 480 V motor systems.
+coverCaption: Illustrative comparison of two 480 V, 60 Hz Wye systems, each supplying two direct-on-line motors.
+coverDisplay: false
+video:
+  name: One Motor Fault. Another at Risk?
+  description: Animation comparing a first motor ground fault in solidly grounded and ungrounded 480 V three-phase systems.
+  contentUrl: /images/engineering-notes/one-motor-fault-another-at-risk.mp4
+  thumbnailUrl: /images/engineering-notes/one-motor-fault-another-at-risk-social.png
+  duration: PT14S
+---
+
+import Callout from '../../components/Callout.astro';
+import EngineeringTable from '../../components/EngineeringTable.astro';
+import EngineeringVideo from '../../components/EngineeringVideo.astro';
+import EquationBlock from '../../components/EquationBlock.astro';
+import ReferenceList from '../../components/ReferenceList.astro';
+
+Imagine two industrial motors supplied by the same 480 V three-phase distribution system.
+
+Both motors operate normally until an energized conductor in the first motor's circuit accidentally contacts its bonded metal frame.
+
+In one electrical system, the protective device disconnects the faulted motor.
+
+In another, both motors may continue running at essentially the same speed and load current as before.
+
+Yet the second motor—which had no initial fault—is now exposed to a different electrical environment.
+
+How can a ground fault in one motor increase the electrical insulation stress on another motor without changing its normal operating voltage?
+
+The answer lies in how the power source is grounded.
+
+<EngineeringVideo
+  src="/images/engineering-notes/one-motor-fault-another-at-risk.mp4"
+  poster="/images/engineering-notes/one-motor-fault-another-at-risk.webp"
+  alt="Industrial animation comparing ground faults in solidly grounded and ungrounded 480 V motor systems"
+  captionId="note21-animation-caption"
+  caption="Illustrative comparison of two 480 V, 60 Hz Wye systems, each supplying two direct-on-line motors. Voltage readings represent idealized RMS conditions. Fault and protection timing are illustrative rather than measured. The potential risk to the second motor does not represent an inevitable equipment failure."
+/>
+
+## 1. Same Supply Voltage. Different Grounding Arrangements.
+
+Consider two otherwise comparable industrial electrical systems.
+
+Each system consists of a Wye-connected three-phase source, two direct-on-line induction motors, individual three-pole branch protective devices, and properly bonded metal motor frames.
+
+<EngineeringTable number="1" caption="System arrangements used for the comparison">
+  <thead><tr><th scope="col">System parameter</th><th scope="col">Solidly Grounded</th><th scope="col">Ungrounded</th></tr></thead>
+  <tbody>
+    <tr><td>Line-to-line voltage</td><td>480 V</td><td>480 V</td></tr>
+    <tr><td>Frequency</td><td>60 Hz</td><td>60 Hz</td></tr>
+    <tr><td>Source configuration</td><td>Wye</td><td>Wye</td></tr>
+    <tr><td>Source neutral</td><td>Solidly grounded</td><td>Not intentionally grounded</td></tr>
+    <tr><td>Motor connection</td><td>Direct-on-line</td><td>Direct-on-line</td></tr>
+    <tr><td>Equipment bonding</td><td>Present</td><td>Present</td></tr>
+  </tbody>
+</EngineeringTable>
+
+An important distinction must be established before examining the fault:
+
+**System grounding and equipment bonding are not the same thing.**
+
+System grounding describes the intentional electrical connection between the power source and ground.
+
+Equipment bonding connects exposed conductive equipment parts to the protective bonding network.
+
+An ungrounded electrical system does not mean that motor frames, electrical enclosures, or other exposed conductive parts should be left electrically floating.
+
+Protective earth and equipment bonding remain essential in both grounding arrangements. <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+
+For this analysis, assume:
+
+- A balanced three-phase voltage source.
+- Negligible source voltage variation under the simplified first-fault conditions.
+- Approximately symmetrical initial phase-to-ground capacitances.
+- Two operating three-phase induction motors.
+- Properly bonded motor frames.
+- A single low-impedance L1-to-frame fault at Motor 1's supply terminal.
+- No simultaneous turn-to-turn winding fault or additional insulation breakdown.
+- No distributed neutral connection to the motors.
+- Correctly functioning protection and selective branch isolation in the solidly grounded example.
+
+These assumptions isolate the effect of system grounding from other possible fault mechanisms.
+
+## 2. What Happens in a Solidly Grounded System?
+
+In a solidly grounded Wye system, the source neutral is connected to ground through a low-impedance bonding connection.
+
+Under normal conditions, the phase-to-neutral voltage is:
+
+<EquationBlock>
+$$
+V_{LN}=\frac{V_{LL}}{\sqrt{3}}
+$$
+</EquationBlock>
+
+For a 480 V system:
+
+<EquationBlock>
+$$
+V_{LN}=\frac{480}{\sqrt{3}}=277.13\text{ V}
+$$
+</EquationBlock>
+
+When L1 contacts the bonded metal frame of Motor 1, a low-impedance fault-current return path may be established.
+
+The simplified fault-current path is:
+
+**Source → L1 → Faulted Motor Frame → Equipment Bonding Network → Source Neutral Bond → Source**
+
+The ground-fault current may be significantly higher than the normal motor load current.
+
+In a simplified equivalent circuit:
+
+<EquationBlock>
+$$
+I_f\approx\frac{V_{LN}}{Z_{\mathrm{loop}}}
+$$
+</EquationBlock>
+
+Where:
+
+- $I_f$ = ground-fault current.
+- $V_{LN}$ = source phase-to-neutral voltage.
+- $Z_{\mathrm{loop}}$ = equivalent impedance of the complete fault-current loop.
+
+The loop impedance includes the relevant source, phase-conductor, fault, and return-path impedances.
+
+A detailed fault-current study must use the appropriate network model, including sequence impedances where necessary.
+
+When the available ground-fault current satisfies the protective device's operating characteristics, the faulted circuit can be disconnected.
+
+In the illustrated scenario, the Motor 1 branch circuit breaker opens all three poles.
+
+Motor 1 stops, while Motor 2 remains connected to the healthy source bus.
+
+This assumes appropriate selective coordination.
+
+In actual installations, the fault may also cause a voltage dip, operate upstream protection, or interrupt additional loads. The actual clearing time depends on the fault current, protective settings, and system characteristics. <a href="#ref-1">[1]</a>
+
+After Motor 1 is isolated, the energized source bus returns to its normal operating conditions.
+
+## 3. What Happens in an Ungrounded System?
+
+Now consider the same L1-to-frame fault in an otherwise identical ungrounded three-phase system.
+
+The source neutral has no intentional low-impedance connection to ground.
+
+Consequently, the fault does not create the same metallic return circuit that exists in the solidly grounded system.
+
+However, a practical electrical network is never perfectly isolated from ground.
+
+Electrical cables, motor windings, and connected equipment possess distributed capacitance and finite insulation resistance relative to ground.
+
+These characteristics provide a return path for the first ground-fault current.
+
+Depending on the network, the first ground-fault current may be too small to operate conventional overcurrent protection.
+
+Therefore:
+
+- Motor 1 may remain energized.
+- Motor 2 may remain energized.
+- Neither branch protective device may operate immediately.
+- The process may continue running.
+
+This ability to maintain service following a first ground fault is one reason ungrounded systems have historically been used in industrial applications where an unexpected interruption of production can have significant consequences. <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a>
+
+However, continuity of operation must not be confused with the absence of an electrical fault.
+
+The system's insulation environment has changed.
+
+Continued operation is only permissible when the actual system design, protection scheme, applicable requirements, and approved operating procedures allow it.
+
+## 4. Neutral Displacement: The Hidden Voltage Change
+
+Before the first ground fault, an approximately balanced ungrounded 480 V system may exhibit the following phase-to-ground voltages:
+
+<EquationBlock>
+$$
+\begin{aligned}
+V_{L1-G}&\approx277.13\text{ V}\\
+V_{L2-G}&\approx277.13\text{ V}\\
+V_{L3-G}&\approx277.13\text{ V}
+\end{aligned}
+$$
+</EquationBlock>
+
+These values result from approximately balanced phase-to-ground admittances.
+
+Unlike a solidly grounded source, however, the ungrounded source neutral is not rigidly referenced to ground.
+
+Asymmetric capacitance or insulation leakage may shift these voltages even before a fault occurs.
+
+For a balanced three-phase source, the phase-to-neutral voltage phasors can be expressed as:
+
+<EquationBlock>
+$$
+\begin{aligned}
+\underline{V}_{1N}&=277.13\angle0^\circ\\
+\underline{V}_{2N}&=277.13\angle-120^\circ\\
+\underline{V}_{3N}&=277.13\angle120^\circ
+\end{aligned}
+$$
+</EquationBlock>
+
+When L1 becomes connected to the bonded frame through an ideal low-impedance fault, the ground reference becomes approximately equal to the L1 potential.
+
+Therefore:
+
+<EquationBlock>
+$$
+\underline{V}_{NG}=-\underline{V}_{1N}
+$$
+</EquationBlock>
+
+The resulting phase-to-ground voltages become:
+
+<EquationBlock>
+$$
+\underline{V}_{1G}\approx0
+$$
+$$
+\underline{V}_{2G}=\underline{V}_{2N}-\underline{V}_{1N}
+$$
+$$
+\underline{V}_{3G}=\underline{V}_{3N}-\underline{V}_{1N}
+$$
+</EquationBlock>
+
+The latter two expressions correspond to line-to-line voltage differences. Their magnitudes are approximately:
+
+<EquationBlock>
+$$
+\begin{aligned}
+|V_{2G}|&\approx480\text{ V}\\
+|V_{3G}|&\approx480\text{ V}
+\end{aligned}
+$$
+</EquationBlock>
+
+This phenomenon is commonly referred to as **neutral displacement**.
+
+The relative positions of the three source voltage phasors remain essentially unchanged, while their electrical reference relative to ground shifts.
+
+<EngineeringTable number="2" caption="Idealized RMS bus-voltage comparison before and after the first ground fault">
+  <thead><tr><th scope="col">RMS bus voltage</th><th scope="col">Before the fault</th><th scope="col">Solidly grounded after M1 isolation</th><th scope="col">Ungrounded with first fault present</th></tr></thead>
+  <tbody>
+    <tr><td>L1–L2</td><td>480 V</td><td>480 V</td><td>Approximately 480 V</td></tr>
+    <tr><td>L2–L3</td><td>480 V</td><td>480 V</td><td>Approximately 480 V</td></tr>
+    <tr><td>L3–L1</td><td>480 V</td><td>480 V</td><td>Approximately 480 V</td></tr>
+    <tr><td>L1–Ground</td><td>277 V</td><td>277 V</td><td>Approximately 0 V</td></tr>
+    <tr><td>L2–Ground</td><td>277 V</td><td>277 V</td><td>Approximately 480 V</td></tr>
+    <tr><td>L3–Ground</td><td>277 V</td><td>277 V</td><td>Approximately 480 V</td></tr>
+  </tbody>
+</EngineeringTable>
+
+The solidly grounded column represents the energized source bus after the faulted motor has been disconnected, not the disconnected motor terminals.
+
+The percentage increase in healthy-phase voltage relative to ground is:
+
+<EquationBlock>
+$$
+\Delta V_{\%}=\left(\frac{480}{480/\sqrt{3}}-1\right)\times100
+$$
+</EquationBlock>
+
+Therefore:
+
+<EquationBlock>
+$$
+\Delta V_{\%}=(\sqrt{3}-1)\times100
+$$
+$$
+\boxed{\Delta V_{\%}\approx73.2\%}
+$$
+</EquationBlock>
+
+The healthy phases experience an idealized 73.2% increase in voltage relative to ground.
+
+This ratio is independent of the nominal system voltage under equivalent assumptions.
+
+**The critical distinction is that the increase occurs in phase-to-ground voltage, not phase-to-phase voltage.**
+
+The result describes idealized fundamental-frequency RMS conditions. It is not an upper limit on transient overvoltages.
+
+## 5. Why Can Both Motors Continue Running?
+
+At first glance, it may appear that Motor 1 has lost a phase because L1-to-ground voltage has decreased to approximately zero.
+
+But a zero phase-to-ground voltage does not necessarily mean that the phase conductor has been disconnected.
+
+All three phase conductors may remain energized and connected to the motor.
+
+The motor still receives approximately:
+
+<EquationBlock>
+$$
+\begin{aligned}
+V_{L1-L2}&=480\text{ V}\\
+V_{L2-L3}&=480\text{ V}\\
+V_{L3-L1}&=480\text{ V}
+\end{aligned}
+$$
+</EquationBlock>
+
+A three-phase induction motor develops its rotating magnetic field from the three-phase winding voltages.
+
+For a Delta-connected motor, these are determined directly by the line-to-line supply voltages.
+
+For a balanced Wye-connected motor with no external neutral connection, the winding voltages are determined by its own star point and the applied line-to-line voltages.
+
+In neither case is the ground reference alone responsible for establishing the normal motor operating voltage.
+
+Mathematically, adding the same displacement voltage to all three phase-to-ground voltage phasors does not change the differences between those phasors.
+
+Consequently, for an otherwise undamaged motor operating at the same frequency and mechanical loading:
+
+- Normal load current may remain approximately unchanged.
+- Operating speed may remain approximately unchanged.
+- Developed torque may remain approximately unchanged.
+- Mechanical output may remain approximately unchanged.
+
+The ground fault does not necessarily produce conventional single-phasing.
+
+<EngineeringTable number="3" caption="Illustrative motor operating conditions before and after the first fault">
+  <thead><tr><th scope="col">Motor parameter</th><th scope="col">Before first fault</th><th scope="col">After first fault in ungrounded system</th></tr></thead>
+  <tbody>
+    <tr><td>Line-to-line voltage</td><td>480 V</td><td>Approximately 480 V</td></tr>
+    <tr><td>Motor load current</td><td>Normal</td><td>Approximately normal</td></tr>
+    <tr><td>Speed</td><td>Normal</td><td>Approximately normal</td></tr>
+    <tr><td>Torque</td><td>Normal</td><td>Approximately normal</td></tr>
+    <tr><td>Motor operation</td><td>Running</td><td>May continue running</td></tr>
+    <tr><td>Healthy-phase terminal voltage to frame</td><td>277 V</td><td>Approximately 480 V</td></tr>
+  </tbody>
+</EngineeringTable>
+
+Actual measured phase-conductor currents can also include leakage and fault-current contributions.
+
+Therefore, the measured currents should not be assumed to remain mathematically identical under every fault condition.
+
+This distinction explains why a motor ammeter or conventional overload relay may not indicate the first ground fault.
+
+## 6. How Large Is the First Ground-Fault Current?
+
+The first ground-fault current in an ungrounded network depends significantly on the distributed phase-to-ground capacitance and insulation leakage of the connected system.
+
+For a simplified balanced network with equal capacitance per phase, negligible resistive leakage, and an ideal low-impedance first ground fault:
+
+<EquationBlock>
+$$
+|I_f|\approx3\omega C_\phi V_{LN}
+$$
+</EquationBlock>
+
+Where:
+
+- $I_f$ = first ground-fault current magnitude.
+- $C_\phi$ = total effective capacitance per phase to ground.
+- $\omega$ = angular frequency.
+- $V_{LN}$ = nominal source phase-to-neutral voltage.
+
+Since:
+
+<EquationBlock>
+$$
+\omega=2\pi f
+$$
+</EquationBlock>
+
+The expression becomes:
+
+<EquationBlock>
+$$
+|I_f|\approx3(2\pi f)C_\phi V_{LN}
+$$
+</EquationBlock>
+
+Or equivalently:
+
+<EquationBlock>
+$$
+|I_f|\approx\sqrt{3}(2\pi f)C_\phi V_{LL}
+$$
+</EquationBlock>
+
+The factor of three results from the vector summation of capacitive current phasors.
+
+It does not represent the arithmetic addition of three equal current magnitudes.
+
+### Numerical Example
+
+Assume the following hypothetical system:
+
+- Line-to-line voltage: 480 V.
+- Frequency: 60 Hz.
+- Effective capacitance per phase to ground: 0.50 µF.
+- Negligible resistive leakage.
+
+Then:
+
+<EquationBlock>
+$$
+\begin{aligned}
+|I_f|&\approx3(2\pi\times60)\\
+&\quad{}\times(0.50\times10^{-6})(277.13)
+\end{aligned}
+$$
+$$
+\boxed{|I_f|\approx0.157\text{ A}}
+$$
+</EquationBlock>
+
+A first ground-fault current of this magnitude may not be sufficient to operate conventional motor branch overcurrent protection.
+
+However, this value is strictly an educational example.
+
+It is not a measured value from a particular industrial installation, a universal first-fault current, or a recommended protection setting.
+
+The actual current can vary substantially depending on cable lengths, connected equipment, system capacitance, frequency, insulation resistance, and fault impedance. <a href="#ref-2">[2]</a>
+
+## 7. Can a Fault in Motor 1 Put Motor 2 at Risk?
+
+This is one of the most important consequences of an unresolved first ground fault.
+
+Neutral displacement is not confined to the faulted motor.
+
+It affects the connected electrical network supplied by the same ungrounded source.
+
+Although Motor 2 had no initial fault, its healthy phase terminals may now experience approximately 480 V relative to its bonded frame instead of approximately 277 V.
+
+This represents an increase of approximately 73.2% in the relevant terminal-to-ground voltage.
+
+Consequently, Motor 2 and other connected equipment are exposed to a different phase-to-ground insulation environment.
+
+The change concerns insulation between energized conductors or windings and grounded conductive parts.
+
+It does not mean that the voltage across every winding turn has increased by 73.2%.
+
+Nor does it mean that the motor is necessarily experiencing a conventional thermal overload.
+
+### Does Increased Insulation Stress Guarantee Failure?
+
+No.
+
+A properly selected insulation system may be capable of withstanding the full line-to-line system voltage relative to ground.
+
+The increased steady-state voltage alone does not establish that another insulation failure will occur, or when it might occur.
+
+Existing insulation weakness, unsuitable equipment, and transient overvoltages can increase the probability of another insulation breakdown.
+
+Intermittent arcing ground faults can also produce transient overvoltages that exceed the idealized steady-state values shown here. <a href="#ref-1">[1]</a>
+
+The important engineering conclusion is narrower: a fault in one circuit can change the phase-to-ground insulation environment of equipment elsewhere on the same ungrounded source.
+
+## 8. What If a Second Ground Fault Occurs?
+
+Assume that Motor 1 remains energized with an unresolved L1-to-frame fault.
+
+Now suppose Motor 2 develops a separate L2-to-frame fault.
+
+Because both motor frames are connected through the protective bonding network, the two faults may establish a phase-to-phase short-circuit path.
+
+The conceptual fault-current path becomes:
+
+**L1 → First Fault at Motor 1 → Protective Bonding Network → Second Fault at Motor 2 → L2 → Source**
+
+Unlike the first ground fault, the resulting fault current is no longer limited primarily by the distributed phase-to-ground capacitance.
+
+The two faults can create a low-impedance path between different energized phases.
+
+Potential consequences include:
+
+- High short-circuit current.
+- Operation of branch or upstream protective devices.
+- Electrical arcing.
+- Equipment damage.
+- Damage to motor insulation.
+- Interruption of production.
+
+The actual severity depends on the available fault current, fault-loop impedance, protection characteristics, and clearing time.
+
+A second fault on the same phase does not create the same different-phase short-circuit condition.
+
+The scenario illustrates why the first ground fault must not remain unresolved indefinitely. <a href="#ref-1">[1]</a> <a href="#ref-3">[3]</a>
+
+The ability to continue operating after the first fault is an opportunity for a controlled engineering response—not permission to ignore the fault.
+
+## 9. If Both Motors Keep Running, How Does the Operator Know?
+
+The operating conditions may appear normal:
+
+- Both motors are running.
+- Motor speed remains approximately unchanged.
+- Motor load current remains approximately unchanged.
+- Line-to-line voltage remains approximately 480 V.
+- Conventional overcurrent protection has not operated.
+
+However, an insulation fault is already present.
+
+This is why an ungrounded system requires an appropriate fault-detection strategy.
+
+### Phase-to-Ground Voltage Monitoring
+
+One traditional detection method uses three voltage indicators, historically implemented using three ground-detection lamps.
+
+Under balanced normal conditions, all three indicators show approximately equal phase-to-ground voltage.
+
+Following an ideal L1-to-ground fault:
+
+- L1-to-ground voltage approaches zero.
+- L2-to-ground voltage approaches 480 V.
+- L3-to-ground voltage approaches 480 V.
+
+The voltage displacement provides an indication that a ground fault is present.
+
+However, it does not necessarily identify the faulted feeder.
+
+A passive voltage-displacement detector may also fail to reveal approximately symmetrical insulation degradation across all phases.
+
+### Insulation Monitoring Device (IMD)
+
+An Insulation Monitoring Device continuously monitors the insulation resistance of the connected ungrounded electrical network relative to ground.
+
+When insulation resistance falls below an engineered alarm threshold, the device can generate a warning.
+
+Depending on the equipment and system design, an IMD may detect insulation deterioration before it becomes a direct low-resistance ground fault.
+
+The alarm can be communicated to a local indicator, PLC, HMI, SCADA system, or plant alarm-management system. <a href="#ref-3">[3]</a> <a href="#ref-4">[4]</a>
+
+The IMD alarm in the ARTPHASE animation illustrates this independent detection function.
+
+The motors may continue running, but the fault is no longer invisible to the operator.
+
+### Insulation Fault Location System (IFLS)
+
+An IMD typically provides system-level information.
+
+Identifying which individual feeder or motor is responsible may require an Insulation Fault Location System.
+
+A compatible IFLS uses a locating signal and dedicated measuring sensors to help identify the affected circuit. <a href="#ref-5">[5]</a>
+
+The exact fault-location and isolation procedure must be established for the actual electrical installation.
+
+<EngineeringTable number="4" caption="Functions and limitations of common first-fault detection and location methods">
+  <thead><tr><th scope="col">Detection method</th><th scope="col">Primary function</th><th scope="col">Limitation</th></tr></thead>
+  <tbody>
+    <tr><td>Phase-to-ground voltage monitoring</td><td>Detects voltage displacement</td><td>May not detect symmetrical insulation degradation or identify the feeder</td></tr>
+    <tr><td>IMD</td><td>Monitors insulation resistance to ground</td><td>System-level alarm may not identify the individual motor</td></tr>
+    <tr><td>IFLS</td><td>Helps locate the affected feeder</td><td>Requires compatible equipment and proper system design</td></tr>
+    <tr><td>Conventional overcurrent protection</td><td>Clears qualifying overcurrent faults</td><td>May not operate during the first low-current ground fault</td></tr>
+  </tbody>
+</EngineeringTable>
+
+A normal motor-current reading is not sufficient evidence of healthy electrical insulation.
+
+## 10. Solidly Grounded vs. Ungrounded: The Industrial Trade-Off
+
+Neither grounding arrangement should be selected solely on the basis of whether production continues after a first ground fault.
+
+The decision involves equipment compatibility, electrical protection, personnel safety, process reliability, maintenance practices, and insulation coordination.
+
+<EngineeringTable number="5" caption="Selected industrial trade-offs between solidly grounded and ungrounded systems">
+  <thead><tr><th scope="col">Engineering consideration</th><th scope="col">Solidly Grounded</th><th scope="col">Ungrounded</th></tr></thead>
+  <tbody>
+    <tr><td>Source neutral reference</td><td>Fixed through a low-impedance ground connection</td><td>Not intentionally grounded</td></tr>
+    <tr><td>First ground-fault current</td><td>Can be high</td><td>Often limited by capacitance and insulation leakage</td></tr>
+    <tr><td>First-fault response</td><td>Typically designed for fault isolation</td><td>May permit continued operation</td></tr>
+    <tr><td>Production continuity after first fault</td><td>Faulted circuit normally disconnected</td><td>Can remain in service under controlled conditions</td></tr>
+    <tr><td>Phase-to-ground voltage stability</td><td>Generally better constrained</td><td>Neutral displacement can occur</td></tr>
+    <tr><td>Healthy-phase voltage after first fault</td><td>Generally better constrained</td><td>Can approach full line-to-line voltage</td></tr>
+    <tr><td>Insulation-monitoring requirements</td><td>Dependent on protection design</td><td>Particularly important</td></tr>
+    <tr><td>First-fault location</td><td>Protective operation may help identify affected circuits</td><td>Dedicated fault-location methods may be needed</td></tr>
+    <tr><td>Transient overvoltage concerns</td><td>Generally better controlled</td><td>Intermittent arcing faults can produce significant overvoltages</td></tr>
+    <tr><td>Equipment compatibility</td><td>Verify actual ratings</td><td>Explicit grounding compatibility checks are particularly important</td></tr>
+    <tr><td>Principal design trade-off</td><td>Fault interruption versus rapid isolation</td><td>Continuity versus increased monitoring and subsequent-fault risk</td></tr>
+  </tbody>
+</EngineeringTable>
+
+In a solidly grounded system, an intentional low-impedance return path helps facilitate detection and isolation of a qualifying ground fault.
+
+In an ungrounded system, the absence of that intentional path may allow the process to continue operating following the first fault.
+
+However, this operational advantage must be supported by appropriate monitoring, fault-location capability, and qualified maintenance response. <a href="#ref-1">[1]</a> <a href="#ref-2">[2]</a> <a href="#ref-3">[3]</a>
+
+Neither grounding arrangement eliminates electrical shock hazards.
+
+## 11. Why Grounding Configuration Matters During Equipment Selection
+
+Two electrical networks can have the same nominal line-to-line voltage while imposing different voltage conditions relative to ground.
+
+Therefore, nominal system voltage alone is not sufficient to establish equipment compatibility.
+
+Grounding configuration should also be considered when selecting:
+
+- Circuit breakers.
+- Motor protective devices.
+- Surge protective devices.
+- Motors.
+- Cable insulation systems.
+- Insulation monitoring equipment.
+- Power-electronic equipment.
+- Electrical filters and components connected to ground.
+
+A component suitable for a solidly grounded 480 V system is not automatically suitable for an ungrounded 480 V system.
+
+Engineers must verify the equipment manufacturer's actual voltage ratings, insulation characteristics, protection ratings, grounding limitations, and installation instructions.
+
+The grounding configuration is an electrical design parameter, not simply a detail of the grounding drawing.
+
+## 12. Frequently Asked Questions
+
+### Does an ungrounded motor lose one phase when L1 contacts its frame?
+
+Not necessarily.
+
+If the first ground fault does not disconnect the motor, all three phase conductors can remain connected and the line-to-line supply voltages can remain approximately unchanged.
+
+A zero L1-to-ground voltage does not indicate that L1 has necessarily been disconnected.
+
+### Does the motor receive 480 V instead of 277 V across its windings after the first ground fault?
+
+Not as a general consequence of neutral displacement.
+
+The increased voltage is relative to ground.
+
+The normal winding supply voltages remain approximately unchanged in the idealized example.
+
+### Will the second motor definitely fail if the first ground fault remains unresolved?
+
+No.
+
+Appropriately rated insulation may withstand the changed steady-state voltage environment.
+
+Existing insulation weakness, unsuitable equipment, and transient overvoltages can increase the probability of another insulation breakdown.
+
+Failure is possible, not inevitable.
+
+### How long can an ungrounded system operate after the first ground fault?
+
+There is no universal safe operating duration.
+
+The permissible response depends on the actual protection design, insulation characteristics, applicable requirements, and site operating procedures.
+
+The first fault should be promptly investigated and addressed by qualified personnel.
+
+### Does a normal motor current prove that the electrical system is healthy?
+
+No.
+
+The normal load current primarily reflects the electrical and mechanical loading of the motor.
+
+An insulation fault can exist without producing a sufficient change in motor current to operate conventional overcurrent protection.
+
+### Can an IMD identify the exact motor with an insulation fault?
+
+A conventional system-level IMD identifies insulation degradation or a ground fault within the monitored network.
+
+Locating the specific motor may require dedicated feeder-level fault-location equipment and further investigation.
+
+## Engineering Takeaway
+
+<Callout type="calculation-result" title="The essential distinction">
+The line-to-line voltage drives the motor load. The phase-to-ground voltage is part of the insulation environment. In the idealized ungrounded-system example, the first fault leaves line-to-line voltage approximately unchanged while increasing the healthy phases' voltage to ground from about 277 V to 480 V.
+</Callout>
+
+An ungrounded system may continue operating at normal load current, normal speed, and normal line-to-line voltage while a ground fault changes the insulation stress experienced by other equipment connected to the same ungrounded source.
+
+First-fault continuity can be a valuable industrial design objective.
+
+But it must be supported by suitable insulation, appropriate equipment selection, reliable fault detection, and a timely engineering response.
+
+**One motor fault can put another motor at risk—even when both motors appear to be operating normally.**
+
+For a related equipment-protection discussion, see [Engineering Note #20 — The Hidden SCCR Trap](/engineering-notes/the-hidden-sccr-trap/).
+
+<Callout type="warning" title="Engineering scope">
+This article presents an idealized educational comparison of solidly grounded and ungrounded three-phase electrical systems. It is not a short-circuit study, arc-flash assessment, insulation-coordination study, or protection-setting recommendation. Actual electrical installations require application-specific engineering evaluation. Never intentionally create an energized ground fault to demonstrate or verify system behavior.
+</Callout>
+
+<ReferenceList title="Technical References">
+  <li id="ref-1"><a href="https://www.eaton.com/content/dam/eaton/products/design-guides---consultant-audience/canada/cag/eaton-power-distribution-systems-consulting-application-guide-tb08104003e-tab-1-ca08104001e-ca.pdf"><strong>Eaton — Power Distribution Systems: Grounding/Ground Fault Protection</strong></a>. Consulting Application Guide CA08104001E, Section 1.6, particularly printed pages 1.6-4 and 1.6-5, August 2017. Covers solidly grounded and ungrounded systems, ground-fault return paths, first-fault continuity, arcing ground-fault overvoltages, remote insulation failures, and subsequent faults.</li>
+  <li id="ref-2"><a href="https://www.benderinc.com/know-how/technology/ungrounded-system/ungrounded-systems-as-reflected-in-the-standards/"><strong>Bender — Ungrounded Systems as Reflected in the Standards</strong></a>. Technical background concerning ungrounded systems, first ground-fault current, insulation resistance, and distributed system capacitance.</li>
+  <li id="ref-3"><a href="https://www.electrical-installation.org/enwiki/IT_system_-_Practical_aspects"><strong>Schneider Electric — Electrical Installation Guide: IT System, Practical Aspects</strong></a>. Technical background concerning first-fault detection, insulation monitoring, fault location, and subsequent fault protection.</li>
+  <li id="ref-4"><a href="https://www.benderinc.com/know-how/technology/ungrounded-system/ground-fault-monitoring/"><strong>Bender — Ground-Fault Monitoring in Ungrounded Systems</strong></a>. Technical information concerning insulation monitoring and the detection of ground faults in ungrounded networks.</li>
+  <li id="ref-5"><a href="https://www.benderinc.com/know-how/technology/ungrounded-system/ground-fault-location/"><strong>Bender — Ground-Fault Location</strong></a>. Technical background concerning insulation fault location, locating signals, and measuring sensors.</li>
+</ReferenceList>
+
+The numerical calculations and illustrative scenarios are original ARTPHASE educational explanations based on standard AC circuit relationships.
+
+References support the underlying engineering principles. No manufacturer endorsement or affiliation is implied.

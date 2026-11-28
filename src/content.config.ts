@@ -10,8 +10,16 @@ const notes = defineCollection({
     category: z.string(), tags: z.array(z.string()), readingTime: z.string(), draft: z.boolean().default(false),
     coverImage: z.string().optional(), coverAlt: z.string().optional(), coverCaption: z.string().optional(),
     socialImage: z.string().optional(),
+    listingImage: z.string().optional(), listingDescription: z.string().optional(),
     coverDisplay: z.boolean().default(true),
-    socialDescription: z.string().optional(),
+    socialTitle: z.string().optional(), socialDescription: z.string().optional(),
+    video: z.object({
+      name: z.string(),
+      description: z.string(),
+      contentUrl: z.string(),
+      thumbnailUrl: z.string(),
+      duration: z.string(),
+    }).optional(),
   }),
 });
 export const collections = { notes };

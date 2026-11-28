@@ -1,0 +1,66 @@
+---
+const {
+  src,
+  poster,
+  alt,
+  caption,
+  captionId,
+  width = 1080,
+  height = 1350,
+} = Astro.props;
+---
+
+<figure class="engineering-note-animation engineering-figure portrait">
+  <video
+    data-engineering-video
+    width={width}
+    height={height}
+    muted
+    playsinline
+    controls
+    preload="metadata"
+    poster={poster}
+    aria-label={alt}
+    aria-describedby={captionId}
+  >
+    <source src={src} type="video/mp4" />
+    <p>
+      Your browser does not support embedded video.
+      <a href={src}>Open the engineering animation directly.</a>
+    </p>
+  </video>
+  <figcaption id={captionId}>{caption}</figcaption>
+  <div class="video-fallback-links">
+    <a href={src}>Open the animation directly</a>
+    <a href={poster}>View the full-resolution diagram</a>
+  </div>
+</figure>
+
+<script>
+  const initializeEngineeringVideos = () => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    document.querySelectorAll<HTMLVideoElement>('[data-engineering-video]').forEach((video) => {
+      if (video.dataset.initialized === 'true') return;
+      video.dataset.initialized = 'true';
+
+      const applyMotionPreference = () => {
+        video.loop = !reducedMotion.matches;
+        if (reducedMotion.matches && !video.paused) video.pause();
+      };
+
+      applyMotionPreference();
+      reducedMotion.addEventListener('change', applyMotionPreference);
+
+      // Try autoplay only on initialization. Preference changes must not override a pause.
+      if (!reducedMotion.matches) {
+        video.play().catch(() => {
+          // Autoplay can be blocked. Native controls remain available.
+        });
+      }
+    });
+  };
+
+  initializeEngineeringVideos();
+  document.addEventListener('astro:page-load', initializeEngineeringVideos);
+</script>

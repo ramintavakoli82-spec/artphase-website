@@ -12,8 +12,15 @@ html{scroll-behavior:smooth}a{transition:color .15s ease}.site-header{position:r
 
 .article-cover{margin-block:48px 0;max-width:860px}.article-cover img,.engineering-figure img{display:block;width:100%;height:auto;background:#fff}.article-cover figcaption{font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.5}
 .engineering-figure.portrait{max-width:648px;margin-inline:auto}.engineering-figure.portrait img{aspect-ratio:4/5;object-fit:contain}.central-check{font-family:Inter,sans-serif;font-weight:700;text-align:center;border-block:2px solid var(--ink);padding:24px;margin:34px 0;color:var(--ink)}
+.engineering-note-animation video{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:contain;background:#fff}
+.engineering-note-animation video:focus-visible,.video-fallback-links a:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.video-fallback-links{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-family:Inter,sans-serif;font-size:.78rem}
+.video-fallback-links a{color:var(--blue)}
+.note-card-image{position:relative;display:block;aspect-ratio:16/10;margin:-30px -30px 26px;overflow:hidden;background:#fff;border-bottom:1px solid var(--line)}
+.note-card:first-child .note-card-image{margin-left:0}
+.note-card-image img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
 .reduced-motion-poster{display:none!important}@media(prefers-reduced-motion:reduce){.motion-animation{display:none!important}.reduced-motion-poster{display:block!important}}
-@media(max-width:650px){.equation-block{margin-inline:-12px;padding:22px 12px;text-align:left}.equation-block .katex-display{text-align:left}.central-check{padding:20px 12px}.engineering-table{margin-inline:-12px}.engineering-table figcaption{padding-inline:12px}.engineering-figure.portrait{margin-inline:-12px}.engineering-figure.portrait figcaption{padding-inline:12px}}
+@media(max-width:650px){.equation-block{margin-inline:-12px;padding:22px 12px;text-align:left}.equation-block .katex-display{text-align:left}.central-check{padding:20px 12px}.engineering-table{margin-inline:-12px}.engineering-table figcaption{padding-inline:12px}.engineering-figure.portrait{margin-inline:-12px}.engineering-figure.portrait figcaption{padding-inline:12px}.video-fallback-links{margin-inline:12px}.note-card-image,.note-card:first-child .note-card-image{margin:0 0 24px}}
 
 .contact-options{padding-block:52px 90px}.contact-option{display:grid;grid-template-columns:minmax(220px,.7fr) minmax(300px,1.3fr) auto;align-items:start;gap:32px;padding:30px 0;border-bottom:1px solid var(--line)}.contact-option:first-child{border-top:2px solid var(--ink)}.contact-option h2{font-family:Georgia,serif;font-size:1.55rem;line-height:1.25;margin:0}.contact-option p{color:var(--muted);margin:0}.contact-option a{color:var(--blue);font-weight:700;text-decoration:none;white-space:nowrap}.contact-option a:hover{text-decoration:underline}
 
